@@ -87,11 +87,13 @@ export interface BuildUpdate {
 
 // User Helpers
 export const getUserProfile = async (uid: string) => {
+    if (!db) return null;
     const userDoc = await getDoc(doc(db, COLLECTIONS.USERS, uid));
     return userDoc.exists() ? (userDoc.data() as UserProfile) : null;
 };
 
 export const createUserProfile = async (uid: string, profile: Partial<UserProfile>) => {
+    if (!db) return;
     await setDoc(doc(db, COLLECTIONS.USERS, uid), {
         ...profile,
         uid,
@@ -100,11 +102,13 @@ export const createUserProfile = async (uid: string, profile: Partial<UserProfil
 };
 
 export const updateUserProfile = async (uid: string, data: Partial<UserProfile>) => {
+    if (!db) return;
     await updateDoc(doc(db, COLLECTIONS.USERS, uid), data);
 };
 
 // Project Helpers
 export const createProject = async (projectData: Omit<Project, "id">) => {
+    if (!db) return null;
     const docRef = await addDoc(collection(db, COLLECTIONS.PROJECTS), {
         ...projectData,
         createdAt: serverTimestamp(),
@@ -113,16 +117,19 @@ export const createProject = async (projectData: Omit<Project, "id">) => {
 };
 
 export const getProject = async (id: string) => {
+    if (!db) return null;
     const snap = await getDoc(doc(db, COLLECTIONS.PROJECTS, id));
     return snap.exists() ? { id: snap.id, ...snap.data() } as Project : null;
 };
 
 export const getAllProjects = async () => {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, COLLECTIONS.PROJECTS), orderBy("createdAt", "desc")));
     return snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
 };
 
 export const toggleUpvoteProject = async (projectId: string, userId: string, hasUpvoted: boolean) => {
+    if (!db) return;
     const projectRef = doc(db, COLLECTIONS.PROJECTS, projectId);
     await updateDoc(projectRef, {
         upvotes: hasUpvoted ? arrayRemove(userId) : arrayUnion(userId)
@@ -131,6 +138,7 @@ export const toggleUpvoteProject = async (projectId: string, userId: string, has
 
 // Application Helpers
 export const createApplication = async (appData: Omit<Application, "id" | "createdAt" | "status">) => {
+    if (!db) return null;
     const docRef = await addDoc(collection(db, COLLECTIONS.APPLICATIONS), {
         ...appData,
         status: "pending",
@@ -140,6 +148,7 @@ export const createApplication = async (appData: Omit<Application, "id" | "creat
 };
 
 export const getApplicationsForProject = async (projectId: string) => {
+    if (!db) return [];
     const q = query(collection(db, COLLECTIONS.APPLICATIONS), where("projectId", "==", projectId));
     const snap = await getDocs(q);
     return snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Application));
@@ -147,6 +156,7 @@ export const getApplicationsForProject = async (projectId: string) => {
 
 // Feed Helpers
 export const postUpdate = async (projectId: string, authorId: string, content: string) => {
+    if (!db) return null;
     const docRef = await addDoc(collection(db, COLLECTIONS.UPDATES), {
         projectId,
         authorId,
@@ -159,6 +169,7 @@ export const postUpdate = async (projectId: string, authorId: string, content: s
 };
 
 export const getFeedUpdates = async (limitCount: number = 20) => {
+    if (!db) return [];
     const q = query(collection(db, COLLECTIONS.UPDATES), orderBy("createdAt", "desc"), limit(limitCount));
     const snap = await getDocs(q);
     return snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as BuildUpdate));

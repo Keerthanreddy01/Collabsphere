@@ -30,31 +30,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!auth) {
+            setLoading(false);
+            console.warn("AuthProvider: Firebase 'auth' object is not initialized. Check your config.");
+            return;
+        }
+
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
-            if (user) {
+            if (user && db) {
                 // Fetch or create profile
-                const userRef = doc(db, COLLECTIONS.USERS, user.uid);
-                const userSnap = await getDoc(userRef);
+                try {
+                    const userRef = doc(db, COLLECTIONS.USERS, user.uid);
+                    const userSnap = await getDoc(userRef);
 
-                if (userSnap.exists()) {
-                    setProfile(userSnap.data() as UserProfile);
-                } else {
-                    // New user
-                    const newProfile: UserProfile = {
-                        uid: user.uid,
-                        name: user.displayName || "New Builder",
-                        email: user.email || "",
-                        avatar: user.photoURL || "",
-                        bio: "",
-                        skills: [],
-                        role: "Developer",
-                        openToCollab: true,
-                        onboardingComplete: false,
-                        createdAt: serverTimestamp() as any, // Firebase handles this
-                    };
-                    await setDoc(userRef, newProfile);
-                    setProfile(newProfile);
+                    if (userSnap.exists()) {
+                        setProfile(userSnap.data() as UserProfile);
+                    } else {
+                        // New user
+                        const newProfile: UserProfile = {
+                            uid: user.uid,
+                            name: user.displayName || "New Builder",
+                            email: user.email || "",
+                            avatar: user.photoURL || "",
+                            bio: "",
+                            skills: [],
+                            role: "Developer",
+                            openToCollab: true,
+                            onboardingComplete: false,
+                            createdAt: serverTimestamp() as any, // Firebase handles this
+                        };
+                        await setDoc(userRef, newProfile);
+                        setProfile(newProfile);
+                    }
+                } catch (err) {
+                    console.error("Error management profile:", err);
                 }
             } else {
                 setProfile(null);
@@ -66,18 +76,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     const loginWithGitHub = async () => {
+        if (!auth) return;
         const provider = new GithubAuthProvider();
         await signInWithPopup(auth, provider);
     };
 
     const loginWithGoogle = async () => {
+        if (!auth) return;
         const provider = new GoogleAuthProvider();
         await signInWithPopup(auth, provider);
     };
 
     const logout = async () => {
+        if (!auth) return;
         await signOut(auth);
     };
+
 
     return (
         <AuthContext.Provider value={{ user, profile, loading, loginWithGitHub, loginWithGoogle, logout }}>
