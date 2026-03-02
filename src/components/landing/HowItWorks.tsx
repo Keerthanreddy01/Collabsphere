@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Rocket, Users, Globe, Terminal, Sparkles, Send, Ship } from "lucide-react";
-import { GlassCard } from "../shared/GlassCard";
+// GlassCard removed — styles applied inline via glass-card utility
 
 const steps = [
     {

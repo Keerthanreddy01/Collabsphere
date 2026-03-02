@@ -45,7 +45,7 @@ export const CTASection = () => {
                         </motion.p>
 
                         <div className="relative group">
-                            <GlowButton className="scale-125 px-12 py-5 text-xl relative z-10" onClick={() => window.location.href = "/register"}>
+                            <GlowButton className="scale-125 px-12 py-5 text-xl relative z-10" onClick={() => window.location.href = "/dashboard"}>
                                 Start Building For Free <Rocket className="w-6 h-6 ml-3" />
                             </GlowButton>
 
