@@ -113,7 +113,7 @@ export const HowItWorks = () => {
     });
 
     return (
-        <section ref={containerRef} className="relative w-full bg-[#0d0d0d]">
+        <section ref={containerRef} className="relative w-full bg-[#0d0d0d]" style={{ position: "relative" }}>
             <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row min-h-[300vh]">
 
                 {/* Sticky Left Panel */}
@@ -181,7 +181,7 @@ const StepCard = ({ step, index }: { step: typeof steps[0], index: number }) => 
         <motion.div
             ref={ref}
             style={{ scale, opacity }}
-            className="relative w-full aspect-square md:aspect-auto md:h-[600px] flex flex-col justify-between"
+            className="relative w-full aspect-square md:aspect-auto md:h-[600px] flex flex-col justify-between" // position:relative is already set via "relative" class
         >
             <div className="bg-gradient-to-br from-white/10 to-transparent p-1 rounded-3xl border border-white/5 shadow-2xl h-full flex flex-col">
                 <div className="flex-1 flex items-center justify-center p-8 bg-[#111] rounded-[calc(1.5rem-2px)] m-0.5 overflow-hidden">

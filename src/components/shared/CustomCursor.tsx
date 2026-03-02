@@ -66,7 +66,7 @@ export const CustomCursor = () => {
                 }}
                 animate={{
                     scale: isHovering ? 1.5 : 1,
-                    backgroundColor: isHovering ? "rgba(124, 58, 237, 0.1)" : "transparent",
+                    backgroundColor: isHovering ? "rgba(124, 58, 237, 0.1)" : "rgba(0, 0, 0, 0)",
                 }}
             />
             {/* Inner dot */}
