@@ -12,8 +12,10 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Handle missing config gracefully
-const isConfigValid = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "your_api_key_here";
+// Firebase is optional — app runs with mock auth when env vars are absent
+const isConfigValid =
+    !!firebaseConfig.apiKey &&
+    firebaseConfig.apiKey !== "your_api_key_here";
 
 export const app: FirebaseApp | undefined = isConfigValid
     ? (getApps().length > 0 ? getApp() : initializeApp(firebaseConfig))
@@ -22,5 +24,3 @@ export const app: FirebaseApp | undefined = isConfigValid
 export const auth: Auth | undefined = app ? getAuth(app) : undefined;
 export const db: Firestore | undefined = app ? getFirestore(app) : undefined;
 export const storage: FirebaseStorage | undefined = app ? getStorage(app) : undefined;
-
-// Firebase is optional — app runs with mock auth when config is absent.
