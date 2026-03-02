@@ -23,6 +23,4 @@ export const auth: Auth | undefined = app ? getAuth(app) : undefined;
 export const db: Firestore | undefined = app ? getFirestore(app) : undefined;
 export const storage: FirebaseStorage | undefined = app ? getStorage(app) : undefined;
 
-if (!isConfigValid) {
-    console.warn("Firebase configuration is missing or using placeholder values. Please update your .env.local file.");
-}
+// Firebase is optional — app runs with mock auth when config is absent.
