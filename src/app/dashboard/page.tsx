@@ -9,7 +9,7 @@ import {
     ChevronRight,
     Github,
     Sparkles,
-    SendHorizonal,
+    SendHorizontal,
     CheckCircle2,
     XCircle,
     ArrowUpRight,
@@ -38,7 +38,7 @@ const stats = [
     { label: "Projects Posted", value: "4", icon: Rocket, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20", trend: "+1 this month" },
     { label: "Applications Sent", value: "17", icon: Send, color: "text-secondary", bg: "bg-secondary/10", border: "border-secondary/20", trend: "+5 this week" },
     { label: "Profile Views", value: "1.2k", icon: Eye, color: "text-primary", bg: "bg-primary/10", border: "border-primary/20", trend: "+18% vs last week" },
-    { label: "Collab Requests", value: "9", icon: SendHorizonal, color: "text-secondary", bg: "bg-secondary/10", border: "border-secondary/20", trend: "3 pending" },
+    { label: "Collab Requests", value: "9", icon: SendHorizontal, color: "text-secondary", bg: "bg-secondary/10", border: "border-secondary/20", trend: "3 pending" },
 ];
 
 const activeProjects = [
