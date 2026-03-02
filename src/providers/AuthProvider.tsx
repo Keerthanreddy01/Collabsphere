@@ -1,21 +1,34 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-    onAuthStateChanged,
-    User,
-    signInWithPopup,
-    signOut,
-    GithubAuthProvider,
-    GoogleAuthProvider
-} from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { UserProfile, COLLECTIONS } from "@/lib/firestore";
+
+// Mock user — Firebase auth is bypassed until real credentials are configured
+const MOCK_USER = {
+    uid: "mock-user-001",
+    displayName: "Alex Rivera",
+    email: "alex@collabsphere.dev",
+    photoURL: "https://avatar.vercel.sh/alex-rivera",
+};
+
+const MOCK_PROFILE = {
+    uid: "mock-user-001",
+    name: "Alex Rivera",
+    email: "alex@collabsphere.dev",
+    avatar: "https://avatar.vercel.sh/alex-rivera",
+    bio: "Fullstack developer passionate about building in public. Next.js, TypeScript, Rust.",
+    skills: ["Next.js", "TypeScript", "Rust", "PostgreSQL", "Tailwind"],
+    role: "Fullstack Developer",
+    openToCollab: true,
+    onboardingComplete: true,
+    githubUrl: "https://github.com/alexrivera",
+    location: "San Francisco, CA",
+    timezone: "PST",
+    createdAt: new Date().toISOString(),
+};
 
 interface AuthContextType {
-    user: User | null;
-    profile: UserProfile | null;
+    user: typeof MOCK_USER | null;
+    profile: typeof MOCK_PROFILE | null;
     loading: boolean;
     loginWithGitHub: () => Promise<void>;
     loginWithGoogle: () => Promise<void>;
@@ -25,76 +38,37 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!auth) {
-            setLoading(false);
-            console.warn("AuthProvider: Firebase 'auth' object is not initialized. Check your config.");
-            return;
-        }
-
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setUser(user);
-            if (user && db) {
-                // Fetch or create profile
-                try {
-                    const userRef = doc(db, COLLECTIONS.USERS, user.uid);
-                    const userSnap = await getDoc(userRef);
-
-                    if (userSnap.exists()) {
-                        setProfile(userSnap.data() as UserProfile);
-                    } else {
-                        // New user
-                        const newProfile: UserProfile = {
-                            uid: user.uid,
-                            name: user.displayName || "New Builder",
-                            email: user.email || "",
-                            avatar: user.photoURL || "",
-                            bio: "",
-                            skills: [],
-                            role: "Developer",
-                            openToCollab: true,
-                            onboardingComplete: false,
-                            createdAt: serverTimestamp() as any, // Firebase handles this
-                        };
-                        await setDoc(userRef, newProfile);
-                        setProfile(newProfile);
-                    }
-                } catch (err) {
-                    console.error("Error management profile:", err);
-                }
-            } else {
-                setProfile(null);
-            }
-            setLoading(false);
-        });
-
-        return () => unsubscribe();
+        // Simulate auth check completing
+        const t = setTimeout(() => setLoading(false), 100);
+        return () => clearTimeout(t);
     }, []);
 
     const loginWithGitHub = async () => {
-        if (!auth) return;
-        const provider = new GithubAuthProvider();
-        await signInWithPopup(auth, provider);
+        window.location.href = "/dashboard";
     };
 
     const loginWithGoogle = async () => {
-        if (!auth) return;
-        const provider = new GoogleAuthProvider();
-        await signInWithPopup(auth, provider);
+        window.location.href = "/dashboard";
     };
 
     const logout = async () => {
-        if (!auth) return;
-        await signOut(auth);
+        window.location.href = "/";
     };
 
-
     return (
-        <AuthContext.Provider value={{ user, profile, loading, loginWithGitHub, loginWithGoogle, logout }}>
+        <AuthContext.Provider
+            value={{
+                user: MOCK_USER,
+                profile: MOCK_PROFILE,
+                loading,
+                loginWithGitHub,
+                loginWithGoogle,
+                logout,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

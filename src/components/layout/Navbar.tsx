@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
     { name: "Explore", href: "/explore", icon: Compass },
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Feed", href: "/feed", icon: Terminal },
+    { name: "Feed", href: "/dashboard/feed", icon: Terminal },
 ];
 
 export const Navbar = () => {
@@ -99,7 +99,7 @@ export const Navbar = () => {
                                 <Link href="/login">Login</Link>
                             </Button>
                             <Button asChild className="rounded-full bg-primary hover:bg-primary/90 text-white px-6 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
-                                <Link href="/register">Join Platform</Link>
+                                <Link href="/dashboard">Join Platform</Link>
                             </Button>
                         </div>
                     )}
