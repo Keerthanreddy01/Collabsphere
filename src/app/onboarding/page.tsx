@@ -12,15 +12,18 @@ import {
     ChevronLeft,
     User,
     Terminal,
-    Design,
+    Palette,
     Globe,
     Users,
     Send,
     Sparkles,
     Zap,
     CheckCircle2,
-    Code
+    Code,
+    Compass,
+    Plus
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -28,7 +31,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const roles = [
     { id: "dev", name: "Developer", icon: Terminal, color: "text-primary", bg: "bg-primary/10" },
-    { id: "designer", name: "Designer", icon: Sparkles, color: "text-secondary", bg: "bg-secondary/10" },
+    { id: "designer", name: "Designer", icon: Palette, color: "text-secondary", bg: "bg-secondary/10" },
     { id: "student", name: "Student", icon: User, color: "text-primary", bg: "bg-primary/10" },
     { id: "entrepreneur", name: "Entrepreneur", icon: Zap, color: "text-secondary", bg: "bg-secondary/10" },
 ];
