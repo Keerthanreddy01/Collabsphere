@@ -1,65 +1,85 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
 export const ActivityHeatmap = () => {
-    // Generate random activity data for mockup
-    const weeks = 24;
-    const daysPerWeek = 7;
-    const data = Array.from({ length: weeks * daysPerWeek }, () => Math.floor(Math.random() * 5));
+    // Generate mockup data
+    const weeks = 28;
+    const days = 7;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
-    const getColor = (val: number) => {
-        switch (val) {
-            case 1: return "bg-primary/20";
-            case 2: return "bg-primary/40";
-            case 3: return "bg-primary/60";
-            case 4: return "bg-primary/90";
-            default: return "bg-white/5";
+    // Random activity levels
+    const data = Array.from({ length: weeks * days }, () => Math.floor(Math.random() * 5));
+
+    const getColor = (level: number) => {
+        switch (level) {
+            case 1: return "#0e4429";
+            case 2: return "#006d32";
+            case 3: return "#26a641";
+            case 4: return "#39d353";
+            default: return "#161b22";
         }
     };
 
     return (
-        <div className="w-full bg-[#111] p-6 rounded-3xl border border-white/5 shadow-2xl overflow-hidden group">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex flex-col">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-white italic">Contribution Grid</h3>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Consistency breeds excellence</p>
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground font-black uppercase tracking-widest">
-                    <span>Less</span>
-                    {[0, 1, 2, 3, 4].map(v => (
-                        <div key={v} className={`w-3 h-3 rounded-sm ${getColor(v)}`} />
+        <div className="surface p-4 overflow-hidden">
+            <div className="flex flex-col gap-2">
+                {/* Month Headers */}
+                <div className="flex gap-[16px] ml-8 mb-1">
+                    {months.map((m, i) => (
+                        <span key={i} className="text-[10px] text-[#7d8590] w-full">{m}</span>
                     ))}
-                    <span>More</span>
                 </div>
-            </div>
 
-            <div className="flex gap-2 overflow-x-auto no-scrollbar pb-4 min-w-full">
-                {Array.from({ length: weeks }).map((_, weekIndex) => (
-                    <div key={weekIndex} className="flex flex-col gap-2 shrink-0">
-                        {Array.from({ length: daysPerWeek }).map((_, dayIndex) => {
-                            const val = data[weekIndex * daysPerWeek + dayIndex];
-                            return (
-                                <motion.div
-                                    key={dayIndex}
-                                    whileHover={{ scale: 1.2 }}
-                                    className={`w-4 h-4 rounded-md transition-colors duration-500 shadow-sm ${getColor(val)}`}
-                                    title={`${val} activities on day ${weekIndex * 7 + dayIndex}`}
-                                />
-                            );
-                        })}
+                <div className="flex gap-2">
+                    {/* Day Labels */}
+                    <div className="flex flex-col gap-[7px] text-[10px] text-[#7d8590] pt-1">
+                        <span>Mon</span>
+                        <span>Wed</span>
+                        <span>Fri</span>
                     </div>
-                ))}
-            </div>
 
-            <div className="flex items-center justify-center gap-12 mt-4 pt-4 border-t border-white/5 opacity-50 text-[10px] font-black tracking-widest uppercase">
-                <div className="flex items-center gap-2">
-                    <span className="text-white">Mar</span>
-                    <div className="h-0.5 w-8 bg-white/10" />
-                    <span className="text-white">Jun</span>
-                    <div className="h-0.5 w-8 bg-white/10" />
-                    <span className="text-white">Sep</span>
+                    {/* SVG Grid */}
+                    <div className="flex-1 overflow-x-auto no-scrollbar">
+                        <svg width={weeks * 14} height={days * 14} className="overflow-visible">
+                            {Array.from({ length: weeks }).map((_, w) => (
+                                <g key={w} transform={`translate(${w * 14}, 0)`}>
+                                    {Array.from({ length: days }).map((_, d) => {
+                                        const level = data[w * days + d];
+                                        return (
+                                            <rect
+                                                key={d}
+                                                y={d * 14}
+                                                width="11"
+                                                height="11"
+                                                rx="2"
+                                                ry="2"
+                                                fill={getColor(level)}
+                                                stroke={level === 0 ? "#30363d" : "none"}
+                                                strokeWidth="1"
+                                                style={{ cursor: "pointer" }}
+                                            >
+                                                <title>{level} contributions on some date</title>
+                                            </rect>
+                                        );
+                                    })}
+                                </g>
+                            ))}
+                        </svg>
+                    </div>
+                </div>
+
+                {/* Legend */}
+                <div className="flex items-center justify-end gap-2 mt-4 text-[11px] text-[#7d8590]">
+                    <span>Less</span>
+                    <div className="flex gap-1">
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-[#161b22] border border-[#30363d]" />
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-[#0e4429]" />
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-[#006d32]" />
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-[#26a641]" />
+                        <div className="w-[10px] h-[10px] rounded-[2px] bg-[#39d353]" />
+                    </div>
+                    <span>More</span>
                 </div>
             </div>
         </div>
