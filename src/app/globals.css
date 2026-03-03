@@ -7,24 +7,24 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-outfit), var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -32,77 +32,67 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0a0a0a;
-  --primary: #7c3aed;
+  --foreground: #1f2328;
+  --primary: #0969da;
   --primary-foreground: #ffffff;
-  --secondary: #06b6d4;
-  --secondary-foreground: #ffffff;
-  --accent: #f5f5f5;
-  --accent-foreground: #0a0a0a;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
+  --secondary: #f6f8fa;
+  --secondary-foreground: #1f2328;
+  --accent: #f6f8fa;
+  --accent-foreground: #1f2328;
+  --muted: #f6f8fa;
+  --muted-foreground: #636c76;
   --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #7c3aed;
-  --radius: 0.75rem;
+  --card-foreground: #1f2328;
+  --border: #d0d7de;
+  --input: #d0d7de;
+  --ring: #0969da;
+  --radius: 6px;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --primary: #7c3aed;
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --primary: #238636;
   --primary-foreground: #ffffff;
-  --secondary: #06b6d4;
-  --secondary-foreground: #ffffff;
-  --accent: #171717;
-  --accent-foreground: #ffffff;
-  --muted: #171717;
-  --muted-foreground: #a3a3a3;
-  --card: #111111;
-  --card-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #7c3aed;
+  --secondary: #161b22;
+  --secondary-foreground: #e6edf3;
+  --accent: #1c2128;
+  --accent-foreground: #e6edf3;
+  --muted: #0d1117;
+  --muted-foreground: #7d8590;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --border: #30363d;
+  --input: #30363d;
+  --ring: #58a6ff;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-    cursor: none; /* Custom cursor requested */
-  }
-  
-  /* Reset cursor for mobile */
-  @media (max-width: 1024px) {
-    * {
-      cursor: auto;
-    }
+    @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground selection:bg-primary/30;
+    @apply bg-background text-foreground font-sans text-[14px] leading-[1.5];
     overflow-x: hidden;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  .surface {
+    @apply bg-[#161b22] border border-[#30363d] rounded-[6px];
   }
-  
-  .glass-dark {
-    @apply backdrop-blur-md bg-black/40 border border-white/5;
+
+  .text-link {
+    @apply text-[#58a6ff] hover:underline cursor-pointer;
   }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+
+  .btn-github {
+    @apply px-3 py-1.5 bg-[#21262d] border border-[#30363d] rounded-[6px] text-[12px] font-semibold text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all;
   }
-  
-  .noise-overlay {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.05;
-    pointer-events: none;
+
+  .btn-primary-github {
+    @apply px-3 py-1.5 bg-[#238636] border border-[#2ea44f] rounded-[6px] text-[12px] font-semibold text-white hover:bg-[#2eaa42] transition-all;
   }
 }
 
@@ -128,6 +118,7 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
