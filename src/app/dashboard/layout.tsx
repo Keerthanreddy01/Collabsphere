@@ -9,25 +9,16 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
-        <div className="flex bg-[#0a0a0a] min-h-screen text-white font-sans overflow-hidden">
-            {/* Sidebar */}
-            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+        <div className="flex bg-[#0d1117] min-h-screen text-[#e6edf3] font-sans">
+            <Sidebar />
 
-            {/* Main Content Area */}
-            <motion.main
-                animate={{
-                    marginLeft: 0,
-                    paddingLeft: 0,
-                }}
-                className="flex-1 h-screen overflow-y-auto overflow-x-hidden p-6 lg:p-12 pb-24 no-scrollbar"
-            >
-                <div className="max-w-6xl mx-auto flex flex-col gap-12 pt-8">
+            <main className="flex-1 min-h-screen overflow-y-auto p-4 lg:p-12">
+                <div className="max-w-[1012px] mx-auto flex flex-col gap-8">
                     {children}
                 </div>
-            </motion.main>
+            </main>
         </div>
     );
 }
