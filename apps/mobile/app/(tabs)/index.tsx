@@ -1,8 +1,13 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Pressable } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Pressable, Dimensions } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { Feather } from '@expo/vector-icons';
 import { colors, typography } from '@collabsphere/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const { width } = Dimensions.get('window');
 
 import { MOCK_FEED, MOCK_USER } from '../../src/mock/data';
 
@@ -26,14 +31,19 @@ const FEED_DATA = MOCK_FEED.map(item => ({
 export default function FeedScreen() {
     const renderStory = (item: any) => (
         <TouchableOpacity key={item.id} style={styles.storyContainer}>
-            <View style={[styles.storyCircle, item.isMe ? styles.storyMe : styles.storyUnseen]}>
-                <Image source={{ uri: item.avatar }} style={styles.storyAvatar} />
-                {item.isMe && (
-                    <View style={styles.plusIcon}>
-                        <Feather name="plus" size={12} color="white" />
-                    </View>
-                )}
-            </View>
+            <LinearGradient
+                colors={item.isMe ? [colors.accent, '#4338ca'] : ['#555', '#333']}
+                style={[styles.storyCircle, !item.isMe && styles.storyUnseenGlass]}
+            >
+                <BlurView intensity={30} style={styles.storyBlur}>
+                    <Image source={{ uri: item.avatar }} style={styles.storyAvatar} />
+                    {item.isMe && (
+                        <View style={styles.plusIcon}>
+                            <Feather name="plus" size={12} color="white" />
+                        </View>
+                    )}
+                </BlurView>
+            </LinearGradient>
             <Text style={styles.storyLabel} numberOfLines={1}>{item.name}</Text>
         </TouchableOpacity>
     );
@@ -61,42 +71,48 @@ export default function FeedScreen() {
                     </ScrollView>
                 }
                 renderItem={({ item }) => (
-                    <View style={styles.postContainer}>
-                        <View style={styles.postHeader}>
-                            <Image source={{ uri: `https://avatar.vercel.sh/${item.author}` }} style={styles.authorAvatar} />
-                            <View style={styles.authorMeta}>
-                                <Text style={styles.authorName}>{item.author} <Text style={styles.time}>· {item.time}</Text></Text>
-                                <Text style={styles.projectSubtext}>posted update to <Text style={styles.projectName}>{item.project}</Text></Text>
-                            </View>
-                            <TouchableOpacity>
-                                <Feather name="more-horizontal" size={18} color={colors.textMuted} />
-                            </TouchableOpacity>
-                        </View>
+                    <View style={styles.postWrapper}>
+                        <BlurView intensity={10} style={styles.postGlass}>
+                            <View style={styles.postContainer}>
+                                <View style={styles.postHeader}>
+                                    <View style={styles.avatarGlow}>
+                                        <Image source={{ uri: `https://avatar.vercel.sh/${item.author}` }} style={styles.authorAvatar} />
+                                    </View>
+                                    <View style={styles.authorMeta}>
+                                        <Text style={styles.authorName}>{item.author} <Text style={styles.time}>· {item.time}</Text></Text>
+                                        <Text style={styles.projectSubtext}>posted update to <Text style={styles.projectName}>{item.project}</Text></Text>
+                                    </View>
+                                    <TouchableOpacity>
+                                        <Feather name="more-horizontal" size={18} color={colors.textMuted} />
+                                    </TouchableOpacity>
+                                </View>
 
-                        <Text style={styles.postText}>{item.text}</Text>
+                                <Text style={styles.postText}>{item.text}</Text>
 
-                        {item.image && (
-                            <Image source={{ uri: item.image }} style={styles.postImage} />
-                        )}
+                                {item.image && (
+                                    <Image source={{ uri: item.image }} style={styles.postImage} />
+                                )}
 
-                        <View style={styles.actionRow}>
-                            <View style={styles.reactions}>
-                                {Object.entries(item.reactions).map(([emoji, count]) => (
-                                    <Pressable key={emoji} style={styles.reactionTag}>
-                                        <Text style={styles.reactionText}>{emoji} {count}</Text>
-                                    </Pressable>
-                                ))}
+                                <View style={styles.actionRow}>
+                                    <View style={styles.reactions}>
+                                        {Object.entries(item.reactions).map(([emoji, count]) => (
+                                            <Pressable key={emoji} style={styles.reactionTagGlass}>
+                                                <Text style={styles.reactionText}>{emoji} {count}</Text>
+                                            </Pressable>
+                                        ))}
+                                    </View>
+                                    <View style={styles.postActions}>
+                                        <TouchableOpacity style={styles.postAction}>
+                                            <Feather name="message-square" size={14} color={colors.textSecondary} />
+                                            <Text style={styles.actionCount}>4</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.postAction}>
+                                            <Feather name="share-2" size={14} color={colors.textSecondary} />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </View>
-                            <View style={styles.postActions}>
-                                <TouchableOpacity style={styles.postAction}>
-                                    <Feather name="message-square" size={14} color={colors.textSecondary} />
-                                    <Text style={styles.actionCount}>4</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.postAction}>
-                                    <Feather name="share-2" size={14} color={colors.textSecondary} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        </BlurView>
                     </View>
                 )}
                 estimatedItemSize={250}
@@ -148,34 +164,37 @@ const styles = StyleSheet.create({
     },
     storyContainer: {
         alignItems: 'center',
-        width: 64,
+        width: 72,
     },
     storyCircle: {
-        width: 56,
-        height: 56,
-        borderRadius: 28,
+        width: 68,
+        height: 68,
+        borderRadius: 34,
         padding: 2,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    storyMe: {
-        borderWidth: 1,
-        borderColor: colors.border,
+    storyBlur: {
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
     },
-    storyUnseen: {
-        borderWidth: 2,
-        borderColor: 'white',
+    storyUnseenGlass: {
+        opacity: 0.8,
     },
     storyAvatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
         backgroundColor: colors.surface,
     },
     plusIcon: {
         position: 'absolute',
-        right: 0,
-        bottom: 0,
+        right: 18,
+        bottom: 18,
         backgroundColor: colors.accent,
         borderRadius: 10,
         width: 18,
@@ -183,7 +202,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: colors.bg,
+        borderColor: 'white',
     },
     storyLabel: {
         fontSize: 10,
@@ -191,14 +210,33 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontFamily: 'DMSans_400Regular',
     },
-    postContainer: {
+    postWrapper: {
+        marginHorizontal: 16,
+        marginVertical: 8,
+        borderRadius: 20,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.05)',
+    },
+    postGlass: {
         padding: 16,
+        backgroundColor: 'rgba(255,255,255,0.02)',
+    },
+    postContainer: {
+        // Wrapper for content padding
     },
     postHeader: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 12,
         marginBottom: 12,
+    },
+    avatarGlow: {
+        borderRadius: 18,
+        shadowColor: colors.accent,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
     },
     authorAvatar: {
         width: 36,
@@ -250,13 +288,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 8,
     },
-    reactionTag: {
-        backgroundColor: colors.surfaceHigh,
+    reactionTagGlass: {
+        backgroundColor: 'rgba(255,255,255,0.05)',
         paddingHorizontal: 8,
         paddingVertical: 4,
         borderRadius: 12,
         borderWidth: 1,
-        borderColor: colors.border,
+        borderColor: 'rgba(255,255,255,0.1)',
     },
     reactionText: {
         fontSize: 13,
@@ -278,7 +316,7 @@ const styles = StyleSheet.create({
     },
     divider: {
         height: 1,
-        backgroundColor: colors.surfaceHigh,
+        backgroundColor: 'transparent',
         marginHorizontal: 16,
     },
     fab: {
