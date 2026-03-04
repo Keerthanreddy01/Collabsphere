@@ -1,0 +1,125 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1f2328;
+  --primary: #0969da;
+  --primary-foreground: #ffffff;
+  --secondary: #f6f8fa;
+  --secondary-foreground: #1f2328;
+  --accent: #f6f8fa;
+  --accent-foreground: #1f2328;
+  --muted: #f6f8fa;
+  --muted-foreground: #636c76;
+  --card: #ffffff;
+  --card-foreground: #1f2328;
+  --border: #d0d7de;
+  --input: #d0d7de;
+  --ring: #0969da;
+  --radius: 6px;
+}
+
+.dark {
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --primary: #238636;
+  --primary-foreground: #ffffff;
+  --secondary: #161b22;
+  --secondary-foreground: #e6edf3;
+  --accent: #1c2128;
+  --accent-foreground: #e6edf3;
+  --muted: #0d1117;
+  --muted-foreground: #7d8590;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --border: #30363d;
+  --input: #30363d;
+  --ring: #58a6ff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#0d1117] text-[#e6edf3] font-sans text-[14px] leading-[1.5];
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .surface {
+    @apply bg-[#161b22] border border-[#30363d] rounded-[6px];
+  }
+
+  .text-link {
+    @apply text-[#58a6ff] hover:underline cursor-pointer;
+  }
+
+  .btn-github {
+    @apply px-3 py-1.5 bg-[#21262d] border border-[#30363d] rounded-[6px] text-[12px] font-semibold text-[#e6edf3] hover:bg-[#30363d] hover:border-[#8b949e] transition-all;
+  }
+
+  .btn-primary-github {
+    @apply px-3 py-1.5 bg-[#21262d] border border-[#30363d] rounded-[6px] text-[12px] font-semibold text-[#e6edf3] hover:bg-[#30363d] transition-all shrink-0;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* Hide scrollbar for horizontal marquee */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
