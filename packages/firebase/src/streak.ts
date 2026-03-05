@@ -3,46 +3,50 @@ import { db } from "./config";
 import { User } from "@collabsphere/types";
 
 export const updateStreak = async (uid: string) => {
-    if (!db) return;
+    if (!db) return null;
 
     const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
 
-    if (!userSnap.exists()) return;
+    if (!userSnap.exists()) return null;
 
     const userData = userSnap.data() as User;
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
 
     if (!userData.streak) {
-        await updateDoc(userRef, {
-            streak: {
-                count: 1,
-                lastActiveDate: serverTimestamp()
-            }
-        });
-        return;
+        const initialStreak = {
+            count: 1,
+            lastActiveDate: serverTimestamp()
+        };
+        await updateDoc(userRef, { streak: initialStreak });
+        return 1;
     }
 
     const lastActive = userData.streak.lastActiveDate.toDate();
     const lastActiveDay = new Date(lastActive.getFullYear(), lastActive.getMonth(), lastActive.getDate()).getTime();
 
-    const diffInDays = (today - lastActiveDay) / (1000 * 60 * 60 * 24);
+    const diffInDays = Math.floor((today - lastActiveDay) / (1000 * 60 * 60 * 24));
 
     if (diffInDays === 1) {
         // Consecutive day
+        const newCount = userData.streak.count + 1;
         await updateDoc(userRef, {
-            "streak.count": userData.streak.count + 1,
+            "streak.count": newCount,
             "streak.lastActiveDate": serverTimestamp()
         });
+        return newCount;
     } else if (diffInDays > 1) {
         // Streak broken
         await updateDoc(userRef, {
             "streak.count": 1,
             "streak.lastActiveDate": serverTimestamp()
         });
+        return 1;
     }
-    // If diffInDays === 0, already active today, do nothing.
+
+    // Already active today
+    return userData.streak.count;
 };
 
 export const checkStreakReset = async (uid: string) => {
