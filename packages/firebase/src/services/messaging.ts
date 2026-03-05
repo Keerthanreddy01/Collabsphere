@@ -83,3 +83,25 @@ export const addReaction = (conversationId: string, messageId: string, emoji: st
         { [`reactions.${emoji}`]: arrayUnion(uid) }
     );
 };
+
+// EDIT MESSAGE
+export const editMessage = async (conversationId: string, messageId: string, newText: string) => {
+    if (!db) return;
+    const msgRef = doc(db, `conversations/${conversationId}/messages`, messageId);
+    await updateDoc(msgRef, {
+        text: newText,
+        edited: true,
+        editedAt: serverTimestamp()
+    });
+};
+
+// DELETE MESSAGE
+export const deleteMessage = async (conversationId: string, messageId: string) => {
+    if (!db) return;
+    const msgRef = doc(db, `conversations/${conversationId}/messages`, messageId);
+    await updateDoc(msgRef, {
+        text: "🚫 This message was deleted",
+        isDeleted: true,
+        deletedAt: serverTimestamp()
+    });
+};

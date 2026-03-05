@@ -85,6 +85,9 @@ export interface Message {
     readBy: string[];
     createdAt: Timestamp;
     edited: boolean;
+    editedAt?: Timestamp;
+    isDeleted?: boolean;
+    deletedAt?: Timestamp;
 }
 
 export interface ProjectUpdate {
