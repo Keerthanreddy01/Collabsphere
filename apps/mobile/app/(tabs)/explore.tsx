@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { colors, typography } from '@collabsphere/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { ProjectCard } from '../../components/ProjectCard';
 
 import { MOCK_PROJECTS } from '../../src/mock/data';
@@ -25,24 +26,28 @@ export default function ExploreScreen() {
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
+            <LinearGradient
+                colors={[colors.bg, '#08080c', colors.bg]}
+                style={StyleSheet.absoluteFill}
+            />
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.title}>Explore</Text>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton}>
                     <Feather name="filter" size={20} color="white" />
                 </TouchableOpacity>
             </View>
 
             {/* Search Bar */}
             <View style={styles.searchContainer}>
-                <View style={styles.searchBar}>
-                    <Feather name="search" size={18} color="#555555" style={styles.searchIcon} />
+                <BlurView intensity={20} tint="dark" style={styles.searchBar}>
+                    <Feather name="search" size={18} color={colors.textMuted} style={styles.searchIcon} />
                     <TextInput
                         placeholder="Search projects, skills, people..."
-                        placeholderTextColor="#555555"
+                        placeholderTextColor={colors.textMuted}
                         style={styles.searchInput}
                     />
-                </View>
+                </BlurView>
             </View>
 
             <FlashList
@@ -95,9 +100,15 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontFamily: 'DMSans_700Bold',
         color: 'white',
+        letterSpacing: -0.5,
+    },
+    iconButton: {
+        padding: 8,
+        borderRadius: 12,
+        backgroundColor: colors.surfaceGlass,
     },
     searchContainer: {
         paddingHorizontal: 16,
@@ -106,20 +117,21 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.surface,
+        backgroundColor: colors.surfaceGlass,
         borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 10,
-        height: 44,
-        paddingHorizontal: 12,
+        borderColor: colors.borderGlass,
+        borderRadius: 16,
+        height: 48,
+        paddingHorizontal: 16,
+        overflow: 'hidden',
     },
     searchIcon: {
-        marginRight: 8,
+        marginRight: 10,
     },
     searchInput: {
         flex: 1,
         color: 'white',
-        fontSize: 15,
+        fontSize: 16,
         fontFamily: 'DMSans_400Regular',
     },
     filtersScroll: {
@@ -128,9 +140,9 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     filterChip: {
-        paddingHorizontal: 14,
-        paddingVertical: 6,
-        borderRadius: 20,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 12,
         borderWidth: 1,
     },
     filterActive: {
@@ -138,8 +150,8 @@ const styles = StyleSheet.create({
         borderColor: 'white',
     },
     filterInactive: {
-        backgroundColor: colors.surfaceHigh,
-        borderColor: colors.border,
+        backgroundColor: colors.surfaceGlass,
+        borderColor: colors.borderGlass,
     },
     filterText: {
         fontSize: 13,
