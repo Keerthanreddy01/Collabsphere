@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions
 import { Feather } from '@expo/vector-icons';
 import { colors, typography } from '@collabsphere/types';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { MOCK_USER } from '../../src/mock/data';
 
 const { width } = Dimensions.get('window');
@@ -10,59 +11,77 @@ export default function ProfileScreen() {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             {/* Hero Section */}
-            <LinearGradient
-                colors={['#1e1b4b', '#312e81']}
-                style={styles.cover}
-            />
+            <View style={styles.heroContainer}>
+                <LinearGradient
+                    colors={['#0f172a', '#1e1b4b', '#312e81']}
+                    style={styles.cover}
+                />
+                <View style={styles.headerContent}>
+                    <View style={styles.avatarWrapper}>
+                        <LinearGradient
+                            colors={[colors.accent, colors.accentSecondary]}
+                            style={styles.avatarGlow}
+                        >
+                            <Image
+                                source={{ uri: 'https://avatar.vercel.sh/me' }}
+                                style={styles.avatar}
+                            />
+                        </LinearGradient>
+                        <TouchableOpacity style={styles.editAvatar}>
+                            <Feather name="camera" size={12} color="white" />
+                        </TouchableOpacity>
+                    </View>
 
-            <View style={styles.headerContent}>
-                <View style={styles.avatarWrapper}>
-                    <Image
-                        source={{ uri: 'https://avatar.vercel.sh/me' }}
-                        style={styles.avatar}
-                    />
-                    <TouchableOpacity style={styles.editAvatar}>
-                        <Feather name="camera" size={14} color="white" />
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.userInfo}>
-                    <Text style={styles.name}>{MOCK_USER.name}</Text>
-                    <Text style={styles.username}>@{MOCK_USER.username}</Text>
-                    <Text style={styles.bio}>
-                        {MOCK_USER.bio}
-                    </Text>
-                </View>
-
-                <View style={styles.statusRow}>
-                    {MOCK_USER.openToCollab && (
-                        <View style={styles.statusBadge}>
-                            <View style={styles.statusDot} />
-                            <Text style={styles.statusText}>Open to Collab</Text>
+                    <View style={styles.userInfo}>
+                        <Text style={styles.name}>{MOCK_USER.name}</Text>
+                        <View style={styles.usernameRow}>
+                            <Text style={styles.username}>@{MOCK_USER.username}</Text>
+                            <View style={styles.badge}>
+                                <Text style={styles.badgeText}>PRO</Text>
+                            </View>
                         </View>
-                    )}
-                    <TouchableOpacity style={styles.editProfileBtn}>
-                        <Text style={styles.editProfileText}>Edit Profile</Text>
-                    </TouchableOpacity>
+                        <Text style={styles.bio}>
+                            {MOCK_USER.bio}
+                        </Text>
+                    </View>
+
+                    <View style={styles.statusRow}>
+                        {MOCK_USER.openToCollab && (
+                            <BlurView intensity={20} tint="dark" style={styles.statusBadge}>
+                                <View style={styles.statusDot} />
+                                <Text style={styles.statusText}>Open to Collab</Text>
+                            </BlurView>
+                        )}
+                        <TouchableOpacity style={styles.editProfileBtn}>
+                            <LinearGradient
+                                colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.05)']}
+                                style={styles.editProfileGradient}
+                            >
+                                <Text style={styles.editProfileText}>Edit Profile</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
 
             {/* Stats Row */}
-            <View style={styles.statsRow}>
-                <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>12</Text>
-                    <Text style={styles.statLabel}>Projects</Text>
-                </View>
-                <View style={styles.statDivider} />
-                <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>458</Text>
-                    <Text style={styles.statLabel}>Contribs</Text>
-                </View>
-                <View style={styles.statDivider} />
-                <View style={styles.statItem}>
-                    <Text style={styles.statNumber}>🔥 {MOCK_USER.streak}</Text>
-                    <Text style={styles.statLabel}>Streak</Text>
-                </View>
+            <View style={styles.statsWrapper}>
+                <BlurView intensity={10} tint="dark" style={styles.statsRow}>
+                    <View style={styles.statItem}>
+                        <Text style={styles.statNumber}>12</Text>
+                        <Text style={styles.statLabel}>Projects</Text>
+                    </View>
+                    <View style={styles.statDivider} />
+                    <View style={styles.statItem}>
+                        <Text style={styles.statNumber}>458</Text>
+                        <Text style={styles.statLabel}>Contribs</Text>
+                    </View>
+                    <View style={styles.statDivider} />
+                    <View style={styles.statItem}>
+                        <Text style={styles.statNumber}>🔥 {MOCK_USER.streak}</Text>
+                        <Text style={styles.statLabel}>Streak</Text>
+                    </View>
+                </BlurView>
             </View>
 
             {/* Skills */}
@@ -110,29 +129,45 @@ const styles = StyleSheet.create({
         backgroundColor: colors.bg,
     },
     cover: {
-        height: 180,
+        height: 160,
         width: '100%',
+    },
+    heroContainer: {
+        backgroundColor: colors.bg,
+        paddingBottom: 20,
     },
     headerContent: {
         paddingHorizontal: 16,
         alignItems: 'center',
+        marginTop: -50,
     },
     avatarWrapper: {
-        marginTop: -40,
         position: 'relative',
     },
+    avatarGlow: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        padding: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: colors.accent,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.5,
+        shadowRadius: 15,
+    },
     avatar: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 94,
+        height: 94,
+        borderRadius: 47,
         borderWidth: 4,
         borderColor: colors.bg,
         backgroundColor: colors.surface,
     },
     editAvatar: {
         position: 'absolute',
-        bottom: 0,
-        right: 0,
+        bottom: 4,
+        right: 4,
         backgroundColor: colors.accent,
         width: 24,
         height: 24,
@@ -151,20 +186,39 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans_700Bold',
         color: 'white',
     },
+    usernameRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginTop: 4,
+    },
     username: {
         fontSize: 14,
         color: colors.textSecondary,
-        fontFamily: 'DMSans_400Regular',
-        marginTop: 2,
+        fontFamily: 'DMSans_500Medium',
+    },
+    badge: {
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: 'rgba(59, 130, 246, 0.2)',
+    },
+    badgeText: {
+        color: colors.accent,
+        fontSize: 10,
+        fontFamily: 'DMSans_700Bold',
     },
     bio: {
         fontSize: 14,
         color: colors.textSecondary,
         fontFamily: 'DMSans_400Regular',
         textAlign: 'center',
-        marginTop: 12,
-        lineHeight: 20,
-        paddingHorizontal: 20,
+        marginTop: 16,
+        lineHeight: 22,
+        paddingHorizontal: 30,
+        opacity: 0.8,
     },
     statusRow: {
         flexDirection: 'row',
@@ -176,18 +230,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        backgroundColor: '#1c1c1c',
         paddingHorizontal: 12,
-        paddingVertical: 6,
+        paddingVertical: 8,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: colors.border,
+        borderColor: colors.borderGlass,
+        overflow: 'hidden',
     },
     statusDot: {
         width: 8,
         height: 8,
         borderRadius: 4,
         backgroundColor: colors.success,
+        shadowColor: colors.success,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
     },
     statusText: {
         fontSize: 13,
@@ -195,27 +253,33 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans_500Medium',
     },
     editProfileBtn: {
-        backgroundColor: colors.surface,
-        paddingHorizontal: 16,
-        paddingVertical: 6,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: colors.border,
+        borderColor: colors.borderGlass,
+        overflow: 'hidden',
+    },
+    editProfileGradient: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
     editProfileText: {
         color: 'white',
         fontSize: 13,
         fontFamily: 'DMSans_500Medium',
     },
+    statsWrapper: {
+        paddingHorizontal: 16,
+        marginTop: 10,
+    },
     statsRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginTop: 24,
         paddingVertical: 20,
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: colors.border,
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: colors.borderGlass,
+        overflow: 'hidden',
     },
     statItem: {
         alignItems: 'center',

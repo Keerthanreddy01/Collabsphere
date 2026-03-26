@@ -1,15 +1,20 @@
 export const colors = {
-    bg: '#0d0d0d',
-    surface: '#141414',
-    surfaceHigh: '#1c1c1c',
-    border: '#2a2a2a',
+    bg: '#050505',           // Deeper black
+    bgSecondary: '#0a0a0a',
+    surface: '#121212',
+    surfaceHigh: '#1a1a1a',
+    surfaceGlass: 'rgba(255, 255, 255, 0.03)',
+    border: '#222222',
+    borderGlass: 'rgba(255, 255, 255, 0.08)',
     textPrimary: '#ffffff',
-    textSecondary: '#8a8a8a',
-    textMuted: '#555555',
-    accent: '#2563eb',       // one blue only
-    success: '#22c55e',
+    textSecondary: '#a1a1aa',
+    textMuted: '#52525b',
+    accent: '#3b82f6',       // Blue-500
+    accentSecondary: '#8b5cf6', // Violet-500
+    success: '#10b981',
     danger: '#ef4444',
     warning: '#f59e0b',
+    glow: 'rgba(59, 130, 246, 0.5)',
 };
 
 export const spacing = {

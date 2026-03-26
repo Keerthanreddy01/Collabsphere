@@ -32,17 +32,20 @@ export default function FeedScreen() {
     const renderStory = (item: any) => (
         <TouchableOpacity key={item.id} style={styles.storyContainer}>
             <LinearGradient
-                colors={item.isMe ? [colors.accent, '#4338ca'] : ['#555', '#333']}
+                colors={item.isMe ? [colors.accent, colors.accentSecondary] : ['#222', '#111']}
                 style={[styles.storyCircle, !item.isMe && styles.storyUnseenGlass]}
             >
-                <BlurView intensity={30} style={styles.storyBlur}>
+                <View style={styles.storyInner}>
                     <Image source={{ uri: item.avatar }} style={styles.storyAvatar} />
                     {item.isMe && (
-                        <View style={styles.plusIcon}>
-                            <Feather name="plus" size={12} color="white" />
-                        </View>
+                        <LinearGradient 
+                            colors={[colors.accent, colors.accentSecondary]}
+                            style={styles.plusIcon}
+                        >
+                            <Feather name="plus" size={10} color="white" />
+                        </LinearGradient>
                     )}
-                </BlurView>
+                </View>
             </LinearGradient>
             <Text style={styles.storyLabel} numberOfLines={1}>{item.name}</Text>
         </TouchableOpacity>
@@ -50,11 +53,15 @@ export default function FeedScreen() {
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
+            <LinearGradient
+                colors={[colors.bg, '#0a0a0f', colors.bg]}
+                style={StyleSheet.absoluteFill}
+            />
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.logo}>CollabSphere</Text>
-                <TouchableOpacity>
-                    <Feather name="bell" size={22} color="white" />
+                <TouchableOpacity style={styles.iconButton}>
+                    <Feather name="bell" size={20} color="white" />
                     <View style={styles.unreadDot} />
                 </TouchableOpacity>
             </View>
@@ -72,7 +79,7 @@ export default function FeedScreen() {
                 }
                 renderItem={({ item }) => (
                     <View style={styles.postWrapper}>
-                        <BlurView intensity={10} style={styles.postGlass}>
+                        <BlurView intensity={20} style={styles.postGlass} tint="dark">
                             <View style={styles.postContainer}>
                                 <View style={styles.postHeader}>
                                     <View style={styles.avatarGlow}>
@@ -80,7 +87,7 @@ export default function FeedScreen() {
                                     </View>
                                     <View style={styles.authorMeta}>
                                         <Text style={styles.authorName}>{item.author} <Text style={styles.time}>· {item.time}</Text></Text>
-                                        <Text style={styles.projectSubtext}>posted update to <Text style={styles.projectName}>{item.project}</Text></Text>
+                                        <Text style={styles.projectSubtext}>to <Text style={styles.projectName}>{item.project}</Text></Text>
                                     </View>
                                     <TouchableOpacity>
                                         <Feather name="more-horizontal" size={18} color={colors.textMuted} />
@@ -103,11 +110,15 @@ export default function FeedScreen() {
                                     </View>
                                     <View style={styles.postActions}>
                                         <TouchableOpacity style={styles.postAction}>
-                                            <Feather name="message-square" size={14} color={colors.textSecondary} />
+                                            <BlurView intensity={10} style={styles.actionIconBlur}>
+                                                <Feather name="message-square" size={14} color={colors.textSecondary} />
+                                            </BlurView>
                                             <Text style={styles.actionCount}>4</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.postAction}>
-                                            <Feather name="share-2" size={14} color={colors.textSecondary} />
+                                            <BlurView intensity={10} style={styles.actionIconBlur}>
+                                                <Feather name="share-2" size={14} color={colors.textSecondary} />
+                                            </BlurView>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -120,8 +131,13 @@ export default function FeedScreen() {
             />
 
             {/* FAB */}
-            <TouchableOpacity style={styles.fab}>
-                <Feather name="edit-3" size={20} color="white" />
+            <TouchableOpacity style={styles.fabWrapper}>
+                <LinearGradient
+                    colors={[colors.accent, colors.accentSecondary]}
+                    style={styles.fab}
+                >
+                    <Feather name="edit-3" size={20} color="white" />
+                </LinearGradient>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -139,91 +155,94 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 12,
         borderBottomWidth: 1,
-        borderBottomColor: colors.border,
+        borderBottomColor: colors.borderGlass,
     },
     logo: {
         fontFamily: 'DMSerifDisplay_400Regular',
-        fontSize: 22,
+        fontSize: 24,
         color: 'white',
+        letterSpacing: -0.5,
+    },
+    iconButton: {
+        padding: 8,
+        borderRadius: 12,
+        backgroundColor: colors.surfaceGlass,
     },
     unreadDot: {
         position: 'absolute',
-        right: 0,
-        top: 0,
+        right: 8,
+        top: 8,
         width: 8,
         height: 8,
         borderRadius: 4,
-        backgroundColor: colors.danger,
-        borderWidth: 1.5,
+        backgroundColor: colors.accent,
+        borderWidth: 2,
         borderColor: colors.bg,
     },
     storiesScroll: {
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingVertical: 16,
         gap: 16,
     },
     storyContainer: {
         alignItems: 'center',
-        width: 72,
+        width: 76,
     },
     storyCircle: {
-        width: 68,
-        height: 68,
-        borderRadius: 34,
+        width: 72,
+        height: 72,
+        borderRadius: 36,
         padding: 2,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    storyBlur: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
+    storyInner: {
+        width: 68,
+        height: 68,
+        borderRadius: 34,
+        backgroundColor: colors.bg,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
     },
     storyUnseenGlass: {
-        opacity: 0.8,
+        opacity: 0.9,
     },
     storyAvatar: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: 64,
+        height: 64,
+        borderRadius: 32,
         backgroundColor: colors.surface,
     },
     plusIcon: {
         position: 'absolute',
-        right: 18,
-        bottom: 18,
-        backgroundColor: colors.accent,
-        borderRadius: 10,
-        width: 18,
-        height: 18,
+        right: 0,
+        bottom: 0,
+        borderRadius: 12,
+        width: 22,
+        height: 22,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
-        borderColor: 'white',
+        borderWidth: 3,
+        borderColor: colors.bg,
     },
     storyLabel: {
-        fontSize: 10,
+        fontSize: 11,
         color: colors.textSecondary,
-        marginTop: 4,
-        fontFamily: 'DMSans_400Regular',
+        marginTop: 6,
+        fontFamily: 'DMSans_500Medium',
     },
     postWrapper: {
         marginHorizontal: 16,
-        marginVertical: 8,
-        borderRadius: 20,
+        marginVertical: 10,
+        borderRadius: 24,
         overflow: 'hidden',
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.05)',
+        borderColor: colors.borderGlass,
     },
     postGlass: {
         padding: 16,
-        backgroundColor: 'rgba(255,255,255,0.02)',
-    },
-    postContainer: {
-        // Wrapper for content padding
+        backgroundColor: colors.surfaceGlass,
     },
     postHeader: {
         flexDirection: 'row',
@@ -232,16 +251,15 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     avatarGlow: {
-        borderRadius: 18,
-        shadowColor: colors.accent,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: colors.borderGlass,
+        padding: 1,
     },
     authorAvatar: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
         backgroundColor: colors.surface,
     },
     authorMeta: {
@@ -250,32 +268,35 @@ const styles = StyleSheet.create({
     authorName: {
         color: 'white',
         fontSize: 15,
-        fontFamily: 'DMSans_500Medium',
+        fontFamily: 'DMSans_700Bold',
     },
     time: {
         color: colors.textMuted,
-        fontSize: 13,
+        fontSize: 12,
+        fontFamily: 'DMSans_400Regular',
     },
     projectSubtext: {
         fontSize: 12,
         color: colors.textMuted,
         fontFamily: 'DMSans_400Regular',
+        marginTop: 1,
     },
     projectName: {
-        color: colors.textSecondary,
+        color: colors.accent,
         fontFamily: 'DMSans_700Bold',
     },
     postText: {
         color: 'white',
         fontSize: 15,
-        lineHeight: 22,
+        lineHeight: 24,
         fontFamily: 'DMSans_400Regular',
+        opacity: 0.95,
     },
     postImage: {
         width: '100%',
-        height: 200,
-        borderRadius: 12,
-        marginTop: 12,
+        height: 240,
+        borderRadius: 20,
+        marginTop: 16,
         backgroundColor: colors.surface,
     },
     actionRow: {
@@ -286,53 +307,63 @@ const styles = StyleSheet.create({
     },
     reactions: {
         flexDirection: 'row',
-        gap: 8,
+        gap: 6,
     },
     reactionTagGlass: {
         backgroundColor: 'rgba(255,255,255,0.05)',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 14,
         borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.1)',
+        borderColor: colors.borderGlass,
     },
     reactionText: {
-        fontSize: 13,
+        fontSize: 12,
         color: 'white',
+        fontFamily: 'DMSans_500Medium',
     },
     postActions: {
         flexDirection: 'row',
-        gap: 16,
+        gap: 12,
         alignItems: 'center',
     },
     postAction: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: 6,
+    },
+    actionIconBlur: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.surfaceGlass,
+        overflow: 'hidden',
     },
     actionCount: {
         color: colors.textSecondary,
         fontSize: 13,
+        fontFamily: 'DMSans_500Medium',
     },
     divider: {
-        height: 1,
-        backgroundColor: 'transparent',
-        marginHorizontal: 16,
+        height: 0,
     },
-    fab: {
+    fabWrapper: {
         position: 'absolute',
         right: 20,
         bottom: 20,
+    },
+    fab: {
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: colors.accent,
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 8,
-        shadowColor: '#000',
+        shadowColor: colors.accent,
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
+        shadowOpacity: 0.4,
+        shadowRadius: 10,
     },
 });
