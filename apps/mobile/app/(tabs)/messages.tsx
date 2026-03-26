@@ -4,6 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import { colors, typography } from '@collabsphere/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 
 import { MOCK_MESSAGES } from '../../src/mock/data';
 
@@ -23,23 +25,29 @@ export default function MessagesScreen() {
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
+            <LinearGradient
+                colors={[colors.bg, '#08080c', colors.bg]}
+                style={StyleSheet.absoluteFill}
+            />
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.title}>Messages</Text>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton}>
                     <Feather name="edit-2" size={20} color="white" />
                 </TouchableOpacity>
             </View>
 
             {/* Tabs */}
-            <View style={styles.tabRow}>
-                <TouchableOpacity style={styles.tabActive}>
-                    <Text style={styles.tabTextActive}>Direct</Text>
-                    <View style={styles.activeIndicator} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.tabInactive}>
-                    <Text style={styles.tabTextInactive}>Teams</Text>
-                </TouchableOpacity>
+            <View style={styles.tabWrapper}>
+                <View style={styles.tabRow}>
+                    <TouchableOpacity style={styles.tabActive}>
+                        <Text style={styles.tabTextActive}>Direct</Text>
+                        <View style={styles.activeIndicator} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.tabInactive}>
+                        <Text style={styles.tabTextInactive}>Teams</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <FlashList
@@ -98,20 +106,29 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontFamily: 'DMSans_700Bold',
         color: 'white',
+        letterSpacing: -0.5,
+    },
+    iconButton: {
+        padding: 8,
+        borderRadius: 12,
+        backgroundColor: colors.surfaceGlass,
+    },
+    tabWrapper: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.borderGlass,
     },
     tabRow: {
         flexDirection: 'row',
         paddingHorizontal: 16,
         gap: 24,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.border,
     },
     tabActive: {
         paddingVertical: 12,
-        position: 'relative',
+        borderBottomWidth: 2,
+        borderBottomColor: colors.accent,
     },
     tabInactive: {
         paddingVertical: 12,
@@ -122,17 +139,9 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans_700Bold',
     },
     tabTextInactive: {
-        color: '#555555',
+        color: colors.textMuted,
         fontSize: 15,
         fontFamily: 'DMSans_500Medium',
-    },
-    activeIndicator: {
-        position: 'absolute',
-        bottom: -1,
-        left: 0,
-        right: 0,
-        height: 2,
-        backgroundColor: 'white',
     },
     chatRow: {
         flexDirection: 'row',
@@ -144,10 +153,12 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     avatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: 54,
+        height: 54,
+        borderRadius: 27,
         backgroundColor: colors.surface,
+        borderWidth: 1,
+        borderColor: colors.borderGlass,
     },
     onlineDot: {
         position: 'absolute',
@@ -175,11 +186,12 @@ const styles = StyleSheet.create({
         fontFamily: 'DMSans_500Medium',
     },
     unreadText: {
+        color: 'white',
         fontFamily: 'DMSans_700Bold',
     },
     chatTime: {
         fontSize: 12,
-        color: '#555555',
+        color: colors.textMuted,
         fontFamily: 'DMSans_400Regular',
     },
     chatFooter: {
