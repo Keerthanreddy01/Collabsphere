@@ -9,9 +9,9 @@ import {
 } from "lucide-react";
 import { GitHubAvatar } from "./GitHubAvatar";
 import { useAuth } from "@/hooks/useAuth";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { cn } from "@/lib/utils";
+
+// TODO: Replace Firebase logic with backend API call
 
 export const CreatePost = () => {
     const { user } = useAuth();
@@ -23,17 +23,17 @@ export const CreatePost = () => {
         if (!content.trim() || !user) return;
         setLoading(true);
         try {
-            const updateData = {
-                content: content.trim(),
-                authorId: user.uid,
-                authorName: user.displayName || "User",
-                projectId: "default", // Placeholder for now
-                projectName: "General Update",
-                createdAt: serverTimestamp(),
-                likes: [],
-                comments: []
-            };
-            await addDoc(collection(db, "updates"), updateData);
+            // TODO: Replace with backend API call
+            // const response = await fetch('/api/updates', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({
+            //         content: content.trim(),
+            //         authorId: user.uid,
+            //         projectId: "default"
+            //     })
+            // });
+            
             setContent("");
             setIsExpanded(false);
         } catch (error) {

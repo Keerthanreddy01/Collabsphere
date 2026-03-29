@@ -6,8 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import Animated, { FadeInRight, FadeOutLeft, useAnimatedStyle, withSpring } from 'react-native-reanimated';
-import { auth, db } from '@collabsphere/firebase';
-import { doc, setDoc } from 'firebase/firestore';
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,22 +36,19 @@ export default function OnboardingScreen() {
         if (!profile.name) return;
         setLoading(true);
         try {
-            const uid = auth?.currentUser?.uid || 'mock-uid';
-            const userData = {
-                uid,
-                name: profile.name,
-                username: profile.username || profile.name.toLowerCase().replace(/ /g, '_'),
-                bio: profile.bio,
-                role,
-                skills: selectedSkills,
-                intent,
-                onboardingComplete: true,
-                createdAt: new Date().toISOString()
-            };
-
-            if (db) {
-                await setDoc(doc(db, 'users', uid), userData);
-            }
+            // TODO: Replace with backend API call to save user profile
+            // const response = await fetch('/api/onboarding', {
+            //     method: 'POST',
+            //     body: JSON.stringify({
+            //         name: profile.name,
+            //         username: profile.username,
+            //         bio: profile.bio,
+            //         role,
+            //         skills: selectedSkills,
+            //         intent
+            //     })
+            // });
+            
             router.replace('/(tabs)');
         } catch (error) {
             console.error('Error saving profile:', error);

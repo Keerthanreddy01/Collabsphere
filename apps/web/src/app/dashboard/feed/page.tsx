@@ -70,7 +70,7 @@ export default function FeedPage() {
                         Load more activity...
                     </button>
                     <p className="mt-4 text-[12px] text-[#484f58]">
-                        You've reached the end for now. Build something new!
+                        You&apos;ve reached the end for now. Build something new!
                     </p>
                 </div>
             </div>

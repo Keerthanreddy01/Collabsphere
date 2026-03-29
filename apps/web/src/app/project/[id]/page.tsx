@@ -15,6 +15,7 @@ import {
     CheckCircle2,
     Plus,
     ArrowUpRight,
+    ChevronRight,
     TrendingUp,
     Clock,
     Send,

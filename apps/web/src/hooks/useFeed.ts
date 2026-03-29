@@ -1,24 +1,21 @@
 import { useEffect, useState } from 'react';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { ProjectUpdate } from '@collabsphere/types';
+
+// TODO: Replace with actual backend API call
 
 export function useFeed(limitCount = 20) {
-    const [updates, setUpdates] = useState<any[]>([]);
+    const [updates, setUpdates] = useState<ProjectUpdate[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!db) return;
-
-        const q = query(
-            collection(db, 'updates'),
-            orderBy('createdAt', 'desc'),
-            limit(limitCount)
-        );
-
-        return onSnapshot(q, (snap) => {
-            setUpdates(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-            setLoading(false);
-        });
+        // TODO: Fetch updates from backend API
+        // const response = await fetch(`/api/updates?limit=${limitCount}`);
+        // const data = await response.json();
+        // setUpdates(data);
+        
+        // For now, return empty array
+        setUpdates([]);
+        setLoading(false);
     }, [limitCount]);
 
     return { updates, loading };

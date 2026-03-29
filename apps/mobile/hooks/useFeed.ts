@@ -1,31 +1,23 @@
-import { useEffect, useState } from 'react';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { db } from '@collabsphere/firebase';
+import { useState } from 'react';
 import { ProjectUpdate } from '@collabsphere/types';
-import { MOCK_FEED } from '../src/mock/data';
+import { MOCK_FEED } from '../constants/mock-data';
+
+// TODO: Replace with actual backend API call
 
 export function useFeed(limitCount = 20) {
-    const [updates, setUpdates] = useState<ProjectUpdate[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [updates] = useState<ProjectUpdate[]>(MOCK_FEED as any);
+    const [loading] = useState(false);
 
-    useEffect(() => {
-        if (!db) {
-            setUpdates(MOCK_FEED as any);
-            setLoading(false);
-            return;
-        }
-
-        const q = query(
-            collection(db, 'updates'),
-            orderBy('createdAt', 'desc'),
-            limit(limitCount)
-        );
-
-        return onSnapshot(q, (snap) => {
-            setUpdates(snap.docs.map(d => ({ id: d.id, ...d.data() } as ProjectUpdate)));
-            setLoading(false);
-        });
-    }, [limitCount]);
+    // TODO: Implement feed fetching from backend API
+    // useEffect(() => {
+    //     const fetchFeed = async () => {
+    //         const response = await fetch(`/api/feed?limit=${limitCount}`);
+    //         const data = await response.json();
+    //         setUpdates(data);
+    //         setLoading(false);
+    //     };
+    //     fetchFeed();
+    // }, [limitCount]);
 
     return { updates, loading };
 }

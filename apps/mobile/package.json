@@ -10,13 +10,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@collabsphere/firebase": "*",
     "@collabsphere/types": "*",
     "@expo-google-fonts/dm-sans": "*",
     "@expo-google-fonts/dm-serif-display": "*",
     "@expo/metro-runtime": "~4.0.1",
     "@gorhom/bottom-sheet": "^4.6.0",
-    "@react-native-firebase/app": "^20.0.0",
     "@shopify/flash-list": "1.7.3",
     "expo": "^52.0.0",
     "expo-asset": "~11.0.5",

@@ -1,5 +1,3 @@
-import { Timestamp } from "firebase/firestore";
-
 export * from "./theme";
 
 export interface User {
@@ -15,11 +13,11 @@ export interface User {
     githubUsername: string;
     location: string;
     onboardingComplete: boolean;
-    createdAt: Timestamp;
-    lastSeen: Timestamp;
+    createdAt: Date;
+    lastSeen: Date;
     streak?: {
         count: number;
-        lastActiveDate: Timestamp;
+        lastActiveDate: Date;
     };
 }
 
@@ -42,7 +40,7 @@ export interface Project {
     viewCount: number;
     githubUrl: string;
     demoUrl: string;
-    createdAt: Timestamp;
+    createdAt: Date;
 }
 
 export interface Application {
@@ -53,7 +51,7 @@ export interface Application {
     role: string;
     message: string;
     status: "pending" | "accepted" | "rejected";
-    createdAt: Timestamp;
+    createdAt: Date;
 }
 
 export interface Conversation {
@@ -64,9 +62,9 @@ export interface Conversation {
     lastMessage: {
         text: string;
         senderId: string;
-        timestamp: Timestamp;
+        timestamp: Date;
     };
-    lastMessageAt: Timestamp;
+    lastMessageAt: Date;
     unreadCount: Record<string, number>;
 }
 
@@ -83,11 +81,11 @@ export interface Message {
         senderName: string;
     };
     readBy: string[];
-    createdAt: Timestamp;
+    createdAt: Date;
     edited: boolean;
-    editedAt?: Timestamp;
+    editedAt?: Date;
     isDeleted?: boolean;
-    deletedAt?: Timestamp;
+    deletedAt?: Date;
 }
 
 export interface ProjectUpdate {
@@ -102,9 +100,9 @@ export interface ProjectUpdate {
     comments: {
         uid: string;
         text: string;
-        createdAt: Timestamp;
+        createdAt: Date;
     }[];
-    createdAt: Timestamp;
+    createdAt: Date;
 }
 
 export interface Notification {
@@ -115,5 +113,5 @@ export interface Notification {
     body: string;
     read: boolean;
     link: string;
-    createdAt: Timestamp;
+    createdAt: Date;
 }

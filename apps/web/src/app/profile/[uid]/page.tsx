@@ -13,6 +13,7 @@ import {
     CheckCircle2,
     Plus,
     Users,
+    ArrowUpRight,
     Mail,
     Linkedin,
     Twitter,
@@ -125,7 +126,7 @@ export default function UserProfilePage() {
                             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
                             <h3 className="text-sm font-black text-white italic uppercase tracking-widest mb-8">Executive Summary</h3>
                             <p className="text-lg text-muted-foreground font-medium leading-relaxed italic">
-                                "{mock_user.bio}"
+                                &quot;{mock_user.bio}&quot;
                             </p>
                         </section>
 

@@ -1,27 +1,23 @@
-import { useEffect, useState } from 'react';
-import { ref, onValue } from 'firebase/database';
-import { rtdb } from '@collabsphere/firebase';
+import { useState } from 'react';
+
+// TODO: Replace with actual backend presence system
 
 export function usePresence(uid: string) {
-    const [online, setOnline] = useState(false);
-    const [lastSeen, setLastSeen] = useState<number | null>(null);
+    const [online] = useState(true);
+    const [lastSeen] = useState<number | null>(Date.now());
 
-    useEffect(() => {
-        if (!rtdb || !uid) {
-            // Default mock presence
-            setOnline(true);
-            setLastSeen(Date.now());
-            return;
-        }
-
-        const statusRef = ref(rtdb, `/status/${uid}`);
-
-        return onValue(statusRef, (snap) => {
-            const data = snap.val();
-            setOnline(data?.online || false);
-            setLastSeen(data?.lastSeen || null);
-        });
-    }, [uid]);
+    // TODO: Implement presence tracking via backend API or WebSocket
+    // useEffect(() => {
+    //     if (!uid) return;
+    //     const url = `/api/presence/${uid}`;
+    //     const eventSource = new EventSource(url);
+    //     eventSource.onmessage = (event) => {
+    //         const data = JSON.parse(event.data);
+    //         setOnline(data.online);
+    //         setLastSeen(data.lastSeen);
+    //     };
+    //     return () => eventSource.close();
+    // }, [uid]);
 
     return { online, lastSeen };
 }

@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { db } from '@collabsphere/firebase';
+import { useState } from 'react';
 import { Message } from '@collabsphere/types';
 
+// TODO: Replace with actual backend API call
+
 export function useMessages(conversationId: string) {
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages] = useState<Message[]>([]);
 
-    useEffect(() => {
-        if (!db || !conversationId) return;
-
-        const q = query(
-            collection(db, `conversations/${conversationId}/messages`),
-            orderBy('createdAt', 'asc'),
-            limit(50)
-        );
-
-        return onSnapshot(q, (snap) => {
-            setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() } as Message)));
-        });
-    }, [conversationId]);
+    // TODO: Implement message fetching from backend API
+    // useEffect(() => {
+    //     if (!conversationId) return;
+    //     const fetchMessages = async () => {
+    //         const response = await fetch(`/api/conversations/${conversationId}/messages`);
+    //         const data = await response.json();
+    //         setMessages(data);
+    //     };
+    //     fetchMessages();
+    // }, [conversationId]);
 
     return { messages };
 }

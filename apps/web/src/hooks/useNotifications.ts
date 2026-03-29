@@ -1,36 +1,34 @@
 import { useEffect, useState } from 'react';
-import { collection, query, where, orderBy, onSnapshot, updateDoc, doc, writeBatch } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { Notification } from '@collabsphere/types';
+
+// TODO: Replace with actual backend API call
 
 export function useNotifications(userId: string | undefined) {
-    const [notifications, setNotifications] = useState<any[]>([]);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
 
     useEffect(() => {
-        if (!db || !userId) return;
+        if (!userId) return;
 
-        const q = query(
-            collection(db, 'notifications'),
-            where('userId', '==', userId),
-            orderBy('createdAt', 'desc')
-        );
+        // TODO: Fetch notifications from backend API
+        // const response = await fetch(`/api/notifications?userId=${userId}`);
+        // const data = await response.json();
+        // setNotifications(data);
+        // setUnreadCount(data.filter((n: Notification) => !n.read).length);
 
-        return onSnapshot(q, (snap) => {
-            const notifs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            setNotifications(notifs);
-            setUnreadCount(notifs.filter((n: any) => !n.read).length);
-        });
+        // For now, return empty array
+        setNotifications([]);
+        setUnreadCount(0);
     }, [userId]);
 
     const markAllAsRead = async () => {
-        if (!db || !userId) return;
-        const batch = writeBatch(db);
-        notifications.forEach(n => {
-            if (!n.read) {
-                batch.update(doc(db, 'notifications', n.id), { read: true });
-            }
-        });
-        await batch.commit();
+        if (!userId) return;
+        
+        // TODO: Call backend API to mark all as read
+        // await fetch(`/api/notifications/mark-all-read`, {
+        //     method: 'POST',
+        //     body: JSON.stringify({ userId })
+        // });
     };
 
     return { notifications, unreadCount, markAllAsRead };
