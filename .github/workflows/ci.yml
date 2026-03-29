@@ -2,11 +2,13 @@ name: CI - Lint, TypeCheck, Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -15,6 +17,9 @@ jobs:
     strategy:
       matrix:
         app: [web, mobile]
+    defaults:
+      run:
+        working-directory: apps/${{ matrix.app }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,11 +30,18 @@ jobs:
           node-version: "18"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Run ESLint on ${{ matrix.app }} app
-        run: cd apps/${{ matrix.app }} && npm run lint
+      - name: Install dependencies
+        working-directory: .
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
         continue-on-error: false
 
   typecheck:
@@ -45,15 +57,24 @@ jobs:
           node-version: "18"
           cache: "npm"
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run TypeScript compiler
-        run: tsc --noEmit
+        run: npx tsc --noEmit
 
   build-web:
     name: Build Web App
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,14 +85,20 @@ jobs:
           node-version: "18"
           cache: "npm"
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install dependencies
-        run: npm install
+        working-directory: .
+        run: npm ci
 
       - name: Build web app
-        run: cd apps/web && npm run build
+        run: npm run build
         env:
-          # Optional: Set to skip telemetry
           NEXT_TELEMETRY_DISABLED: 1
 
       - name: Check build output
-        run: test -d apps/web/.next
+        run: test -d .next

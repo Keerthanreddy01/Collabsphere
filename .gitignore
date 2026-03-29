@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 package-lock.json
 yarn.lock
@@ -50,6 +50,7 @@ yarn-error.log*
 
 # Text files (typically generated/temporary)
 *.txt
+lint_errors.txt
 
 # Firebase (fully removed, but keeping rules for reference)
 .firebaserc

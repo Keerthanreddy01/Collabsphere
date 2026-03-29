@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0] - 2026-03-29
+
+### Added
+- Initial production release
+- Complete Firebase removal and clean architecture
+- Next.js web app with App Router
+- React Native Expo mobile app
+- Builder profiles and project incubation features
+- Build-in-public feed
+- Collaboration rooms and workshops
+- Open source documentation (README, CONTRIBUTING, LICENSE, etc.)
+- CI pipeline with lint, typecheck, and build checks
+- GitHub issue templates and PR template
+
 ## [Production Ready] - 2024
 
 ### 🎉 Major Update: Complete Firebase Removal & Production Architecture
