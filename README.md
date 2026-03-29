@@ -1,18 +1,12 @@
 <div align="center">
 
 ```
-   ██████╗ ██████╗ ██╗     ██╗      █████╗ ██████╗ ███████╗
-  ██╔════╝██╔═══██╗██║     ██║     ██╔══██╗██╔══██╗██╔════╝
-  ██║     ██║   ██║██║     ██║     ███████║██████╔╝███████╗
-  ██║     ██║   ██║██║     ██║     ██╔══██║██╔══██╗╚════██║
-  ╚██████╗╚██████╔╝███████╗███████╗██║  ██║██████╔╝███████║
-   ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝
-                    ██████╗ ██╗  ██╗███████╗██████╗ ███████╗
-                   ██╔════╝ ██║  ██║██╔════╝██╔══██╗██╔════╝
-                   ╚█████╗  ███████║█████╗  ██████╔╝█████╗  
-                    ╚═══██╗ ██╔══██║██╔══╝  ██╔══██╗██╔══╝  
-                   ██████╔╝ ██║  ██║███████╗██║  ██║███████╗
-                   ╚═════╝  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+  ██████╗ ██████╗ ██╗     ██╗      █████╗ ██████╗ ███████╗██████╗ ██╗  ██╗███████╗██████╗ ███████╗
+ ██╔════╝██╔═══██╗██║     ██║     ██╔══██╗██╔══██╗██╔════╝██╔══██╗██║  ██║██╔════╝██╔══██╗██╔════╝
+ ██║     ██║   ██║██║     ██║     ███████║██████╔╝███████╗██████╔╝███████║█████╗  ██████╔╝█████╗  
+ ██║     ██║   ██║██║     ██║     ██╔══██║██╔══██╗╚════██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗██╔══╝  
+ ╚██████╗╚██████╔╝███████╗███████╗██║  ██║██████╔╝███████║██║     ██║  ██║███████╗██║  ██║███████╗
+  ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 ```
 
 **Where teams move faster. Together.**
@@ -244,32 +238,77 @@ See `ENV_CONFIG.md` for complete configuration reference.
 
 ---
 
-## ✦ Contributing
+## ✦ Open Source
+
+Collabsphere is **fully open source** under the MIT License. We welcome contributions from developers of all experience levels — whether it's fixing a typo, reporting a bug, improving docs, or shipping a new feature.
+
+### 🌍 Ways to Contribute
+
+| Type | How |
+|------|-----|
+| 🐛 **Found a bug?** | [Open an Issue](https://github.com/yourusername/Collabsphere/issues/new?template=bug_report.md) |
+| 💡 **Have an idea?** | [Start a Discussion](https://github.com/yourusername/Collabsphere/discussions) |
+| 📖 **Improve docs** | Edit any `.md` file and open a PR |
+| 🔧 **Fix something** | Pick an issue labeled `good first issue` |
+| ⭐ **Show support** | Star the repo — it genuinely helps |
+
+### 🔁 Contribution Workflow
 
 ```bash
-# 1. Fork & branch
-git checkout -b feat/your-feature
+# 1. Fork the repo on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/Collabsphere.git
+cd Collabsphere
 
-# 2. Develop & test
-npm run dev
-npm run test
+# 2. Create a branch — one feature per branch
+git checkout -b feat/your-feature-name
 
-# 3. Lint & format
-npm run lint
-npm run format
+# 3. Install and run
+npm install && npm run dev
 
-# 4. Commit (conventional commits)
-git commit -m "feat(scope): description"
+# 4. Make changes, then lint and format
+npm run lint && npm run format
 
-# 5. Open PR
-git push origin feat/your-feature
+# 5. Commit using conventional commits
+git commit -m "feat(mobile): add push notification support"
+git commit -m "fix(web): resolve auth redirect loop"
+git commit -m "docs: update API endpoint reference"
+
+# 6. Push and open a Pull Request
+git push origin feat/your-feature-name
 ```
 
-**Requirements before merging:**
-- ✅ TypeScript strict mode — no errors
-- ✅ Tests passing
-- ✅ Lint clean
-- ✅ Docs updated if needed
+### ✅ PR Checklist
+
+- [ ] TypeScript compiles with no errors (`tsc --noEmit`)
+- [ ] ESLint passes (`npm run lint`)
+- [ ] Code is formatted (`npm run format`)
+- [ ] Tested locally on web and/or mobile
+- [ ] Docs updated if your change affects usage
+- [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/)
+
+### 🏷️ Commit Message Format
+
+```
+<type>(<scope>): <short description>
+
+Types:  feat | fix | docs | style | refactor | test | chore
+Scopes: web  | mobile | packages | ci | docs
+
+feat(web): add dark mode toggle
+fix(mobile): resolve tab bar flicker on Android
+docs: update contributing guide
+chore: upgrade Expo to 52
+```
+
+### 🌱 Good First Issues
+
+New to the codebase? Look for issues tagged:
+
+- `good first issue` — beginner friendly, well scoped
+- `help wanted` — community help appreciated
+- `documentation` — no code required
+
+> **Not sure where to start?** Open a Discussion and say hi — we'll point you in the right direction.
 
 ---
 
