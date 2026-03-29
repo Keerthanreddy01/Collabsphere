@@ -210,7 +210,7 @@ eas submit --platform android  # Submit to Play Store
 | `SESSION_SECRET` | ✅ | Session encryption key |
 | `NEXT_PUBLIC_ANALYTICS_ID` | ○ | Analytics tracking |
 
-See `ENV_CONFIG.md` for complete configuration reference.
+See `docs/setup/ENV_CONFIG.md` for complete configuration reference.
 
 ---
 
@@ -230,11 +230,15 @@ See `ENV_CONFIG.md` for complete configuration reference.
 
 | Doc | Description |
 |-----|-------------|
-| [`ARCHITECTURE.md`](./ARCHITECTURE.md) | System design & patterns |
-| [`API_DOCS.md`](./API_DOCS.md) | Endpoint reference |
-| [`ENV_CONFIG.md`](./ENV_CONFIG.md) | Environment configuration |
-| [`SETUP.md`](./SETUP.md) | Local development guide |
-| [`CHANGELOG.md`](./CHANGELOG.md) | Version history |
+| [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | System design & patterns |
+| [`API_DOCS.md`](./docs/api/API_DOCS.md) | Endpoint reference |
+| [`ENV_CONFIG.md`](./docs/setup/ENV_CONFIG.md) | Environment configuration |
+| [`SETUP.md`](./docs/setup/SETUP.md) | Local development guide |
+| [`CHANGELOG.md`](./docs/CHANGELOG.md) | Version history |
+| [`CODE_OF_CONDUCT.md`](./docs/CODE_OF_CONDUCT.md) | Conduct guidelines |
+| [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) | Contribution guide |
+| [`OPENSOURCE_CHECKLIST.md`](./docs/OPENSOURCE_CHECKLIST.md) | Open source launch checklist |
+| [`SECURITY.md`](./docs/security/SECURITY.md) | Security policy |
 
 ---
 

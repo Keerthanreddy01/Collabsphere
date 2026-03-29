@@ -261,7 +261,7 @@ export function validateEnvironment() {
 
 - [Next.js Environment Variables](https://nextjs.org/docs/basic-features/environment-variables)
 - [Expo Environment Variables](https://docs.expo.dev/guides/environment-variables/)
-- [Best Practices](./ARCHITECTURE.md)
+- [Best Practices](../ARCHITECTURE.md)
 
 ---
 

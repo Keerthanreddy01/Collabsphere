@@ -364,10 +364,10 @@ git push origin main    # Push to main
 
 ## Documentation
 
-- **Architecture**: See [ARCHITECTURE.md](./ARCHITECTURE.md)
-- **API Docs**: See [API_DOCS.md](./API_DOCS.md)
+- **Architecture**: See [ARCHITECTURE.md](../ARCHITECTURE.md)
+- **API Docs**: See [API_DOCS.md](../api/API_DOCS.md)
 - **Environment**: See [ENV_CONFIG.md](./ENV_CONFIG.md)
-- **Changelog**: See [CHANGELOG.md](./CHANGELOG.md)
+- **Changelog**: See [CHANGELOG.md](../CHANGELOG.md)
 
 ## Additional Resources
 
