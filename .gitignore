@@ -1,20 +1,101 @@
-﻿node_modules/
+﻿# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+.next/
+.nuxt/
+out/
+
+# Dev and tooling
+.turbo/
 .expo/
-*.log
-*.txt
+.turbo-root
+turbo-location.txt
+
+# Environment variables (NEVER commit .env files!)
 .env
 .env.local
-.env*.local
-dist/
-.next/
-build/
-.turbo/
+.env.*.local
+.env.production.local
+.env.test.local
+.env.development.local
+
+# OS specific
 .DS_Store
 Thumbs.db
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.sublime-workspace
+.sublime-project
+*.iml
+.eclipse
+
+# Logs
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Text files (typically generated/temporary)
+*.txt
+
+# Firebase (fully removed, but keeping rules for reference)
 .firebaserc
 firebase.json
 firestore.rules
 firestore.indexes.json
 storage.rules
+
+# Supabase
 supabase/
-package-lock.json
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+
+# TypeScript
+*.tsbuildinfo
+dist-tsc/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*~
+
+# CI/CD
+.github/workflows/logs/
+
+# Compiled files
+*.o
+*.a
+*.lib
+*.so
+*.dylib
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Mac
+._*
+
+# Expo
+expo-env.d.ts

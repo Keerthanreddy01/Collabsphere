@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/Keerthanreddy01/Collabsphere/discussions
+    about: Have a question? Use Discussions instead of Issues
+  - name: Documentation
+    url: https://github.com/Keerthanreddy01/Collabsphere#documentation
+    about: See our docs for guides and API reference
