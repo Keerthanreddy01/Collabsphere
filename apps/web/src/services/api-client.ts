@@ -1,24 +1,70 @@
 /*
  * API Service Layer - Backend Abstraction
- * TODO: Implement actual API calls to replace all Firebase/Supabase logic
+ * Centralized API client for all backend communication
  */
 
-// TODO: Replace with actual backend API client setup
-// Example structure:
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
-// 
-// export const apiClient = {
-//   request: async (method: string, endpoint: string, data?: any) => {
-//     // Implementation here
-//   },
-//   get: (endpoint: string) => // ...,
-//   post: (endpoint: string, data: any) => // ...,
-//   put: (endpoint: string, data: any) => // ...,
-//   delete: (endpoint: string) => // ...
-// };
+import { httpGet, httpPost, httpPut, httpDelete } from '@/lib/http';
+import { WEB_CONFIG } from '@/constants/config';
 
+const apiBaseUrl = WEB_CONFIG.API.BASE_URL;
+
+/**
+ * API Client for backend communication
+ * Handles all HTTP requests with proper error handling
+ */
 export const apiClient = {
-  request: async (method: string, endpoint: string, data?: any) => {
-    throw new Error("API client not yet implemented - replace Firebase with backend service");
-  }
+  /**
+   * Generic request method
+   */
+  request: async <T = any>(
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    endpoint: string,
+    data?: any
+  ): Promise<T> => {
+    const url = `${apiBaseUrl}${endpoint}`;
+
+    try {
+      switch (method) {
+        case 'GET':
+          return await httpGet<T>(url);
+        case 'POST':
+          return await httpPost<T>(url, data);
+        case 'PUT':
+          return await httpPut<T>(url, data);
+        case 'DELETE':
+          return await httpDelete<T>(url);
+      }
+    } catch (error) {
+      console.error(`API ${method} ${endpoint}:`, error);
+      throw error;
+    }
+  },
+
+  /**
+   * GET request
+   */
+  get: <T = any>(endpoint: string) => {
+    return apiClient.request<T>('GET', endpoint);
+  },
+
+  /**
+   * POST request
+   */
+  post: <T = any>(endpoint: string, data: any) => {
+    return apiClient.request<T>('POST', endpoint, data);
+  },
+
+  /**
+   * PUT request
+   */
+  put: <T = any>(endpoint: string, data: any) => {
+    return apiClient.request<T>('PUT', endpoint, data);
+  },
+
+  /**
+   * DELETE request
+   */
+  delete: <T = any>(endpoint: string) => {
+    return apiClient.request<T>('DELETE', endpoint);
+  },
 };
