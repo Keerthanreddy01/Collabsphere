@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { CreatePost } from "@/components/dashboard/CreatePost";
-import { FeedItem } from "@/components/dashboard/FeedItem";
-import { RightSidebar } from "@/components/dashboard/RightSidebar";
+import { CreatePost } from "@/components/features/dashboard/CreatePost";
+import { FeedItem } from "@/components/features/dashboard/FeedItem";
+import { RightSidebar } from "@/components/features/dashboard/RightSidebar";
 import { ChevronDown, Filter, Users, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 

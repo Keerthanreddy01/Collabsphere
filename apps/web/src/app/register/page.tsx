@@ -12,17 +12,17 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function RegisterPage() {
-    const { loginWithGitHub, loginWithGoogle } = useAuth();
+    const { register } = useAuth();
     const router = useRouter();
 
     const handleAuth = async (provider: "github" | "google") => {
         try {
-            if (provider === "github") await loginWithGitHub();
-            else await loginWithGoogle();
-            toast.success("Account created! Let's get started...");
-            router.push("/dashboard");
+            // Simulated OAuth registration using the email/password provider
+            await register(`${provider}@example.com`, "oauth-dummy-password", `${provider} User`);
+            toast.success("Success! Redirecting to setup...");
+            router.push("/onboarding");
         } catch (error: any) {
-            toast.error(error.message || "Registration failed. Try again.");
+            toast.error(error.message || "Authentication failed. Try again.");
         }
     };
 

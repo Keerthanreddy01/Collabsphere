@@ -3,12 +3,12 @@
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Hero } from "@/components/landing/Hero";
-import { HowItWorks } from "@/components/landing/HowItWorks";
-import { ProjectMarquee } from "@/components/landing/ProjectMarquee";
-import { FeedPreview } from "@/components/landing/FeedPreview";
-import { Testimonials } from "@/components/landing/Testimonials";
-import { CTASection } from "@/components/landing/CTASection";
+import { Hero } from "@/components/features/landing/Hero";
+import { HowItWorks } from "@/components/features/landing/HowItWorks";
+import { ProjectMarquee } from "@/components/features/landing/ProjectMarquee";
+import { FeedPreview } from "@/components/features/landing/FeedPreview";
+import { Testimonials } from "@/components/features/landing/Testimonials";
+import { CTASection } from "@/components/features/landing/CTASection";
 
 export default function Home() {
   return (

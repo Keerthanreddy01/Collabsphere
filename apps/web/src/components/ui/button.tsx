@@ -1,6 +1,5 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
@@ -38,26 +37,42 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+  }
+
 function Button({
   className,
   variant = "default",
   size = "default",
   asChild = false,
+  children,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot.Root : "button"
+}: ButtonProps) {
+  const computedClass = cn(buttonVariants({ variant, size, className }))
+
+  // asChild: merge our button styles onto the single child element
+  if (asChild && React.isValidElement(children)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const child = children as React.ReactElement<any>
+    return React.cloneElement(child, {
+      "data-variant": variant,
+      "data-size": size,
+      className: cn(computedClass, child.props.className as string | undefined),
+      ...props,
+    })
+  }
 
   return (
-    <Comp
-      data-slot="button"
+    <button
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={computedClass}
       {...props}
-    />
+    >
+      {children}
+    </button>
   )
 }
 

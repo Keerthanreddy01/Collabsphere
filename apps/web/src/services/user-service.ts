@@ -70,7 +70,7 @@ export const getUserByUsername = async (username: string): Promise<UserProfile> 
  */
 export const followUser = async (userId: string): Promise<{ success: boolean }> => {
   try {
-    return await apiClient.post(`/users/${userId}/follow`);
+    return await apiClient.post(`/users/${userId}/follow`, {});
   } catch (error) {
     console.error('Failed to follow user:', error);
     throw error;

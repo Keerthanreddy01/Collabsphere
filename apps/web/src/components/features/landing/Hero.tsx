@@ -2,8 +2,8 @@
 
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { GlowButton } from "../shared/GlowButton";
-import { AnimatedCounter } from "../shared/AnimatedCounter";
+import { GlowButton } from "@/components/shared/GlowButton";
+import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
 import { Rocket, ArrowDown, Users, Ship, Sparkles } from "lucide-react";
 
 export const Hero = () => {

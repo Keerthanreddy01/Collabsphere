@@ -12,15 +12,17 @@ import {
     ChevronLeft,
     User,
     Terminal,
-    Design,
     Globe,
     Users,
     Send,
     Sparkles,
     Zap,
     CheckCircle2,
-    Code
+    Code,
+    Compass,
+    Plus
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -47,7 +49,7 @@ export default function OnboardingPage() {
         lookingFor: "",
         bio: "",
     });
-    const { user, profile } = useAuth();
+    const { user } = useAuth();
     const router = useRouter();
 
     const handleToggleSkill = (skill: string) => {
@@ -209,8 +211,8 @@ export default function OnboardingPage() {
                                 <div className="flex flex-col items-center gap-8 w-full">
                                     <div className="relative group">
                                         <Avatar className="w-24 h-24 border-4 border-primary/20 shadow-2xl">
-                                            <AvatarImage src={user?.photoURL || ""} />
-                                            <AvatarFallback>{user?.displayName?.charAt(0)}</AvatarFallback>
+                                            <AvatarImage src={user?.avatar || ""} />
+                                            <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                         <label className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center cursor-pointer border-2 border-black hover:scale-110 transition-transform">
                                             <Plus className="w-4 h-4" />

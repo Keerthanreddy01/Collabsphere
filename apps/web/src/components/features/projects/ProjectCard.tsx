@@ -5,10 +5,16 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, Heart, ExternalLink, ArrowUpRight, Code, MessageCircle } from "lucide-react";
-import { Project } from "@/lib/firestore";
+import { ArrowUpRight, Code, Heart } from "lucide-react";
+import { Project } from "@/types";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+
+interface RoleNeeded {
+    role: string;
+    description?: string;
+    filled: boolean;
+}
 
 interface ProjectCardProps {
     project: Project;
@@ -46,7 +52,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
                     </Avatar>
                     <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
                         <Heart className="w-3.5 h-3.5 text-primary fill-primary" />
-                        <span className="text-[10px] font-bold text-white">{project.upvotes.length}</span>
+                        <span className="text-[10px] font-bold text-white">{project.upvotes?.length || 0}</span>
                     </div>
                 </div>
 
@@ -59,7 +65,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
                     </p>
 
                     <div className="flex flex-wrap gap-1.5 mb-6">
-                        {project.techStack.map(tech => (
+                        {project.techStack?.map((tech: string) => (
                             <span key={tech} className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/80 px-2 py-0.5 rounded-md bg-white/5 border border-white/5">
                                 {tech}
                             </span>
@@ -69,7 +75,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
                     <div className="space-y-2 mb-6">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Hiring Roles</p>
                         <div className="flex flex-wrap gap-2">
-                            {project.rolesNeeded.filter(r => !r.filled).map((role, i) => (
+                            {project.rolesNeeded?.filter((r: RoleNeeded) => !r.filled).map((role: RoleNeeded, i: number) => (
                                 <Badge
                                     key={i}
                                     variant="outline"

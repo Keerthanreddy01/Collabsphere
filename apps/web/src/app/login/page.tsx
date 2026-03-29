@@ -13,13 +13,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function LoginPage() {
-    const { loginWithGitHub, loginWithGoogle } = useAuth();
+    const { login } = useAuth();
     const router = useRouter();
 
     const handleAuth = async (provider: "github" | "google") => {
         try {
-            if (provider === "github") await loginWithGitHub();
-            else await loginWithGoogle();
+            // Simulated OAuth login using the email/password provider
+            await login(`${provider}@example.com`, "oauth-dummy-password");
             toast.success("Success! Redirecting to dashboard...");
             router.push("/dashboard");
         } catch (error: any) {

@@ -13,7 +13,7 @@ import {
     Settings,
     LogOut,
 } from "lucide-react";
-import { GitHubAvatar } from "@/components/dashboard/GitHubAvatar";
+import { GitHubAvatar } from "@/components/features/dashboard/GitHubAvatar";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -28,8 +28,8 @@ const sidebarLinks = [
 
 export const Sidebar = () => {
     const pathname = usePathname();
-    const { user, profile, logout } = useAuth();
-    const isOpenToCollab = profile?.openToCollab ?? true;
+    const { user, logout } = useAuth();
+    const isOpenToCollab = true; // Use user field if implemented in the future
 
     return (
         <aside
@@ -38,13 +38,13 @@ export const Sidebar = () => {
             {/* User Profile Header */}
             <div className="p-4 mb-2 flex items-center gap-3">
                 <GitHubAvatar
-                    name={user?.displayName || "User"}
-                    src={user?.photoURL || ""}
+                    name={user?.name || "User"}
+                    src={user?.avatar || ""}
                     size={32}
                 />
                 <div className="flex flex-col min-w-0">
                     <span className="text-[14px] font-semibold text-[#e6edf3] truncate">
-                        {user?.displayName || "User"}
+                        {user?.name || "User"}
                     </span>
                     <div className="flex items-center gap-1.5">
                         <div className={cn("w-2 h-2 rounded-full", isOpenToCollab ? "bg-[#3fb950]" : "bg-[#7d8590]")} />

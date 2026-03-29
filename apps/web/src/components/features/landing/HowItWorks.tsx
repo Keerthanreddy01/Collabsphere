@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Rocket, Users, Globe, Terminal, Sparkles, Send, Ship } from "lucide-react";
-import { GlassCard } from "../shared/GlassCard";
 
 const steps = [
     {

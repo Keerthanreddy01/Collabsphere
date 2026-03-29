@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ProjectCard } from "@/components/projects/ProjectCard";
+import { ProjectCard } from "@/components/features/projects/ProjectCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, SlidersHorizontal, ChevronDown, Rocket, Sparkles, Compass } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Project } from "@/lib/firestore";
+import { Project } from "@/types";
 import {
     Select,
     SelectContent,

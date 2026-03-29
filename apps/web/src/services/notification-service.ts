@@ -61,7 +61,7 @@ export const markNotificationAsRead = async (
   notificationId: string
 ): Promise<{ success: boolean }> => {
   try {
-    return await apiClient.put(`/notifications/${notificationId}/read`);
+    return await apiClient.put(`/notifications/${notificationId}/read`, {});
   } catch (error) {
     console.error('Failed to mark notification as read:', error);
     throw error;
@@ -73,7 +73,7 @@ export const markNotificationAsRead = async (
  */
 export const markAllNotificationsAsRead = async (): Promise<{ success: boolean }> => {
   try {
-    return await apiClient.put('/notifications/read-all');
+    return await apiClient.put('/notifications/read-all', {});
   } catch (error) {
     console.error('Failed to mark all notifications as read:', error);
     throw error;
@@ -149,7 +149,7 @@ export const subscribeToPushNotifications = async (
  */
 export const unsubscribeFromPushNotifications = async (): Promise<{ success: boolean }> => {
   try {
-    return await apiClient.post('/notifications/push/unsubscribe');
+    return await apiClient.post('/notifications/push/unsubscribe', {});
   } catch (error) {
     console.error('Failed to unsubscribe from push notifications:', error);
     throw error;

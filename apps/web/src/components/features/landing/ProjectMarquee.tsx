@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, Code, Design, Globe } from "lucide-react";
+import { Users, Code, Palette, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const projects = [

@@ -177,17 +177,20 @@ export const countMatches = <T>(array: T[], predicate: (item: T) => boolean): nu
  * @param source - Source object
  * @returns Merged object
  */
-export const deepMerge = <T extends Record<string, any>>(target: T, source: Partial<T>): T => {
-  const result = { ...target };
+export const deepMerge = <T extends Record<string, unknown>>(target: T, source: Partial<T>): T => {
+  const result = { ...target } as Record<string, unknown>;
 
   for (const key in source) {
-    if (source.hasOwnProperty(key)) {
-      const sourceValue = source[key];
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      const sourceValue = source[key] as unknown;
       const targetValue = result[key];
 
       if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
         if (targetValue && typeof targetValue === 'object' && !Array.isArray(targetValue)) {
-          result[key] = deepMerge(targetValue, sourceValue);
+          result[key] = deepMerge(
+            targetValue as Record<string, unknown>,
+            sourceValue as Partial<Record<string, unknown>>
+          );
         } else {
           result[key] = sourceValue;
         }
@@ -197,7 +200,7 @@ export const deepMerge = <T extends Record<string, any>>(target: T, source: Part
     }
   }
 
-  return result;
+  return result as T;
 };
 
 /**

@@ -120,8 +120,9 @@ export const Toast: React.FC<ToastProps> = ({
   onClose,
 }) => {
   useEffect(() => {
-    if (duration > 0) {
-      const timer = setTimeout(onClose, duration);
+    if (duration > 0 && onClose) {
+      const cb: () => void = onClose;
+      const timer = setTimeout(cb, duration);
       return () => clearTimeout(timer);
     }
   }, [duration, onClose]);

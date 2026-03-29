@@ -7,7 +7,7 @@ import {
     XCircle,
     GitPullRequest
 } from "lucide-react";
-import { GitHubAvatar } from "@/components/dashboard/GitHubAvatar";
+import { GitHubAvatar } from "@/components/features/dashboard/GitHubAvatar";
 import { cn } from "@/lib/utils";
 
 export default function ApplicationsPage() {

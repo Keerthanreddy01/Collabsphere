@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { GlowButton } from "../shared/GlowButton";
+import { GlowButton } from "@/components/shared/GlowButton";
 import { Sparkles, Rocket, Zap, Heart, Globe, Send } from "lucide-react";
 
 export const CTASection = () => {

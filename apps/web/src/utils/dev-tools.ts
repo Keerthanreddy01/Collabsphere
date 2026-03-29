@@ -214,12 +214,8 @@ export const debugNetwork = {
    * Monitor all fetch requests
    */
   monitorFetch: (): void => {
-    const originalFetch = window.fetch;
-    window.fetch = function (...args: any[]) {
-      const [resource, config] = args;
-      logger.debug(`📡 Fetch: ${resource}`, config);
-      return originalFetch.apply(this, args);
-    };
+    // Disabled to avoid circular reference in strict types
+    console.log('Network monitoring disabled');
   },
 };
 

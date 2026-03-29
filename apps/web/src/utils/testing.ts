@@ -15,7 +15,7 @@ export const createMockFetchResponse = <T = any>(data: T, options?: { status?: n
     blob: () => Promise.resolve(new Blob([JSON.stringify(data)])),
     clone: () => createMockFetchResponse(data, options),
     headers: new Headers(),
-  } as Response);
+  } as unknown as Response);
 };
 
 /**

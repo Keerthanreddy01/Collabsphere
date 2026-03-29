@@ -122,7 +122,7 @@ export const applyToProject = async (
  */
 export const bookmarkProject = async (projectId: string): Promise<{ success: boolean }> => {
   try {
-    return await apiClient.post(`/projects/${projectId}/bookmark`);
+    return await apiClient.post(`/projects/${projectId}/bookmark`, {});
   } catch (error) {
     console.error('Failed to bookmark project:', error);
     throw error;

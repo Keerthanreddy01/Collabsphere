@@ -20,8 +20,8 @@ const navLinks = [
 
 export const Navbar = () => {
     const pathname = usePathname();
-    const { user, loading } = useAuth();
-    const { notifications, unreadCount, markAllAsRead } = useNotifications(user?.uid);
+    const { user, isLoading } = useAuth();
+    const { notifications, unreadCount, markAllAsRead } = useNotifications(user?.id);
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -115,7 +115,7 @@ export const Navbar = () => {
                                             <div key={n.id} className={cn("p-3 rounded-lg mb-1 transition-colors", !n.read ? "bg-primary/10" : "hover:bg-accent")}>
                                                 <p className="text-xs text-foreground font-medium leading-relaxed">{n.body}</p>
                                                 <span className="text-[10px] text-muted-foreground mt-1 block">
-                                                    {n.createdAt?.toDate ? n.createdAt.toDate().toLocaleDateString() : 'Just now'}
+                                                    {n.createdAt ? new Date(n.createdAt).toLocaleDateString() : 'Just now'}
                                                 </span>
                                             </div>
                                         ))
@@ -125,14 +125,14 @@ export const Navbar = () => {
                         </div>
                     )}
 
-                    {loading ? (
+                    {isLoading ? (
                         <div className="w-9 h-9 rounded-full bg-white/5 animate-pulse" />
                     ) : user ? (
                         <Link href="/dashboard" className="transition-transform hover:scale-105">
                             <Avatar className="h-9 w-9 border border-primary/20 hover:border-primary transition-colors cursor-pointer">
-                                <AvatarImage src={user.photoURL || ""} alt={user.displayName || ""} />
+                                <AvatarImage src={user.avatar || ""} alt={user.name || ""} />
                                 <AvatarFallback className="bg-primary/10 text-primary uppercase text-xs font-bold">
-                                    {user.displayName?.charAt(0) || "U"}
+                                    {user.name?.charAt(0) || "U"}
                                 </AvatarFallback>
                             </Avatar>
                         </Link>
@@ -199,7 +199,7 @@ export const Navbar = () => {
                                 <Button asChild variant="ghost" className="justify-start gap-3 p-3 h-auto">
                                     <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
                                         <Avatar className="h-6 w-6">
-                                            <AvatarImage src={user.photoURL || ""} />
+                                            <AvatarImage src={user.avatar || ""} />
                                         </Avatar>
                                         <span>My Dashboard</span>
                                     </Link>

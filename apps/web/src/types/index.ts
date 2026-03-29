@@ -51,22 +51,33 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  shortDescription: string;
-  owner: User;
-  technologies: string[];
+  shortDescription?: string;
+  owner?: User;
+  ownerId?: string;
+  technologies?: string[];
+  techStack?: string[];
   lookingFor?: string[];
-  status: 'active' | 'completed' | 'archived';
+  rolesNeeded?: { role: string; description?: string; filled: boolean }[];
+  status: string; // was strict 'active'...' building'
   links?: {
     github?: string;
     demo?: string;
     website?: string;
   };
+  githubUrl?: string;
+  demoUrl?: string;
   image?: string;
-  applicants: number;
-  views: number;
-  bookmarks: number;
-  createdAt: string;
-  updatedAt: string;
+  bannerColor?: string;
+  applicants?: number;
+  views?: number;
+  viewCount?: number;
+  bookmarks?: number;
+  upvotes?: string[];
+  teamSize?: number;
+  maxTeamSize?: number;
+  difficulty?: string;
+  createdAt: any;
+  updatedAt?: string;
 }
 
 /**

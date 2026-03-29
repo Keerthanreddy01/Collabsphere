@@ -9,10 +9,11 @@ import {
     GitBranch,
     ChevronDown,
 } from "lucide-react";
-import { GitHubAvatar } from "@/components/dashboard/GitHubAvatar";
-import { CreatePost } from "@/components/dashboard/CreatePost";
-import { RightSidebar } from "@/components/dashboard/RightSidebar";
-import { ActivityHeatmap } from "@/components/dashboard/ActivityHeatmap";
+import { GitHubAvatar } from "@/components/features/dashboard/GitHubAvatar";
+import { CreatePost } from "@/components/features/dashboard/CreatePost";
+import { RightSidebar } from "@/components/features/dashboard/RightSidebar";
+import { ActivityHeatmap } from "@/components/features/dashboard/ActivityHeatmap";
+import { Project } from "@/types";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useFeed } from "@/hooks/useFeed";
@@ -145,7 +146,7 @@ export default function DashboardOverview() {
                                         <span className="font-semibold text-[#e6edf3]">{activity.authorName || 'User'}</span>
                                         <span className="text-[#7d8590]">posted an update to</span>
                                         <span className="text-[#58a6ff] hover:underline cursor-pointer">{activity.projectName || 'Project'}</span>
-                                        <span className="text-[#7d8590]">· {activity.createdAt?.toDate ? new Date(activity.createdAt.toDate()).toLocaleDateString() : 'Just now'}</span>
+                                        <span className="text-[#7d8590]">· {activity.createdAt ? new Date(activity.createdAt).toLocaleDateString() : 'Just now'}</span>
                                     </div>
                                     <p className="text-[13px] text-[#7d8590] truncate pl-8">
                                         {activity.content}

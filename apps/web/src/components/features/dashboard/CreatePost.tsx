@@ -29,7 +29,7 @@ export const CreatePost = () => {
             //     headers: { 'Content-Type': 'application/json' },
             //     body: JSON.stringify({
             //         content: content.trim(),
-            //         authorId: user.uid,
+            //         authorId: user.id,
             //         projectId: "default"
             //     })
             // });
@@ -47,8 +47,8 @@ export const CreatePost = () => {
         <div className="bg-[#161b22] border border-[#30363d] rounded-[6px] p-4">
             <div className="flex gap-3">
                 <GitHubAvatar
-                    name={user?.displayName || "User"}
-                    src={user?.photoURL || ""}
+                    name={user?.name || "User"}
+                    src={user?.avatar || ""}
                     size={32}
                 />
 
