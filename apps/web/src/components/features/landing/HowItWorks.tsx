@@ -119,28 +119,28 @@ export const HowItWorks = () => {
                     <div className="relative overflow-hidden h-full flex flex-col justify-center">
                         <motion.div
                             style={{ 
-                                opacity: useTransform(scrollYProgress, [0, 0.33], [0, 0.05]),
-                                scale: useTransform(scrollYProgress, [0, 0.33], [0.8, 1])
+                                opacity: useTransform(scrollYProgress, [0, 0.33], [0, 0.03]),
+                                scale: useTransform(scrollYProgress, [0, 0.33], [0.8, 1.1])
                             }}
-                            className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-[450px] font-black text-primary select-none leading-none tracking-tighter"
+                            className="absolute -left-20 top-1/2 -translate-y-1/2 text-[500px] font-black text-primary select-none leading-none tracking-tighter"
                         >
                             01
                         </motion.div>
                         <motion.div
                             style={{ 
-                                opacity: useTransform(scrollYProgress, [0.33, 0.66], [0, 0.05]),
-                                scale: useTransform(scrollYProgress, [0.33, 0.66], [0.8, 1])
+                                opacity: useTransform(scrollYProgress, [0.33, 0.66], [0, 0.03]),
+                                scale: useTransform(scrollYProgress, [0.33, 0.66], [0.8, 1.1])
                             }}
-                            className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-[450px] font-black text-primary select-none leading-none tracking-tighter"
+                            className="absolute -left-20 top-1/2 -translate-y-1/2 text-[500px] font-black text-primary select-none leading-none tracking-tighter"
                         >
                             02
                         </motion.div>
                         <motion.div
                             style={{ 
-                                opacity: useTransform(scrollYProgress, [0.66, 1], [0, 0.05]),
-                                scale: useTransform(scrollYProgress, [0.66, 1], [0.8, 1])
+                                opacity: useTransform(scrollYProgress, [0.66, 1], [0, 0.03]),
+                                scale: useTransform(scrollYProgress, [0.66, 1], [0.8, 1.1])
                             }}
-                            className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-[450px] font-black text-primary select-none leading-none tracking-tighter"
+                            className="absolute -left-20 top-1/2 -translate-y-1/2 text-[500px] font-black text-primary select-none leading-none tracking-tighter"
                         >
                             03
                         </motion.div>

@@ -4,13 +4,25 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { 
+    Rocket, 
+    Menu, 
+    X, 
+    Bell, 
+    User as UserIcon, 
+    LogOut, 
+    Settings, 
+    LayoutDashboard,
+    Compass,
+    Terminal,
+    Sparkles
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 import { useNotifications } from "@/hooks/useNotifications";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Menu, X, Rocket, Terminal, Compass, LayoutDashboard, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navLinks = [
     { name: "Explore", href: "/explore", icon: Compass },
@@ -21,7 +33,7 @@ const navLinks = [
 export const Navbar = () => {
     const pathname = usePathname();
     const { user, isLoading } = useAuth();
-    const { notifications, unreadCount, markAllAsRead } = useNotifications(user?.id);
+    const { unreadCount } = useNotifications(user?.id);
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -34,30 +46,32 @@ export const Navbar = () => {
     }, []);
 
     return (
-        <motion.nav
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 lg:px-12 py-4",
-                isScrolled
-                    ? "bg-black/60 backdrop-blur-xl border-b border-white/5 py-3"
-                    : "bg-transparent"
-            )}
-        >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <header className={cn(
+            "fixed top-4 left-0 right-0 z-50 transition-all duration-500 px-4 flex justify-center",
+            isScrolled ? "top-2" : "top-4"
+        )}>
+            <motion.nav 
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className={cn(
+                    "w-full max-w-6xl flex items-center justify-between px-6 py-2.5 rounded-2xl transition-all duration-500",
+                    isScrolled 
+                        ? "bg-black/80 backdrop-blur-xl border border-white/10 shadow-[0_0_40px_rgba(34,197,94,0.1)]" 
+                        : "bg-white/5 backdrop-blur-md border border-white/5"
+                )}
+            >
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center relative shadow-[0_0_20px_rgba(124,58,237,0.3)] group-hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] transition-all">
-                        <Rocket className="text-white w-6 h-6 group-hover:scale-110 transition-transform" />
+                    <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center relative shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all duration-500">
+                        <Rocket className="text-white w-5 h-5 group-hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <span className="text-xl font-bold tracking-tight text-foreground dark:text-white">
+                    <span className="text-lg font-black tracking-tighter text-foreground dark:text-white uppercase">
                         Collab<span className="text-primary">Sphere</span>
                     </span>
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8 bg-white/5 dark:bg-black/20 px-6 py-2 rounded-full border border-white/5 backdrop-blur-sm">
+                <div className="hidden lg:flex items-center gap-1.5 p-1 bg-white/5 rounded-xl border border-white/5">
                     {navLinks.map((link) => {
                         const isActive = pathname === link.href;
                         return (
@@ -65,15 +79,15 @@ export const Navbar = () => {
                                 key={link.name}
                                 href={link.href}
                                 className={cn(
-                                    "text-sm font-medium transition-colors hover:text-primary relative",
-                                    isActive ? "text-primary" : "text-muted-foreground"
+                                    "px-4 py-1.5 text-xs font-bold uppercase tracking-widest transition-all rounded-lg relative",
+                                    isActive ? "text-white bg-primary/20" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                                 )}
                             >
                                 {link.name}
                                 {isActive && (
                                     <motion.div
-                                        layoutId="navbar-indicator"
-                                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
+                                        layoutId="nav-glow"
+                                        className="absolute inset-0 bg-primary/10 rounded-lg -z-10 blur-sm"
                                     />
                                 )}
                             </Link>
@@ -81,143 +95,94 @@ export const Navbar = () => {
                     })}
                 </div>
 
-                {/* Desktop Actions */}
-                <div className="hidden md:flex items-center gap-4">
-                    <ThemeToggle />
-
-                    {user && (
-                        <div className="relative group">
-                            <button className="p-2 rounded-full hover:bg-white/5 transition-colors relative">
-                                <Bell className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                                {unreadCount > 0 && (
-                                    <span className="absolute top-2 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-background animate-pulse" />
-                                )}
-                            </button>
-
-                            <div className="absolute right-0 top-full mt-2 w-72 bg-card border border-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 p-2 overflow-hidden">
-                                <div className="flex justify-between items-center p-2 border-b border-border mb-2">
-                                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Notifications</span>
-                                    <button
-                                        onClick={markAllAsRead}
-                                        className="text-[10px] text-primary hover:underline font-medium"
-                                    >
-                                        Mark all read
-                                    </button>
-                                </div>
-                                <div className="max-h-64 overflow-y-auto no-scrollbar">
-                                    {notifications.length === 0 ? (
-                                        <div className="p-8 text-center">
-                                            <Bell className="w-8 h-8 text-muted/20 mx-auto mb-2" />
-                                            <p className="text-xs text-muted-foreground">No new notifications</p>
-                                        </div>
-                                    ) : (
-                                        notifications.slice(0, 5).map((n) => (
-                                            <div key={n.id} className={cn("p-3 rounded-lg mb-1 transition-colors", !n.read ? "bg-primary/10" : "hover:bg-accent")}>
-                                                <p className="text-xs text-foreground font-medium leading-relaxed">{n.body}</p>
-                                                <span className="text-[10px] text-muted-foreground mt-1 block">
-                                                    {n.createdAt ? new Date(n.createdAt).toLocaleDateString() : 'Just now'}
-                                                </span>
-                                            </div>
-                                        ))
+                {/* Actions */}
+                <div className="flex items-center gap-3">
+                    <div className="hidden md:flex items-center gap-3">
+                        <ThemeToggle />
+                        {!user && !isLoading && (
+                            <div className="flex items-center gap-2">
+                                <Link href="/login">
+                                    <Button variant="ghost" className="text-xs font-bold uppercase tracking-widest px-4 h-9">
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link href="/register">
+                                    <Button className="bg-primary text-white hover:bg-primary/90 text-xs font-bold uppercase tracking-widest px-5 h-9 rounded-lg shadow-lg shadow-primary/20">
+                                        Join Platform
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
+                        {user && (
+                            <div className="flex items-center gap-3">
+                                <button className="relative p-2 rounded-lg hover:bg-white/5 transition-colors group">
+                                    <Bell className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    {unreadCount > 0 && (
+                                        <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-black" />
                                     )}
+                                </button>
+                                <div className="w-9 h-9 rounded-lg border border-white/10 p-0.5 overflow-hidden group cursor-pointer">
+                                    <Avatar className="w-full h-full rounded-[6px]">
+                                        <AvatarImage src={user.avatar} />
+                                        <AvatarFallback className="bg-primary/20 text-primary text-[10px] font-black">{user.name?.charAt(0)}</AvatarFallback>
+                                    </Avatar>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
 
-                    {isLoading ? (
-                        <div className="w-9 h-9 rounded-full bg-white/5 animate-pulse" />
-                    ) : user ? (
-                        <Link href="/dashboard" className="transition-transform hover:scale-105">
-                            <Avatar className="h-9 w-9 border border-primary/20 hover:border-primary transition-colors cursor-pointer">
-                                <AvatarImage src={user.avatar || ""} alt={user.name || ""} />
-                                <AvatarFallback className="bg-primary/10 text-primary uppercase text-xs font-bold">
-                                    {user.name?.charAt(0) || "U"}
-                                </AvatarFallback>
-                            </Avatar>
-                        </Link>
-                    ) : (
-                        <div className="flex items-center gap-2">
-                            <Button asChild variant="ghost" className="rounded-full px-6">
-                                <Link href="/login">Login</Link>
-                            </Button>
-                            <Button asChild className="rounded-full bg-primary hover:bg-primary/90 text-white px-6 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
-                                <Link href="/register">Join Platform</Link>
-                            </Button>
-                        </div>
-                    )}
-                </div>
-
-                {/* Mobile Toggle */}
-                <div className="md:hidden flex items-center gap-3">
-                    <ThemeToggle />
-                    {user && (
-                        <div className="relative">
-                            <Bell className="w-5 h-5 text-muted-foreground" />
-                            {unreadCount > 0 && (
-                                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-background" />
-                            )}
-                        </div>
-                    )}
-                    <Button
-                        variant="ghost"
-                        size="icon"
+                    {/* Mobile Menu Toggle */}
+                    <button 
+                        className="lg:hidden p-2 rounded-lg bg-white/5 border border-white/5"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="rounded-full border border-white/5"
                     >
                         {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                    </Button>
+                    </button>
                 </div>
-            </div>
+            </motion.nav>
 
             {/* Mobile Menu */}
             <AnimatePresence>
                 {mobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden mt-4 overflow-hidden bg-background/95 backdrop-blur-2xl rounded-2xl border border-white/10"
+                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                        className="fixed inset-x-4 top-20 z-40 lg:hidden p-4 bg-black/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
                     >
-                        <div className="flex flex-col gap-2 p-4">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className={cn(
-                                        "flex items-center gap-3 p-3 rounded-xl transition-colors",
-                                        pathname === link.href ? "bg-primary/10 text-primary" : "hover:bg-white/5 text-muted-foreground"
-                                    )}
-                                >
-                                    <link.icon className="w-5 h-5" />
-                                    <span className="font-medium">{link.name}</span>
-                                </Link>
-                            ))}
-                            <div className="h-px bg-white/5 my-2" />
-                            {user ? (
-                                <Button asChild variant="ghost" className="justify-start gap-3 p-3 h-auto">
-                                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                                        <Avatar className="h-6 w-6">
-                                            <AvatarImage src={user.avatar || ""} />
-                                        </Avatar>
-                                        <span>My Dashboard</span>
-                                    </Link>
-                                </Button>
-                            ) : (
-                                <>
-                                    <Button asChild variant="ghost" className="justify-start">
-                                        <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
-                                    </Button>
-                                    <Button asChild className="bg-primary text-white">
-                                        <Link href="/register" onClick={() => setMobileMenuOpen(false)}>Join Platform</Link>
-                                    </Button>
-                                </>
-                            )}
+                        <div className="flex flex-col gap-2">
+                           {navLinks.map((link) => (
+                               <Link
+                                   key={link.name}
+                                   href={link.href}
+                                   onClick={() => setMobileMenuOpen(false)}
+                                   className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-sm font-bold uppercase tracking-widest text-[#7d8590] hover:text-white"
+                               >
+                                   <link.icon className="w-5 h-5 text-primary" />
+                                   {link.name}
+                               </Link>
+                           ))}
+                           <div className="h-px bg-white/5 my-2" />
+                           <div className="flex flex-col gap-3 p-2">
+                               {!user ? (
+                                   <>
+                                       <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                                           <Button variant="outline" className="w-full h-12 uppercase tracking-widest font-black">Login</Button>
+                                       </Link>
+                                       <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                                           <Button className="w-full h-12 bg-primary uppercase tracking-widest font-black shadow-lg shadow-primary/20">Join Now</Button>
+                                       </Link>
+                                   </>
+                               ) : (
+                                   <Button variant="outline" className="w-full h-12 flex items-center justify-center gap-2 text-red-500 border-red-500/20 hover:bg-red-500/10">
+                                       <LogOut className="w-5 h-5" /> Sign Out
+                                   </Button>
+                               )}
+                           </div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.nav>
+        </header>
     );
 };

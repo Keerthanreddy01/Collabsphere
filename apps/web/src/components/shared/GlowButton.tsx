@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useSpring, useMotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const GlowButton = ({
@@ -20,7 +20,7 @@ export const GlowButton = ({
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 20, stiffness: 150 };
+    const springConfig = { damping: 25, stiffness: 200 };
     const springX = useSpring(mouseX, springConfig);
     const springY = useSpring(mouseY, springConfig);
 
@@ -29,8 +29,8 @@ export const GlowButton = ({
         const rect = ref.current.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        mouseX.set(x * 0.35);
-        mouseY.set(y * 0.35);
+        mouseX.set(x * 0.25);
+        mouseY.set(y * 0.25);
     };
 
     const handleMouseLeave = () => {
@@ -39,8 +39,8 @@ export const GlowButton = ({
     };
 
     const variants = {
-        primary: "bg-primary text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:shadow-[0_0_30px_rgba(124,58,237,0.6)]",
-        secondary: "bg-secondary text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]",
+        primary: "bg-primary text-white border border-primary/20 shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:shadow-[0_0_50px_rgba(34,197,94,0.5)]",
+        secondary: "bg-[#050505] text-white border border-white/10 shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:bg-white/5",
         ghost: "bg-transparent text-foreground border border-white/10 hover:bg-white/5",
         glass: "glass text-foreground hover:bg-white/10 border-white/20 shadow-xl",
     };
@@ -56,23 +56,23 @@ export const GlowButton = ({
                 y: springY,
             }}
             className={cn(
-                "relative px-8 py-3 rounded-full font-bold transition-all duration-300 active:scale-95 group overflow-hidden",
+                "relative h-12 px-8 rounded-full font-black uppercase tracking-widest text-[10px] transition-all duration-300 active:scale-95 group overflow-hidden",
                 variants[variant],
                 className
             )}
         >
-            <span className="relative z-10 flex items-center gap-2 group-hover:scale-105 transition-transform duration-300">
+            <span className="relative z-10 flex items-center justify-center gap-2 group-hover:scale-105 transition-transform duration-300">
                 {children}
             </span>
 
-            {/* Glow highlight */}
+            {/* Internal Glow Pulse */}
             <motion.div
-                className="absolute inset-0 z-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl pointer-events-none"
+                className="absolute inset-0 z-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl pointer-events-none"
                 animate={{
-                    scale: [1, 1.2, 1],
+                    scale: [1, 1.3, 1],
                 }}
                 transition={{
-                    duration: 3,
+                    duration: 4,
                     repeat: Infinity,
                 }}
             />
