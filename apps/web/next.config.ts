@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
   reactCompiler: true,
   transpilePackages: ["@collabsphere/firebase", "@collabsphere/types", "@collabsphere/utils"],
   devIndicators: {
