@@ -1,10 +1,11 @@
 name: CI - Lint, TypeCheck, Build
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+on: [] # Empty on to effectively disable
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

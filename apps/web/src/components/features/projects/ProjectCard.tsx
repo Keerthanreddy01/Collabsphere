@@ -47,7 +47,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
                         </div>
                     </div>
                     <div className="flex items-center gap-1.5 bg-secondary/50 px-2 py-1 rounded-lg border border-border">
-                        <Heart className={cn("w-3.5 h-3.5", project.upvotes?.length > 0 ? "text-primary fill-primary" : "text-muted-foreground")} />
+                        <Heart className={cn("w-3.5 h-3.5", (project.upvotes?.length ?? 0) > 0 ? "text-primary fill-primary" : "text-muted-foreground")} />
                         <span className="text-[10px] font-bold font-mono">{project.upvotes?.length || 0}</span>
                     </div>
                 </div>
@@ -95,9 +95,9 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
                                     <AvatarFallback>B</AvatarFallback>
                                 </Avatar>
                             ))}
-                            {project.teamSize > 2 && (
+                            {(project.teamSize ?? 0) > 2 && (
                                 <div className="w-7 h-7 rounded-full bg-secondary text-[9px] text-foreground font-black border-2 border-[hsl(var(--card))] flex items-center justify-center ring-1 ring-border">
-                                    +{project.teamSize - 2}
+                                    +{(project.teamSize ?? 0) - 2}
                                 </div>
                             )}
                         </div>
