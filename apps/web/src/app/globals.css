@@ -27,18 +27,16 @@
 
 @layer base {
   body {
-    @apply bg-[#0A0A0F] text-white antialiased selection:bg-primary/30;
-    font-family: var(--font-inter), sans-serif;
+    @apply bg-[#0A0A0F] text-white antialiased selection:bg-primary/30 font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-white font-bold leading-tight;
-    font-family: var(--font-space-grotesk), var(--font-syne), sans-serif;
   }
 
   code, pre, .font-mono {
-    font-family: var(--font-mono), monospace;
+    @apply font-mono;
   }
 }
 
