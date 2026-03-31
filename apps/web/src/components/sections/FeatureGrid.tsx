@@ -2,72 +2,36 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const FEATURES = [
   {
-    title: "Builder Profiles",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
-      </svg>
-    ),
-    description: "Show what you actually build. GitHub stats, tech stack, open-to-collab status."
+    title: "BUILDER PROFILES",
+    icon: "★",
+    description: "GitHub-native reputation system. Your PRs are your resume.",
+    bg: "#6C63FF",
+    span: "col-span-1"
   },
   {
-    title: "Project Incubation",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m3 21 3-3"></path>
-        <path d="m15 12-3-3"></path>
-        <path d="m21 3-3 3"></path>
-        <path d="m5 16 4-4"></path>
-        <path d="m9 21 4-4"></path>
-        <path d="M15 15h0"></path>
-      </svg>
-    ),
-    description: "Launch your project. Post open roles. Recruit motivated teammates."
+    title: "PROJECT INCUBATION",
+    icon: "✦",
+    description: "Launch, recruit, and coordinate. One platform, zero friction.",
+    bg: "#00D4FF",
+    span: "col-span-1 lg:col-span-2"
   },
   {
-    title: "Build-in-Public Feed",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-      </svg>
-    ),
-    description: "Share progress. Get boosts. Build your reputation one shipped feature at a time."
+    title: "SHIP-IN-PUBLIC FEED",
+    icon: "🚀",
+    description: "Build your fan base one shipped feature at a time. Get real-time boosts.",
+    bg: "#00FF94",
+    span: "col-span-1 lg:col-span-2"
   },
   {
-    title: "Collaboration Rooms",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-      </svg>
-    ),
-    description: "Team spaces for chat, assets, and coordination — all in one place."
-  },
-  {
-    title: "Workshops",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-        <line x1="16" y1="2" x2="16" y2="6"></line>
-        <line x1="8" y1="2" x2="8" y2="6"></line>
-        <line x1="3" y1="10" x2="21" y2="10"></line>
-      </svg>
-    ),
-    description: "Host or attend technical workshops. Online, offline, or hybrid with RSVP tracking."
-  },
-  {
-    title: "Dev Q&A",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-    ),
-    description: "Post a question. Get a real answer. Senior devs help and move on. No noise."
+    title: "COLLAB ROOMS",
+    icon: "⚑",
+    description: "Private spaces for your core team to coordinate without the discord noise.",
+    bg: "#FFE135",
+    span: "col-span-1"
   }
 ];
 
@@ -76,42 +40,42 @@ export function FeatureGrid() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="relative py-32 bg-[#0A0A0F] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Editorial Section Header */}
-        <div className="mb-24 flex flex-col items-start text-left">
-           <motion.h2 
-             initial={{ opacity: 0, x: -60 }}
-             animate={isInView ? { opacity: 1, x: 0 } : {}}
-             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }} 
-             className="text-[48px] md:text-[72px] font-display font-extrabold flex flex-col leading-[1] tracking-tight italic mb-8"
-           >
-             <span className="text-white">Everything a</span>
-             <span className="text-[#6C63FF]">builder needs.</span>
-           </motion.h2>
-           <motion.p 
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 1, delay: 0.3 }} 
-              className="text-[18px] text-[#5A5A6E] font-medium max-w-lg leading-relaxed"
-           >
-              One platform. Zero friction. Built by developers for developers.
-           </motion.p>
-        </div>
+    <section ref={ref} className="relative py-48 bg-[#0A0A0F] grid-texture">
+       {/* Section Header */}
+       <div className="max-w-7xl mx-auto px-6 mb-32 flex flex-col md:flex-row md:items-end justify-between gap-12 text-left">
+          <div className="max-w-2xl">
+             <div className="text-[14px] font-mono font-bold tracking-[8px] text-[#6C63FF] mb-8 uppercase italic border-l-4 border-[#6C63FF] pl-6">
+                PLATFORM CAPABILITIES
+             </div>
+             <motion.h2 
+               initial={{ opacity: 0, x: -60 }}
+               animate={isInView ? { opacity: 1, x: 0 } : {}}
+               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }} 
+               className="text-[60px] md:text-[90px] font-display font-extrabold flex flex-col leading-[0.88] tracking-[-0.04em] italic uppercase"
+             >
+               <span className="text-white">EVERYTHING A</span>
+               <span className="text-[#6C63FF]">BUILDER NEEDS.</span>
+             </motion.h2>
+          </div>
+          <div className="max-w-xs pb-4">
+             <p className="text-[18px] text-[#5A5A6E] font-medium leading-relaxed italic border-b border-white/10 pb-6 mb-6 uppercase">
+                One platform. Zero friction. Built by developers for developers.
+             </p>
+             <button className="text-[12px] font-mono font-black text-white hover:text-[#6C63FF] transition-all underline underline-offset-8">VIEW ALL FEATURES</button>
+          </div>
+       </div>
 
-        {/* Grid of Stamp Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-           {FEATURES.map((feature, i) => (
-             <FeatureCard 
-               key={feature.title} 
-               feature={feature} 
-               index={i} 
-               isInView={isInView}
-             />
-           ))}
-        </div>
-      </div>
+       {/* Creative Masonry Grid */}
+       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {FEATURES.map((feature, i) => (
+             <FeatureCard key={i} index={i} feature={feature} isInView={isInView} />
+          ))}
+       </div>
+
+       {/* Background decorative big ghost text */}
+       <div className="absolute top-0 right-0 pointer-events-none opacity-[0.03] rotate-90 translate-x-1/2 origin-top-right">
+          <span className="text-[300px] font-display font-extrabold italic whitespace-nowrap text-white">FEATURES FEATURES FEATURES</span>
+       </div>
     </section>
   );
 }
@@ -119,34 +83,44 @@ export function FeatureGrid() {
 const FeatureCard = ({ feature, index, isInView }: { feature: any, index: number, isInView: boolean }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: 0.1 + index * 0.1, ease: [0.16, 1, 0.3, 1] as any }}
-      whileHover={{ scale: 1.02 }}
-      className="group relative h-full bg-[#111118] border border-[#6C63FF]/12 p-10 rounded-[28px] overflow-hidden transition-all duration-300 hover:border-[#6C63FF]/40 hover:shadow-[0_0_40px_rgba(108,99,255,0.12)]"
+      initial={{ opacity: 0, y: 60, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 1, delay: 0.1 + index * 0.15, ease: [0.16, 1, 0.3, 1] as any }}
+      className={cn(
+        "group relative h-[380px] bg-[#111118] border-4 border-[#0A0A0F] p-12 rounded-[48px] overflow-hidden transition-all duration-500 shadow-[12px_12px_0_rgba(10,10,15,1)] hover:shadow-none hover:translate-x-3 hover:translate-y-3",
+        feature.span
+      )}
     >
-       {/* Byooooob Glow Spot */}
-       <div className="absolute top-[-40px] right-[-40px] w-[120px] h-[120px] bg-[#6C63FF]/0 transition-all duration-500 rounded-full blur-[60px] group-hover:bg-[#6C63FF]/20" />
+       {/* Background hover color splash like Byooooob */}
+       <div 
+         className="absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-[0.08]"
+         style={{ backgroundColor: feature.bg }}
+       />
 
-       {/* Icon Container */}
-       <div className="w-[52px] h-[52px] bg-[#6C63FF]/12 rounded-[14px] flex items-center justify-center text-[#6C63FF] mb-10 transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-2 group-hover:bg-[#6C63FF] group-hover:text-white">
-          {feature.icon}
+       {/* Top Icon Badge - Creative Stamp style */}
+       <div className="flex justify-between items-start mb-14 relative z-10">
+          <div 
+            className="w-16 h-16 rounded-2xl flex items-center justify-center font-display font-black text-3xl transition-all duration-500 group-hover:rotate-[360deg] shadow-lg border-2 border-[#0A0A0F]"
+            style={{ backgroundColor: feature.bg, color: feature.bg === "#FFE135" ? "#0A0A0F" : "#FFFFFF" }}
+          >
+             {feature.icon}
+          </div>
+          <div className="bg-[#0A0A0F] text-white px-5 py-2 font-mono font-black text-[10px] italic rotate-6 group-hover:rotate-0 transition-all rounded-xl shadow-lg uppercase">
+             CAPABILITY #{index + 1}
+          </div>
        </div>
 
-       {/* Optional Badge */}
-       {feature.title === "Workshops" && (
-          <div className="absolute top-8 right-8 bg-[#00FF94]/10 border border-[#00FF94]/30 px-3 py-1.5 rounded-lg text-[#00FF94] font-mono font-bold text-[9px] tracking-[1px] uppercase">
-             UPCOMING
-          </div>
-       )}
+       <div className="relative z-10">
+          <h3 className="text-3xl font-display font-extrabold text-white italic uppercase mb-4 tracking-tighter leading-none group-hover:text-[#6C63FF] transition-all">
+             {feature.title}
+          </h3>
+          <p className="text-[16px] font-medium text-[#565668] leading-[1.65] max-w-[280px] uppercase italic group-hover:text-[#8B8B9E] transition-all">
+             {feature.description}
+          </p>
+       </div>
 
-       <h3 className="text-[22px] font-display font-extrabold text-white mb-4 italic uppercase tracking-tighter">
-          {feature.title}
-       </h3>
-       
-       <p className="text-[15px] font-medium text-[#5A5A6E] leading-relaxed group-hover:text-[#8B8B9E] transition-colors">
-          {feature.description}
-       </p>
+       {/* Corner floating element on hover */}
+       <div className="absolute -bottom-8 -right-8 w-32 h-32 opacity-0 group-hover:opacity-20 transition-all duration-700 group-hover:scale-150 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: feature.bg }} />
     </motion.div>
   );
 };
