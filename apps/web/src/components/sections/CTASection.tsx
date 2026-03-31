@@ -12,14 +12,24 @@ export function CTASection() {
       offset: ["start end", "end start"]
    });
 
-   // Smooth wordmark movement
    const wordmarkX = useTransform(scrollYProgress, [0, 1], [-500, 500]);
+   const tickerX = useTransform(scrollYProgress, [0, 1], [0, -1000]);
 
    return (
       <section ref={containerRef} className="relative pt-64 pb-32 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden">
          
-         {/* Heavy Airloop Dot Pattern (Sharp Border restore) */}
-         <div className="absolute inset-0 opacity-20" 
+         {/* ELITE BACKGROUND FILL: Ticker + Atoms */}
+         <div className="absolute inset-0 opacity-10 pointer-events-none select-none">
+            <motion.div 
+               style={{ x: tickerX }}
+               className="flex whitespace-nowrap text-[180px] font-display font-black text-white italic uppercase leading-none tracking-tighter"
+            >
+               SHIP SHIP SHIP SHIP SHIP SHIP SHIP SHIP SHIP SHIP
+            </motion.div>
+         </div>
+
+         {/* Heavy Airloop Dot Pattern */}
+         <div className="absolute inset-0 opacity-15" 
               style={{ 
                 backgroundImage: `radial-gradient(circle at 2px 2px, white 2px, transparent 0)`,
                 backgroundSize: '40px 40px' 
@@ -33,16 +43,17 @@ export function CTASection() {
                
                {/* Massive Text Area */}
                <div className="lg:col-span-12 xl:col-span-7 space-y-12">
-                  <motion.h3 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-[72px] md:text-[140px] font-display font-black text-white italic uppercase tracking-[-0.08em] leading-[0.78]"
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                   >
-                     READY TO <br/><span className="text-[#B6FF33]">SHIP?</span>
-                  </motion.h3>
+                     <h3 className="text-[72px] md:text-[140px] font-display font-black text-white italic uppercase tracking-[-0.08em] leading-[0.78]">
+                        READY TO <br/><span className="text-[#B6FF33]">SHIP?</span>
+                     </h3>
+                  </motion.div>
                   
-                  <div className="flex flex-col md:flex-row gap-6 max-w-2xl mt-12 group">
+                  <div className="flex flex-col md:flex-row gap-6 max-w-2xl mt-12">
                      <div className="flex-1 bg-white p-2 rounded-[32px] border-4 border-[#0A0A0F] shadow-[16px_16px_0_#0A0A0F] transition-all hover:translate-x-4 hover:translate-y-4 hover:shadow-none duration-500">
                         <input
                            type="email"
@@ -58,13 +69,14 @@ export function CTASection() {
 
                {/* REFILLED LINKS AREA */}
                <div className="lg:col-span-12 xl:col-span-5 grid grid-cols-2 md:grid-cols-3 gap-12 text-left relative">
-                  <div className="absolute -z-10 -top-20 -right-20 w-80 h-80 bg-white/[0.03] border-4 border-white/5 rounded-full flex items-center justify-center font-display font-black text-[200px] text-white/[0.05] italic rotate-[20deg] select-none pointer-events-none">★</div>
+                  {/* Floating 'Stamp' Sticker */}
+                  <div className="absolute -z-10 -top-20 -right-20 w-80 h-80 bg-white/[0.05] border-8 border-white/5 rounded-full flex items-center justify-center font-display font-black text-[200px] text-white/[0.05] italic rotate-[20deg] select-none pointer-events-none">★</div>
 
                   <div className="space-y-8">
                      <h4 className="text-white font-display font-black text-2xl uppercase italic tracking-tighter">Resources</h4>
                      <ul className="space-y-4">
                         {["GitHub REPO", "NPM SDK", "DOCS (BETA)", "API STATUS"].map(item => (
-                           <li key={item}><button className="text-white/60 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
+                           <li key={item}><button className="text-white/70 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
                         ))}
                      </ul>
                   </div>
@@ -72,15 +84,15 @@ export function CTASection() {
                      <h4 className="text-white font-display font-black text-2xl uppercase italic tracking-tighter">Ecosystem</h4>
                      <ul className="space-y-4">
                         {["Featured", "Community", "Showcase", "Licenses"].map(item => (
-                           <li key={item}><button className="text-white/60 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
+                           <li key={item}><button className="text-white/70 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
                         ))}
                      </ul>
                   </div>
                   <div className="space-y-8 hidden md:block">
                      <h4 className="text-white font-display font-black text-2xl uppercase italic tracking-tighter">Follow</h4>
                      <ul className="space-y-4">
-                        {["Twitter / X", "Instagram", "Discord", "LinkedIn"].map(item => (
-                           <li key={item}><button className="text-white/60 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
+                        {["Twitter", "Instagram", "Discord", "LinkedIn"].map(item => (
+                           <li key={item}><button className="text-white/70 font-display font-black text-xs hover:text-[#B6FF33] transition-colors uppercase italic tracking-widest">{item}</button></li>
                         ))}
                      </ul>
                   </div>
@@ -99,7 +111,7 @@ export function CTASection() {
                </motion.div>
 
                {/* HI-FIDELITY ORGANIC STICKERS */}
-               <div className="absolute inset-x-0 bottom-[-10%] flex items-center justify-center gap-4 md:gap-32 w-full">
+               <div className="absolute inset-x-0 bottom-[-10%] flex items-center justify-center gap-4 md:gap-48 w-full">
                   
                   {/* Flower Sticker */}
                   <motion.div
@@ -113,7 +125,7 @@ export function CTASection() {
                      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#0A0A0F] border-4 border-white/20" />
                   </motion.div>
 
-                  {/* Blob/Bone Sticker */}
+                  {/* Blob Sticker */}
                   <motion.div
                      whileHover={{ scale: 1.05, rotate: 5 }}
                      className="relative bg-[#B6FF33] border-[8px] md:border-[20px] border-[#0A0A0F] px-10 md:px-32 py-10 md:py-24 rounded-[100px_40px_120px_60px] shadow-[40px_40px_0_#0A0A0F] rotate-[6deg] cursor-pointer group"
@@ -128,12 +140,14 @@ export function CTASection() {
 
             {/* Footer Bottom */}
             <div className="pt-20 border-t-8 border-[#0A0A0F] flex flex-col md:flex-row justify-between items-center gap-10">
-               <div className="flex items-center gap-8">
-                  <p className="text-[14px] font-mono font-black text-white/50 uppercase tracking-[6px]">© 2026 THE GALAXY CORP.</p>
+               <div className="flex items-center gap-10">
+                  <p className="text-[14px] font-mono font-black text-white/50 uppercase tracking-[8px]">© 2026 THE GALAXY CORP.</p>
+                  <div className="h-6 w-1 bg-white/20 hidden md:block" />
+                  <span className="text-[10px] font-mono font-black text-white/20 uppercase tracking-[4px] hidden md:block italic">WORLD-CLASS SHIPPER PROTOCOL ACTIVE</span>
                </div>
-               <div className="flex gap-12 font-mono text-[10px] font-black text-[#B6FF33] underline underline-offset-4 decoration-2">
-                  <button className="hover:text-white transition-colors">PRIVACY POLICY</button>
-                  <button className="hover:text-white transition-colors">TERMS OF SERVICE</button>
+               <div className="flex gap-16 font-mono text-[10px] font-black text-[#B6FF33] underline underline-offset-4 decoration-2">
+                  <button className="hover:text-white transition-colors">PRIVACY</button>
+                  <button className="hover:text-white transition-colors">TERMS</button>
                </div>
             </div>
          </div>
