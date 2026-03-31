@@ -1,75 +1,81 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
-import { Rocket, Github, Twitter, Linkedin, Heart } from "lucide-react";
+import { Github, Twitter, Linkedin, Star } from "lucide-react";
 
-export const Footer = () => {
-    return (
-        <footer className="w-full bg-[#f9f9f9] dark:bg-[#050505] border-t border-[hsl(var(--border))] py-20 px-6 lg:px-12 relative z-[1]">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 md:gap-24">
-                <div className="flex flex-col gap-8 max-w-sm">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center relative shadow-lg shadow-primary/20">
-                            <Rocket className="text-white w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-black tracking-tight text-foreground dark:text-white uppercase">
-                            Collab<span className="text-primary">Sphere</span>
-                        </span>
-                    </Link>
-                    <p className="text-muted-foreground text-base leading-relaxed font-medium">
-                        The platform for the next generation of builders. Connect, build, and ship faster together. 
-                        Let&apos;s build the future of software in public.
-                    </p>
-                    <div className="flex items-center gap-6">
-                        <Link href="https://github.com/Keerthanreddy01/Collabsphere" className="text-muted-foreground hover:text-primary transition-colors">
-                            <Github className="w-6 h-6" />
-                        </Link>
-                        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                            <Twitter className="w-6 h-6" />
-                        </Link>
-                        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                            <Linkedin className="w-6 h-6" />
-                        </Link>
-                    </div>
-                </div>
+export function Footer() {
+  const currentYear = new Date().getFullYear();
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-16 md:gap-24 w-full md:w-auto">
-                    <div className="flex flex-col gap-6">
-                        <h4 className="font-black text-xs text-foreground uppercase tracking-[0.2em]">Explore</h4>
-                        <div className="flex flex-col gap-4">
-                            <Link href="/explore" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Projects</Link>
-                            <Link href="/explore" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Hackathons</Link>
-                            <Link href="/explore" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Builders</Link>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-6">
-                        <h4 className="font-black text-xs text-foreground uppercase tracking-[0.2em]">Platform</h4>
-                        <div className="flex flex-col gap-4">
-                            <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Dashboard</Link>
-                            <Link href="/feed" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Feed</Link>
-                            <Link href="/profile" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Profile</Link>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-6">
-                        <h4 className="font-black text-xs text-foreground uppercase tracking-[0.2em]">Resources</h4>
-                        <div className="flex flex-col gap-4">
-                            <Link href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Privacy</Link>
-                            <Link href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Terms</Link>
-                            <Link href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Contact</Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <footer className="relative bg-[#0A0A0F] border-t border-white/5 pt-24 pb-12 overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3" />
+      
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 relative z-10">
+        <div className="lg:col-span-2">
+          <Link href="/" className="inline-block mb-6">
+            <span className="text-2xl font-display font-bold tracking-tight text-white">
+              Collab<span className="text-primary italic">sphere</span>
+            </span>
+          </Link>
+          <p className="text-[#8B8B9E] max-w-sm mb-8 leading-relaxed">
+            The professional network for builders. Post your project, find your stack match, and ship together. Built for developers by developers.
+          </p>
+          <div className="flex items-center gap-4">
+            <Link href="https://github.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-primary/20 transition-colors">
+              <Github size={18} />
+            </Link>
+            <Link href="https://twitter.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-primary/20 transition-colors">
+              <Twitter size={18} />
+            </Link>
+            <Link href="https://linkedin.com" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-primary/20 transition-colors">
+              <Linkedin size={18} />
+            </Link>
+          </div>
+        </div>
 
-            <div className="max-w-7xl mx-auto border-t border-[hsl(var(--border))] mt-20 pt-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                <p className="text-xs text-muted-foreground flex items-center gap-1.5 font-bold uppercase tracking-widest">
-                    &copy; {new Date().getFullYear()} CollabSphere. Built for Builders.
-                </p>
-                <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest flex items-center gap-2">
-                    Shipped with <Heart className="w-3.5 h-3.5 text-primary fill-current" /> by CollabSphere Team
-                </p>
-            </div>
-        </footer>
-    );
-};
+        <div>
+          <h4 className="text-sm font-bold uppercase tracking-widest text-[#8B8B9E] mb-6">Platform</h4>
+          <ul className="space-y-4 text-sm font-medium">
+            <li><Link href="/features" className="text-white/60 hover:text-primary transition-colors">Features</Link></li>
+            <li><Link href="/pricing" className="text-white/60 hover:text-primary transition-colors">Pricing</Link></li>
+            <li><Link href="/changelog" className="text-white/60 hover:text-primary transition-colors">Changelog</Link></li>
+            <li><Link href="/oss" className="text-white/60 hover:text-primary transition-colors">Open Source</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-bold uppercase tracking-widest text-[#8B8B9E] mb-6">Community</h4>
+          <ul className="space-y-4 text-sm font-medium">
+            <li><Link href="https://github.com" className="text-white/60 hover:text-primary transition-colors">GitHub Discussions</Link></li>
+            <li><Link href="/contributing" className="text-white/60 hover:text-primary transition-colors">Contributing</Link></li>
+            <li><Link href="/security" className="text-white/60 hover:text-primary transition-colors">Security</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-sm font-bold uppercase tracking-widest text-[#8B8B9E] mb-6">Company</h4>
+          <ul className="space-y-4 text-sm font-medium">
+            <li><Link href="/about" className="text-white/60 hover:text-primary transition-colors">About Us</Link></li>
+            <li><Link href="/blog" className="text-white/60 hover:text-primary transition-colors">Engineering Blog</Link></li>
+            <li><Link href="/contact" className="text-white/60 hover:text-primary transition-colors">Contact</Link></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+        <div className="text-sm text-[#8B8B9E] font-medium flex gap-4">
+          <span>MIT Licensed</span>
+          <span className="w-1 h-1 bg-white/10 my-auto rounded-full" />
+          <span>Open Source</span>
+          <span className="w-1 h-1 bg-white/10 my-auto rounded-full" />
+          <span>Made by builders for builders</span>
+        </div>
+        
+        <Link href="https://github.com" target="_blank" className="bg-primary/10 border border-primary/20 px-4 py-2 rounded-full flex items-center gap-2 group transition-all duration-300">
+          <Star size={16} className="text-primary group-hover:fill-primary" />
+          <span className="text-xs font-mono font-bold text-primary">Starred on GitHub 1.2k</span>
+        </Link>
+      </div>
+    </footer>
+  );
+}
