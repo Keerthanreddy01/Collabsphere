@@ -4,8 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { GradientButton } from "@/components/ui/GradientButton";
-import { Github, Menu, X, Star } from "lucide-react";
+import { Menu, X, Star } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,112 +13,136 @@ export function Navbar() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(10, 10, 15, 0)", "rgba(10, 10, 15, 1)"]
+    ["rgba(10, 10, 15, 0)", "rgba(10, 10, 15, 0.95)"]
   );
   
-  const borderOpacity = useTransform(
-    scrollY,
-    [0, 80],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.06)"]
-  );
-
   const navLinks = [
-    { name: "Features", href: "/features" },
-    { name: "Community", href: "/community" },
-    { name: "Docs", href: "/docs" },
+    { name: "Features", href: "#" },
+    { name: "Community", href: "#", isNew: true },
+    { name: "Docs", href: "#" },
   ];
 
   return (
     <motion.nav
-      style={{
-        backgroundColor,
-        borderBottom: `1px solid ${borderOpacity}`,
-      }}
-      className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center transition-expo"
+      style={{ backgroundColor }}
+      className="fixed top-0 left-0 right-0 z-[100] h-24 flex items-center transition-all duration-500 border-b border-white/[0.05]"
     >
       <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-2xl font-display font-bold tracking-tight text-white transition-expo group-hover:scale-105">
-            Collab<span className="text-[#6C63FF]">sphere</span>
-          </span>
+        
+        {/* LOGO - CLEAN 3D EFFECT (NO GLITCHY DROP-SHADOW) */}
+        <Link href="/" className="flex items-center gap-3 group relative perspective-1000">
+           <motion.div 
+             whileHover={{ scale: 1.05 }}
+             className="relative flex items-center"
+           >
+              {/* Back Layer (The Shadow) */}
+              <span className="absolute top-[4px] left-[4px] text-[26px] font-display font-black tracking-tighter text-[#6C63FF] uppercase italic leading-none select-none opacity-50 group-hover:text-white transition-colors">
+                 COLLABSPHERE
+              </span>
+              
+              {/* Front Layer */}
+              <span className="relative text-[26px] font-display font-black tracking-tighter text-white uppercase italic leading-none">
+                 COLLAB<span className="text-[#6C63FF] group-hover:text-[#FFE135] transition-colors">SPHERE</span>
+              </span>
+
+              {/* The "Eye" Dot */}
+              <div className="absolute -top-1 -left-5 w-3.5 h-3.5 bg-[#00FF94] rounded-full border-4 border-[#0A0A0F] shadow-[0_0_15px_#00FF94]" />
+           </motion.div>
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium tracking-tight text-white/70 hover:text-[#6C63FF] transition-expo"
-            >
-              {link.name}
-            </Link>
-          ))}
+        <div className="hidden lg:flex items-center gap-14">
+          <div className="flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="group relative flex items-center"
+              >
+                <motion.span 
+                  whileHover={{ y: -2 }}
+                  className="text-[11px] font-mono font-black tracking-[4px] text-white uppercase italic transition-colors hover:text-[#FFE135]"
+                >
+                  {link.name}
+                </motion.span>
+                {link.isNew && (
+                  <motion.span 
+                    animate={{ rotate: [5, -5, 5] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="bg-[#FF6B35] text-white text-[7px] font-mono font-black italic px-2 py-0.5 rounded-md border-2 border-[#0A0A0F] absolute -top-4 -right-10 whitespace-nowrap shadow-xl"
+                  >
+                     NEW!
+                  </motion.span>
+                )}
+              </Link>
+            ))}
+          </div>
           
-          <div className="flex items-center gap-6 border-l border-white/10 pl-6">
+          <div className="flex items-center gap-10 border-l border-white/10 pl-10">
             <Link
               href="https://github.com"
               target="_blank"
-              className="flex items-center gap-2 text-sm font-medium text-white/70 hover:text-[#6C63FF] transition-expo"
+              className="group flex flex-col items-end"
             >
-              <Star size={16} className="text-[#FFE135]" />
-              <span className="font-mono">1.2k</span>
+              <div className="flex items-center gap-1.5">
+                 <Star size={14} className="text-[#FFE135] fill-[#FFE135]" />
+                 <span className="text-[11px] font-mono font-black text-white italic group-hover:text-[#FFE135]">1.2K</span>
+              </div>
+              <span className="text-[7px] font-mono font-bold text-white/30 uppercase tracking-widest">STARS</span>
             </Link>
-            <GradientButton variant="primary" size="sm" className="rounded-full px-6">
-              Start Building →
-            </GradientButton>
+
+            {/* WORLD CLASS CTA BUTTON */}
+            <motion.button 
+              whileHover={{ 
+                translateX: 4,
+                translateY: 4,
+                boxShadow: "none"
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="h-[56px] px-10 bg-white border-4 border-[#0A0A0F] rounded-full text-[#0A0A0F] font-display font-black text-[13px] italic uppercase tracking-wider shadow-[8px_8px_0_#6C63FF] transition-all flex items-center justify-center gap-3 group/btn"
+            >
+               START BUILDING <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+            </motion.button>
           </div>
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white"
+          className="lg:hidden w-12 h-12 bg-[#111118] border-4 border-[#0A0A0F] rounded-2xl flex items-center justify-center text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="md:hidden fixed inset-0 top-20 bg-[#0A0A0F] z-[99] p-8 flex flex-col gap-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:hidden absolute inset-0 top-24 h-screen bg-[#0A0A0F] z-[99] p-8 flex flex-col items-center justify-center gap-12"
         >
           {navLinks.map((link, i) => (
             <motion.div
               key={link.name}
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
             >
               <Link
                 href={link.href}
-                className="text-3xl font-display font-bold text-white"
+                className="text-6xl font-display font-black text-white italic uppercase tracking-tighter hover:text-[#6C63FF] transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
               </Link>
             </motion.div>
           ))}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mt-4 pt-8 border-t border-white/10 flex flex-col gap-6"
+          <motion.button 
+            className="w-full h-20 bg-[#6C63FF] border-8 border-[#0A0A0F] rounded-[40px] text-white font-display font-black text-xl italic shadow-[15px_15px_0_#0A0A0F]"
           >
-            <Link
-              href="https://github.com"
-              className="flex items-center gap-3 text-xl font-bold text-white/70"
-            >
-              <Github />
-              <span>GitHub (1.2k stars)</span>
-            </Link>
-            <GradientButton variant="primary" size="lg" className="w-full">
-              Start Building →
-            </GradientButton>
-          </motion.div>
+             START BUILDING
+          </motion.button>
         </motion.div>
       )}
     </motion.nav>
