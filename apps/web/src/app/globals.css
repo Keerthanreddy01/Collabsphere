@@ -32,11 +32,12 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight text-white font-bold leading-tight;
+    @apply tracking-tight text-white font-bold leading-tight;
+    font-family: var(--font-space-grotesk), var(--font-syne), sans-serif;
   }
 
   code, pre, .font-mono {
-    @apply font-mono;
+    font-family: var(--font-mono), monospace;
   }
 }
 
