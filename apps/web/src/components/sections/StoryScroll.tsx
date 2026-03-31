@@ -57,7 +57,12 @@ export function StoryScroll() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6C63FF]/5 blur-[120px] rounded-full pointer-events-none" />
 
               {/* The Frame */}
-              <div className="relative w-full aspect-[4/3] bg-[#111118] rounded-[40px] border-8 border-[#0A0A0F] shadow-[40px_40px_0_rgba(108,99,255,0.1)] overflow-hidden rotate-[-2deg] transition-all duration-700 p-0 transform-gpu group hover:rotate-0">
+              <motion.div 
+                initial={{ rotate: -5, opacity: 0 }}
+                whileInView={{ rotate: -2, opacity: 1 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-full aspect-[4/3] bg-[#111118] rounded-[40px] border-8 border-[#0A0A0F] shadow-[40px_40px_0_rgba(108,99,255,0.1)] overflow-hidden transition-all duration-700 p-0 transform-gpu group hover:rotate-0"
+              >
                   {/* Header */}
                   <div className="h-14 bg-[#111118] border-b-2 border-[#0A0A0F] flex items-center px-6 gap-3">
                      <div className="flex gap-2">
@@ -72,10 +77,10 @@ export function StoryScroll() {
                      <AnimatePresence mode="wait">
                        <motion.div
                          key={activeIndex}
-                         initial={{ opacity: 0, scale: 0.95 }}
-                         animate={{ opacity: 1, scale: 1 }}
-                         exit={{ opacity: 0, scale: 1.05 }}
-                         transition={{ duration: 0.5 }}
+                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                         animate={{ opacity: 1, scale: 1, y: 0 }}
+                         exit={{ opacity: 0, scale: 1.05, y: -20 }}
+                         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                          className="h-full p-8"
                        >
                           {activeIndex === 0 && <UIPanel1 />}
@@ -85,7 +90,7 @@ export function StoryScroll() {
                        </motion.div>
                      </AnimatePresence>
                   </div>
-              </div>
+              </motion.div>
            </div>
         </div>
 
@@ -94,21 +99,38 @@ export function StoryScroll() {
            {BLOCKS.map((block, i) => (
              <div key={i} className="min-h-screen flex flex-col justify-center">
                 <motion.div
-                  initial={{ opacity: 0.1 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ amount: 0.5 }}
+                  initial={{ opacity: 0.1, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ amount: 0.6 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   className="max-w-2xl lg:pl-12"
                 >
                     <div className="text-[12px] font-mono font-bold tracking-[6px] text-[#6C63FF] mb-10 uppercase italic">
                       STEP {block.step} / {block.title}
                     </div>
                     
-                    <h2 className="text-[54px] md:text-[84px] font-display font-extrabold leading-[0.85] mb-12 tracking-[-0.03em] flex flex-col">
-                      <span className="text-white italic">{block.headline.part1}</span>
-                      <span className="text-[#6C63FF]">{block.headline.part2}</span>
+                    <h2 className="text-[54px] md:text-[84px] font-display font-extrabold leading-[0.85] mb-12 tracking-[-0.03em] flex flex-col overflow-hidden">
+                      <motion.span 
+                        initial={{ y: "100%" }}
+                        whileInView={{ y: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-white italic block"
+                      >
+                         {block.headline.part1}
+                      </motion.span>
+                      <motion.span 
+                        initial={{ y: "100%" }}
+                        whileInView={{ y: 0 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-[#6C63FF] block"
+                      >
+                         {block.headline.part2}
+                      </motion.span>
                     </h2>
                     
-                    <p className="text-[20px] text-[#8B8B9E] max-w-[480px] leading-[1.6] font-medium border-l-4 border-white/10 pl-8 mb-12 italic">
+                    <p className="text-[20px] text-[#8B8B9E] max-w-[480px] leading-[1.6] font-medium border-l-4 border-white/10 pl-8 mb-12 italic uppercase tracking-tighter">
                       {block.body}
                     </p>
                 </motion.div>
@@ -117,7 +139,7 @@ export function StoryScroll() {
         </div>
       </div>
 
-      {/* Massive Background Ghost Text (Optional, fixed at bottom of whole section) */}
+      {/* Massive Background Ghost Text */}
       <div className="absolute inset-x-0 bottom-20 pointer-events-none opacity-[0.02] flex justify-center overflow-hidden">
          <span className="text-[300px] font-display font-extrabold text-white leading-none whitespace-nowrap italic uppercase">
            BUILD IN PUBLIC BUILD IN PUBLIC
@@ -139,7 +161,7 @@ const UIPanel1 = () => (
         </div>
      </div>
      <div className="flex gap-4">
-        <div className="flex-1 bg-white/5 border border-white/10 h-32 rounded-3xl animate-pulse" />
+        <div className="flex-1 bg-white/10 border border-white/20 h-32 rounded-3xl animate-pulse" />
         <div className="w-20 bg-[#00FF94]/20 border-2 border-[#00FF94] h-32 rounded-3xl" />
      </div>
   </div>
@@ -147,9 +169,14 @@ const UIPanel1 = () => (
 
 const UIPanel2 = () => (
   <div className="grid grid-cols-2 gap-4 h-full">
-     {[1,2,3,4].map(i => (
-       <div key={i} className="bg-white/5 border border-white/10 p-4 rounded-3xl flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/10" />
+     {[
+       { initial: "K", color: "#6C63FF" },
+       { initial: "A", color: "#00D4FF" },
+       { initial: "M", color: "#00FF94" },
+       { initial: "S", color: "#FFE135" }
+     ].map(u => (
+       <div key={u.initial + Math.random()} className="bg-white/5 border border-white/10 p-5 rounded-3xl flex flex-col items-center gap-3 hover:bg-white/10 transition-colors">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-display font-black italic shadow-lg" style={{ backgroundColor: u.color }}>{u.initial}</div>
           <div className="h-2 w-12 bg-white/20 rounded-full" />
        </div>
      ))}
@@ -157,19 +184,24 @@ const UIPanel2 = () => (
 );
 
 const UIPanel3 = () => (
-   <div className="bg-white/5 border border-white/10 p-6 rounded-3xl h-full flex flex-col gap-4">
+   <div className="bg-white/5 border border-white/10 p-6 rounded-[32px] h-full flex flex-col gap-6">
+      <div className="flex items-center gap-4">
+         <div className="w-10 h-10 rounded-full bg-[#6C63FF]" />
+         <div className="h-3 w-20 bg-white/20 rounded-full" />
+      </div>
       <div className="h-4 w-full bg-white/10 rounded-full" />
       <div className="h-4 w-3/4 bg-white/10 rounded-full" />
       <div className="mt-auto flex justify-between items-center">
-         <div className="w-20 h-10 bg-[#6C63FF] rounded-full" />
-         <div className="text-[10px] font-bold text-white/40 italic">BOOSTS: 1,240</div>
+         <div className="w-24 h-11 bg-[#6C63FF] rounded-full flex items-center justify-center text-[10px] font-black text-white italic tracking-widest border-4 border-[#0A0A0F]">BOOST</div>
+         <div className="text-[11px] font-mono font-black text-[#FFE135] italic">1,240 ★</div>
       </div>
    </div>
 );
 
 const UIPanel4 = () => (
-   <div className="flex flex-col gap-4 h-full justify-center">
-      <div className="bg-[#6C63FF] p-4 rounded-2xl rounded-tr-none text-[10px] font-bold italic">How do we optimize WASM?</div>
-      <div className="bg-[#00FF94] p-4 rounded-2xl rounded-tl-none text-[10px] font-black italic self-end text-black">Check the new docs!</div>
+   <div className="flex flex-col gap-5 h-full relative">
+      <div className="self-end bg-[#6C63FF] p-5 rounded-3xl rounded-tr-none text-[11px] font-bold italic border-4 border-[#0A0A0F] shadow-xl max-w-[80%]">How do we optimize WASM?</div>
+      <div className="self-start bg-[#00FF94] p-5 rounded-3xl rounded-tl-none text-[11px] font-black italic self-end text-black border-4 border-[#0A0A0F] shadow-xl max-w-[80%]">Check the new docs!</div>
+      <div className="absolute bottom-2 right-2 w-14 h-14 bg-[#FFE135] rounded-full border-4 border-[#0A0A0F] flex items-center justify-center font-display font-black text-2xl rotate-12 shadow-2xl">★</div>
    </div>
 );

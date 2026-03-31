@@ -6,32 +6,32 @@ import { cn } from "@/lib/utils";
 
 const FEATURES = [
   {
-    title: "BUILDER PROFILES",
-    icon: "★",
-    description: "GitHub-native reputation system. Your PRs are your resume.",
+    title: "TEAM MATCHING",
+    icon: "✦",
+    description: "Browse verified builders with real project history. No LinkedIn fluff, just world-class code.",
     bg: "#6C63FF",
+    span: "col-span-1 md:col-span-2"
+  },
+  {
+    title: "BUILD IN PUBLIC",
+    icon: "⚐",
+    description: "Share daily progress with the community and attract high-tier collaborators.",
+    bg: "#00FF94",
     span: "col-span-1"
   },
   {
-    title: "PROJECT INCUBATION",
-    icon: "✦",
-    description: "Launch, recruit, and coordinate. One platform, zero friction.",
-    bg: "#00D4FF",
-    span: "col-span-1 lg:col-span-2"
-  },
-  {
-    title: "SHIP-IN-PUBLIC FEED",
-    icon: "🚀",
-    description: "Build your fan base one shipped feature at a time. Get real-time boosts.",
-    bg: "#00FF94",
-    span: "col-span-1 lg:col-span-2"
+    title: "PROJECT INCUBATOR",
+    icon: "★",
+    description: "The teams formed here are the CEOs and CTOs of tomorrow. Start small, ship big.",
+    bg: "#FFE135",
+    span: "col-span-1"
   },
   {
     title: "COLLAB ROOMS",
-    icon: "⚑",
+    icon: "⚒",
     description: "Private spaces for your core team to coordinate without the discord noise.",
-    bg: "#FFE135",
-    span: "col-span-1"
+    bg: "#00D4FF",
+    span: "col-span-1 md:col-span-2"
   }
 ];
 
@@ -53,74 +53,70 @@ export function FeatureGrid() {
                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as any }} 
                className="text-[60px] md:text-[90px] font-display font-extrabold flex flex-col leading-[0.88] tracking-[-0.04em] italic uppercase"
              >
-               <span className="text-white">EVERYTHING A</span>
-               <span className="text-[#6C63FF]">BUILDER NEEDS.</span>
+                <span className="text-white">EVERYTHING A</span>
+                <span className="text-[#6C63FF]">BUILDER NEEDS.</span>
              </motion.h2>
           </div>
           <div className="max-w-xs pb-4">
-             <p className="text-[18px] text-[#5A5A6E] font-medium leading-relaxed italic border-b border-white/10 pb-6 mb-6 uppercase">
-                One platform. Zero friction. Built by developers for developers.
+             <p className="text-[18px] text-[#8B8B9E] font-medium leading-relaxed italic uppercase border-b-4 border-[#111118] pb-6">
+                We've built tools that help developers focus on shipping, not networking.
              </p>
-             <button className="text-[12px] font-mono font-black text-white hover:text-[#6C63FF] transition-all underline underline-offset-8">VIEW ALL FEATURES</button>
           </div>
        </div>
 
-       {/* Creative Masonry Grid */}
-       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {FEATURES.map((feature, i) => (
-             <FeatureCard key={i} index={i} feature={feature} isInView={isInView} />
+            <FeatureCard key={feature.title} feature={feature} index={i} isInView={isInView} />
           ))}
-       </div>
-
-       {/* Background decorative big ghost text */}
-       <div className="absolute top-0 right-0 pointer-events-none opacity-[0.03] rotate-90 translate-x-1/2 origin-top-right">
-          <span className="text-[300px] font-display font-extrabold italic whitespace-nowrap text-white">FEATURES FEATURES FEATURES</span>
        </div>
     </section>
   );
 }
 
-const FeatureCard = ({ feature, index, isInView }: { feature: any, index: number, isInView: boolean }) => {
+function FeatureCard({ feature, index, isInView }: { feature: any, index: number, isInView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 60, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      initial={{ opacity: 0, scale: 0.9, y: 100 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
       transition={{ duration: 1, delay: 0.1 + index * 0.15, ease: [0.16, 1, 0.3, 1] as any }}
       className={cn(
-        "group relative h-[380px] bg-[#111118] border-4 border-[#0A0A0F] p-12 rounded-[48px] overflow-hidden transition-all duration-500 shadow-[12px_12px_0_rgba(10,10,15,1)] hover:shadow-none hover:translate-x-3 hover:translate-y-3",
+        "group relative h-[440px] bg-[#111118] border-8 border-[#0A0A0F] p-12 rounded-[56px] overflow-hidden transition-all duration-500 shadow-[20px_20px_0_rgba(10,10,15,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2",
         feature.span
       )}
     >
-       {/* Background hover color splash like Byooooob */}
+       {/* PUPPET STRING */}
+       <div className="absolute top-[-1000px] left-1/2 -translate-x-1/2 w-1 h-[1000px] bg-[#0A0A0F]/20" />
+       
+       {/* Background Reveal Shape */}
        <div 
-         className="absolute inset-0 transition-opacity duration-700 opacity-0 group-hover:opacity-[0.08]"
-         style={{ backgroundColor: feature.bg }}
+         className="absolute top-0 right-0 w-48 h-48 -translate-y-1/2 translate-x-1/2 rounded-full opacity-[0.08] transition-all duration-700 group-hover:scale-[8] blur-3xl pointer-events-none"
+         style={{ background: feature.bg }}
        />
 
-       {/* Top Icon Badge - Creative Stamp style */}
-       <div className="flex justify-between items-start mb-14 relative z-10">
+       <div className="relative z-10 h-full flex flex-col items-start gap-10">
           <div 
-            className="w-16 h-16 rounded-2xl flex items-center justify-center font-display font-black text-3xl transition-all duration-500 group-hover:rotate-[360deg] shadow-lg border-2 border-[#0A0A0F]"
-            style={{ backgroundColor: feature.bg, color: feature.bg === "#FFE135" ? "#0A0A0F" : "#FFFFFF" }}
+            className="w-20 h-20 rounded-2xl flex items-center justify-center font-display font-black text-4xl italic shadow-xl group-hover:rotate-[360deg] transition-all duration-1000 border-4 border-[#0A0A0F]"
+            style={{ background: feature.bg, color: "#0A0A0F" }}
           >
              {feature.icon}
           </div>
-          <div className="bg-[#0A0A0F] text-white px-5 py-2 font-mono font-black text-[10px] italic rotate-6 group-hover:rotate-0 transition-all rounded-xl shadow-lg uppercase">
-             CAPABILITY #{index + 1}
+          
+          <div className="space-y-4">
+             <h3 className="text-3xl md:text-4xl font-display font-black text-white italic leading-tight uppercase underline decoration-[#6C63FF] decoration-8 underline-offset-8 mt-2">
+                {feature.title}
+             </h3>
+             <p className="text-[17px] md:text-[19px] text-[#8B8B9E] leading-[1.6] group-hover:text-white transition-colors duration-500 font-medium italic uppercase tracking-tighter max-w-[320px]">
+                {feature.description}
+             </p>
+          </div>
+
+          <div className="mt-auto self-end opacity-20 group-hover:opacity-100 transition-all group-hover:translate-x-3 duration-500">
+             <span className="text-[12px] font-mono font-black text-[#6C63FF] tracking-[6px] uppercase italic">REVEAL DEPTH →</span>
           </div>
        </div>
 
-       <div className="relative z-10">
-          <h3 className="text-3xl font-display font-extrabold text-white italic uppercase mb-4 tracking-tighter leading-none group-hover:text-[#6C63FF] transition-all">
-             {feature.title}
-          </h3>
-          <p className="text-[16px] font-medium text-[#565668] leading-[1.65] max-w-[280px] uppercase italic group-hover:text-[#8B8B9E] transition-all">
-             {feature.description}
-          </p>
-       </div>
-
-       {/* Corner floating element on hover */}
-       <div className="absolute -bottom-8 -right-8 w-32 h-32 opacity-0 group-hover:opacity-20 transition-all duration-700 group-hover:scale-150 rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: feature.bg }} />
+       {/* String Screw Dot */}
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0A0A0F] rounded-full border-2 border-white/5" />
     </motion.div>
   );
-};
+}
