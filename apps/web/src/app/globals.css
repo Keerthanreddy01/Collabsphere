@@ -3,95 +3,113 @@
 @tailwind utilities;
 
 :root {
-  --background: 240 24% 4%; /* #0A0A0F */
+  --bg:        #0A0A0F;
+  --surface:   #111118;
+  --purple:    #6C63FF;
+  --purple-2:  #4B44CC;
+  --cyan:      #00D4FF;
+  --cream:     #F5F4EE;
+  --yellow:    #FFE135;
+  --green:     #00FF94;
+  --muted:     #5A5A6E;
+  --border:    rgba(108,99,255,0.2);
+
+  /* shadcn/ui compatibility */
+  --background: 240 24% 4%;
   --foreground: 0 0% 100%;
-  --card: 240 24% 7%; /* #111118 */
+  --card: 240 24% 7%;
   --card-foreground: 0 0% 100%;
   --popover: 240 24% 7%;
   --popover-foreground: 0 0% 100%;
-  --primary: 243 100% 69%; /* #6C63FF - Electric Purple */
+  --primary: 243 100% 69%;
   --primary-foreground: 210 40% 98%;
-  --secondary: 190 100% 50%; /* #00D4FF - Cyan */
+  --secondary: 190 100% 50%;
   --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 240 7% 58%; /* #8B8B9E */
+  --muted: 240 7% 58%;
   --muted-foreground: 240 5% 64.9%;
   --accent: 243 100% 69%;
   --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
-  --border: 243 100% 69% / 0.15; /* rgba(108,99,255,0.15) */
+  --border: 243 100% 69% / 0.15;
   --input: 243 100% 69% / 0.15;
   --ring: 243 100% 69%;
-  --radius: 12px;
+  --radius: 20px;
 }
 
 @layer base {
   body {
-    @apply bg-[#0A0A0F] text-white antialiased selection:bg-primary/30 font-sans;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-[#0A0A0F] text-white antialiased selection:bg-[#6C63FF]/30;
+    font-family: var(--font-space-grotesk), sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight text-white font-bold leading-tight;
-    font-family: var(--font-space-grotesk), var(--font-syne), sans-serif;
+    font-family: var(--font-syne), var(--font-space-grotesk), sans-serif;
+    @apply tracking-tight font-bold italic;
   }
 
-  code, pre, .font-mono {
+  .font-mono {
     font-family: var(--font-mono), monospace;
   }
 }
 
 @layer utilities {
-  .dot-grid {
-    background-image: radial-gradient(
-      circle, rgba(108,99,255,0.15) 1px, transparent 1px
-    );
-    background-size: 32px 32px;
+  /* DOTTED HEX TEXTURE — like Airloop/Byooooob */
+  .dot-texture {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
   }
 
-  .text-glow {
-    text-shadow: 0 0 15px rgba(108, 99, 255, 0.4);
+  /* GRID TEXTURE — like Byooooob */
+  .grid-texture {
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
-  .glass {
-    @apply bg-[#111118]/60 backdrop-blur-md border border-white/5;
+  .text-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    color: transparent;
   }
 
-  .glass-purple {
-    @apply bg-[#6C63FF]/5 backdrop-blur-md border border-[#6C63FF]/20;
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
 /* Custom animations */
-@keyframes marquee {
+@keyframes ticker {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-.animate-marquee {
-  animation: marquee 40s linear infinite;
+.animate-ticker {
+  animation: ticker 40s linear infinite;
 }
 
-.animate-marquee-reverse {
-  animation: marquee 40s linear infinite reverse;
-}
-
-@keyframes pulse-dot {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(0.8); opacity: 0.5; }
+.animate-ticker-reverse {
+  animation: ticker 40s linear infinite reverse;
 }
 
 .pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.4); }
 }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+/* GSAP-style smooth transitions */
+.transition-expo {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }

@@ -1,30 +1,27 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Syne, Inter, JetBrains_Mono } from "next/font/google";
+import { Syne, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { Suspense } from "react";
 import { MouseGlow } from "@/components/shared/MouseGlow";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
 
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
+  weight: ["700", "800"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${syne.variable} ${inter.variable} ${jetbrainsMono.variable} font-inter antialiased selection:bg-primary/20 bg-[#0A0A0F] text-white overflow-x-hidden`}
+        className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#0A0A0F] text-white overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"
@@ -51,9 +48,6 @@ export default function RootLayout({
         >
           <AuthProvider>
             <div className="fixed inset-0 z-0 bg-[#0A0A0F] pointer-events-none" />
-            <div className="fixed inset-0 z-0 dot-grid pointer-events-none opacity-40" />
-            
-            <MouseGlow />
             
             <main className="relative z-[1] min-h-screen">
               {children}

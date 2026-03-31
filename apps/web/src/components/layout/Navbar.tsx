@@ -2,10 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { GradientButton } from "@/components/ui/GradientButton";
-import { Github, Menu, X } from "lucide-react";
+import { Github, Menu, X, Star } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,19 +14,13 @@ export function Navbar() {
   const backgroundColor = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(10, 10, 15, 0)", "rgba(10, 10, 15, 0.8)"]
+    ["rgba(10, 10, 15, 0)", "rgba(10, 10, 15, 1)"]
   );
   
-  const backdropBlur = useTransform(
-    scrollY,
-    [0, 80],
-    ["blur(0px)", "blur(12px)"]
-  );
-
   const borderOpacity = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.1)"]
+    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.06)"]
   );
 
   const navLinks = [
@@ -39,41 +33,42 @@ export function Navbar() {
     <motion.nav
       style={{
         backgroundColor,
-        backdropFilter: backdropBlur,
         borderBottom: `1px solid ${borderOpacity}`,
       }}
-      className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+      className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center transition-expo"
     >
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-display font-bold tracking-tight text-white">
-            Collab<span className="text-primary italic">sphere</span>
+      <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 group">
+          <span className="text-2xl font-display font-bold tracking-tight text-white transition-expo group-hover:scale-105">
+            Collab<span className="text-[#6C63FF]">sphere</span>
           </span>
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-white/70 hover:text-white transition-colors"
+              className="text-sm font-medium tracking-tight text-white/70 hover:text-[#6C63FF] transition-expo"
             >
               {link.name}
             </Link>
           ))}
-          <Link
-            href="https://github.com"
-            target="_blank"
-            className="flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
-          >
-            <Github size={18} />
-            <span>GitHub</span>
-          </Link>
-          <div className="h-4 w-px bg-white/10" />
-          <GradientButton variant="primary" size="sm">
-            Start Building →
-          </GradientButton>
+          
+          <div className="flex items-center gap-6 border-l border-white/10 pl-6">
+            <Link
+              href="https://github.com"
+              target="_blank"
+              className="flex items-center gap-2 text-sm font-medium text-white/70 hover:text-[#6C63FF] transition-expo"
+            >
+              <Star size={16} className="text-[#FFE135]" />
+              <span className="font-mono">1.2k</span>
+            </Link>
+            <GradientButton variant="primary" size="sm" className="rounded-full px-6">
+              Start Building →
+            </GradientButton>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
@@ -81,38 +76,50 @@ export function Navbar() {
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X /> : <Menu />}
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-20 left-0 right-0 bg-[#0A0A0F] border-b border-white/10 p-6 flex flex-col gap-6"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="md:hidden fixed inset-0 top-20 bg-[#0A0A0F] z-[99] p-8 flex flex-col gap-8"
         >
-          {navLinks.map((link) => (
-            <Link
+          {navLinks.map((link, i) => (
+            <motion.div
               key={link.name}
-              href={link.href}
-              className="text-lg font-medium text-white/70"
-              onClick={() => setIsOpen(false)}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1 }}
             >
-              {link.name}
-            </Link>
+              <Link
+                href={link.href}
+                className="text-3xl font-display font-bold text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.name}
+              </Link>
+            </motion.div>
           ))}
-          <Link
-            href="https://github.com"
-            target="_blank"
-            className="flex items-center gap-2 text-lg font-medium text-white/70"
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-4 pt-8 border-t border-white/10 flex flex-col gap-6"
           >
-            <Github />
-            <span>GitHub</span>
-          </Link>
-          <GradientButton variant="primary" size="lg" className="w-full">
-            Start Building →
-          </GradientButton>
+            <Link
+              href="https://github.com"
+              className="flex items-center gap-3 text-xl font-bold text-white/70"
+            >
+              <Github />
+              <span>GitHub (1.2k stars)</span>
+            </Link>
+            <GradientButton variant="primary" size="lg" className="w-full">
+              Start Building →
+            </GradientButton>
+          </motion.div>
         </motion.div>
       )}
     </motion.nav>
