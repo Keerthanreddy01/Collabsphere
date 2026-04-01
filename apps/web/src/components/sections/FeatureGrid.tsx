@@ -63,7 +63,7 @@ export function FeatureGrid() {
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as any }}
-          className="text-[42px] md:text-[64px] font-display font-extrabold flex flex-col leading-[0.85] tracking-[-0.04em] italic uppercase"
+          className="text-[36px] md:text-[48px] font-display font-extrabold flex flex-col leading-[0.85] tracking-[-0.04em] italic uppercase"
         >
           <span className="text-[var(--text)]">EVERYTHING_A</span>
           <span className="text-[var(--purple)]">BUILDER_NEEDS.</span>
@@ -87,7 +87,7 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
       transition={{ duration: 1.2, delay: 0.1 + index * 0.15, ease: [0.16, 1, 0.3, 1] as any }}
       whileHover={{ y: -6 }}
       className={cn(
-        "group relative h-[380px] bg-[var(--bg-card)] border-[4px] border-[var(--text)] p-7 md:p-8 rounded-[48px] overflow-hidden transition-all duration-700 shadow-[10px_10px_0_var(--text)]/[0.03] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
+        "group relative h-[320px] bg-[var(--bg-card)] border-[3px] border-[var(--text)] p-6 md:p-7 rounded-[40px] overflow-hidden transition-all duration-700 shadow-[10px_10px_0_var(--text)]/[0.03] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
         feature.span
       )}
     >
@@ -102,7 +102,7 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
         <div className="flex justify-between items-center w-full">
           <motion.div
             whileHover={{ scale: 1.15 }}
-            className="w-24 h-24 rounded-[32px] flex items-center justify-center font-display font-black text-4xl italic shadow-2xl transition-all duration-700 border-4 border-[var(--text)]"
+            className="w-16 h-16 rounded-[24px] flex items-center justify-center font-display font-black text-2xl italic shadow-2xl transition-all duration-700 border-[3px] border-[var(--text)]"
             style={{ background: feature.bg, color: "var(--bg)" }}
           >
             {feature.icon}
@@ -112,17 +112,17 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
           </div>
         </div>
 
-        <div className="space-y-6">
-          <h3 className="text-4xl md:text-6xl font-display font-black text-[var(--text)] italic leading-none uppercase relative inline-block group-hover:translate-x-2 transition-transform duration-500">
+        <div className="space-y-4">
+          <h3 className="text-3xl md:text-4xl font-display font-black text-[var(--text)] italic leading-none uppercase relative inline-block group-hover:translate-x-2 transition-transform duration-500">
             {feature.title}
             <motion.div
-              className="absolute -bottom-4 left-0 h-3 bg-[var(--purple)] rounded-full"
+              className="absolute -bottom-2 left-0 h-2 bg-[var(--purple)] rounded-full"
               initial={{ width: 0 }}
               whileInView={{ width: "100%" }}
               transition={{ duration: 1.5, delay: 0.8 + index * 0.1 }}
             />
           </h3>
-          <p className="text-[18px] md:text-[22px] text-[var(--text-muted)] leading-[1.4] group-hover:text-[var(--text)] transition-colors duration-1000 font-medium italic uppercase tracking-tighter max-w-[380px]">
+          <p className="text-[16px] md:text-[18px] text-[var(--text-muted)] leading-[1.3] group-hover:text-[var(--text)] transition-colors duration-1000 font-medium italic uppercase tracking-tighter max-w-[320px]">
             {feature.description}
           </p>
         </div>
