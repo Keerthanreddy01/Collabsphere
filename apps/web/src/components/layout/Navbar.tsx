@@ -1,101 +1,187 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import Link from "next/link";
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Star } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
 
 const NAV_LINKS = [
-  { name: "FEATURES", href: "#" },
-  { name: "COMMUNITY", href: "#" },
-  { name: "DOCS", href: "#", isNew: true },
+  { name: "HOME", href: "/" },
+  { name: "ABOUT US", href: "/about" },
+  { name: "CASE STUDY", href: "/cases" },
+  { name: "SERVICE", href: "/services" },
+  { name: "PAGE", href: "/pages", dropdown: true }
 ];
 
 export function Navbar() {
   const { scrollY } = useScroll();
+  const [isHovered, setIsHovered] = useState<string | null>(null);
+
+  // High-end dynamic scroll animations (SNAPPY TRANSITION)
+  const navBg = useTransform(
+    scrollY,
+    [10, 40],
+    ["rgba(248, 249, 250, 0)", "rgba(10, 10, 15, 0.98)"]
+  );
   
-  // Transition background on scroll
-  const bgOpacity = useTransform(scrollY, [0, 50], [0.7, 0.95]);
-  const blurAmount = useTransform(scrollY, [0, 50], [20, 25]);
-  const borderOpacity = useTransform(scrollY, [0, 50], [0.08, 0.12]);
+  const navBorder = useTransform(
+    scrollY,
+    [10, 40],
+    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.15)"]
+  );
+
+  const navBlur = useTransform(
+    scrollY,
+    [10, 40],
+    ["blur(0px)", "blur(24px)"]
+  );
+
+  const textColor = useTransform(
+    scrollY,
+    [10, 40],
+    ["#0A0A0F", "#FFFFFF"]
+  );
+
+  const buttonText = useTransform(
+    scrollY,
+    [10, 40],
+    ["#0A0A0F", "#FFFFFF"]
+  );
 
   return (
-    <motion.header 
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-6 left-0 right-0 z-[100] w-full flex justify-center px-4 pointer-events-none"
+    <motion.nav
+      style={{ 
+        backgroundColor: navBg,
+        borderBottom: `1px solid`,
+        borderColor: navBorder,
+        backdropFilter: navBlur,
+      }}
+      className="fixed top-0 left-0 right-0 z-[100]"
     >
-      <motion.div 
-        style={{ 
-          backgroundColor: useTransform(bgOpacity, v => `rgba(10, 10, 10, ${v})`),
-          backdropFilter: useTransform(blurAmount, v => `blur(${v}px)`),
-          borderColor: useTransform(borderOpacity, v => `rgba(255, 255, 255, ${v})`)
-        }}
-        className="flex items-center justify-between w-full max-w-3xl h-16 rounded-full border px-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)] pointer-events-auto"
-      >
-        {/* LOGO: LEFT */}
-        <Link href="/" className="flex items-center group relative overflow-hidden">
-           <span className="text-[18px] font-display font-black tracking-tighter text-white uppercase italic leading-none group-hover:text-[#6C63FF] transition-colors">
-              COLLAB<span className="text-[#6C63FF] group-hover:text-white">SPHERE</span>
-           </span>
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 h-24 md:h-28 flex items-center justify-between">
+        
+        {/* 1. BRAND LOGO (ELITE REDESIGN) */}
+        <Link href="/" className="flex-shrink-0 group relative pr-10">
+           <motion.span 
+             style={{ color: textColor }}
+             className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter transition-colors duration-500 block"
+           >
+             COLLAB<span className="text-[#6C63FF]">SPHERE</span>
+           </motion.span>
+           {/* Decorative Pulsing Dot */}
+           <motion.div 
+             className="absolute top-0 right-6 w-2.5 h-2.5 rounded-full bg-[#FF6B35]"
+             animate={{ scale: [1, 1.4, 1], opacity: [0.8, 1, 0.8] }}
+             transition={{ duration: 1.5, repeat: Infinity }}
+           />
         </Link>
 
-        {/* LINKS: CENTER */}
-        <nav className="hidden md:flex items-center gap-10">
+        {/* 2. NAVIGATION LINKS (CENTERED ELITE FLOW) */}
+        <div className="hidden lg:flex flex-grow items-center justify-center gap-10 xl:gap-16">
            {NAV_LINKS.map((link) => (
-             <Link
-               key={link.name}
+             <Link 
+               key={link.name} 
                href={link.href}
-               className="relative group flex items-center"
+               onMouseEnter={() => setIsHovered(link.name)}
+               onMouseLeave={() => setIsHovered(null)}
+               className="relative py-2 group px-2 whitespace-nowrap"
              >
-               <motion.span
-                 whileHover={{ 
-                    color: "#ffffff", 
-                    textShadow: "0 0 12px rgba(108,99,255,0.8)" 
-                 }}
-                 className="text-[10px] font-mono font-black tracking-[3px] text-white/60 uppercase transition-colors"
-               >
-                 {link.name}
-               </motion.span>
-               
-               {/* Tiny Pulsing Orange Dot for New Items */}
-               {link.isNew && (
-                 <motion.div 
-                   animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-                   transition={{ duration: 2, repeat: Infinity }}
-                   className="absolute -top-1.5 -right-3 w-1.5 h-1.5 bg-[#FF6B35] rounded-full shadow-[0_0_8px_#FF6B35]"
-                 />
-               )}
+                <motion.span
+                  style={{ color: textColor }}
+                  className="text-sm xl:text-base font-black italic uppercase tracking-[0.1em] transition-colors duration-500 block"
+                >
+                  {link.name}
+                  {link.dropdown && (
+                    <span className="ml-1.5 text-[8px] inline-block align-middle pb-0.5 opacity-40 group-hover:rotate-180 transition-transform">▼</span>
+                  )}
+                </motion.span>
+                
+                {/* Magnetic Underline Animation */}
+                <motion.div 
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ scaleX: isHovered === link.name ? 1 : 0, opacity: isHovered === link.name ? 1 : 0 }}
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-[#6C63FF] to-[#FF6B35] origin-left rounded-full transition-all duration-500"
+                />
              </Link>
            ))}
-        </nav>
+        </div>
 
-        {/* ACTIONS: RIGHT */}
-        <div className="flex items-center gap-8">
-           {/* Stars Ghost Item */}
-           <div className="hidden md:flex items-center gap-1.5 cursor-default group">
-              <Star size={10} className="text-[#FFE135] fill-[#FFE135]/20 group-hover:fill-[#FFE135] transition-all" />
-              <span className="text-[10px] font-mono font-bold text-white/30 group-hover:text-white transition-colors">1.2K</span>
-           </div>
-
-           {/* START BUILDING: GRADIENT BORDER STYLE */}
-           <motion.button
-             whileHover={{ scale: 1.05 }}
-             whileTap={{ scale: 0.95 }}
-             className="relative group/btn"
+        {/* 3. AWARD-WINNING CONTACT PILL (SEAMLESS SCROLL COLOR SHIFT) */}
+        <div className="flex-shrink-0 flex items-center gap-4">
+           <motion.button 
+             whileHover="hover"
+             className="hidden sm:flex relative group items-center gap-5 px-10 py-4.5 md:px-12 md:py-5 overflow-hidden rounded-full"
            >
-             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#6C63FF] to-[#ff6b35] p-[1.5px] opacity-80 group-hover/btn:opacity-100 transition-opacity" />
-             <div className="relative h-10 px-6 rounded-full bg-[#0d0d0d] flex items-center justify-center">
-                <span className="text-[10px] font-display font-black text-white italic uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
-                   START BUILDING →
-                </span>
+             {/* THE MAGNETIC DEPTH BORDER */}
+             <motion.div 
+                style={{ borderColor: useTransform(scrollY, [10, 40], ["#6C63FF", "rgba(255,255,255,0.2)"]) }}
+                className="absolute inset-0 rounded-full border-2 border-[#6C63FF] transition-colors duration-500 group-hover:border-white/40" 
+             />
+             
+             {/* THE LIQUID FILL (FLOWS FROM LEFT) */}
+             <motion.div 
+               variants={{
+                 hover: { x: "0%" }
+               }}
+               initial={{ x: "-100%" }}
+               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+               className="absolute inset-0 bg-gradient-to-r from-[#6C63FF] via-[#8B8DFF] to-[#6C63FF] z-0"
+             />
+
+             {/* SHIFTING BLOOM GLOW */}
+             <div className="absolute -inset-2 bg-white/40 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 scale-75 group-hover:scale-110" />
+
+             {/* TEXT CONTENT (DYNAMIC SCROLL COLOR SHIFTING) */}
+             <motion.span 
+               style={{ color: buttonText }}
+               className="relative z-10 text-xs md:text-sm font-black italic uppercase tracking-[0.2em] group-hover:text-white transition-colors duration-500 whitespace-nowrap"
+             >
+               CONTACT US
+             </motion.span>
+
+             {/* THE DYNAMIC 45 DEGREE ARROW HUB */}
+             <div className="relative z-10 w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#0A0A0F] group-hover:bg-white text-white group-hover:text-[#6C63FF] flex items-center justify-center transition-all duration-700 group-hover:rotate-[405deg] shadow-[0_0_15px_rgba(10,10,15,0.3)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+               <span className="text-lg md:text-xl font-black mt-[-1px] ml-[1px]">↗</span>
              </div>
+
+             {/* INTERACTIVE MESH PATTERN (SURGICAL) */}
+             <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-1000 z-0 pointer-events-none"
+               style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '8px 8px' }}
+             />
+           </motion.button>
+
+           {/* Mobile Menu Trigger (Dynamic Color shift) */}
+           <motion.button 
+             style={{ color: textColor }}
+             className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group relative"
+           >
+              <motion.div 
+                 style={{ backgroundColor: textColor }}
+                 className="w-8 h-1 rounded-full group-hover:w-4 group-hover:-translate-x-1 transition-all duration-500" 
+              />
+              <motion.div 
+                 style={{ backgroundColor: useTransform(scrollY, [10, 40], ["#6C63FF", "#6C63FF"]) }}
+                 className="w-8 h-1 rounded-full transition-all duration-300" 
+              />
+              <motion.div 
+                 style={{ backgroundColor: useTransform(scrollY, [10, 40], ["#FF6B35", "#FF6B35"]) }}
+                 className="w-4 h-1 rounded-full group-hover:w-8 group-hover:translate-x-1 transition-all duration-500" 
+              />
            </motion.button>
         </div>
 
-      </motion.div>
-    </motion.header>
+      </div>
+
+      {/* SUBTLE PROGRESS LINE ON SCROLL (MESH GRADIENT) */}
+      <motion.div 
+        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-[#6C63FF] via-[#FF6B35] to-[#6C63FF] z-50 origin-left opacity-80"
+        style={{ 
+          scaleX: useTransform(scrollY, [0, 1000], [0, 1]),
+          backgroundSize: '200% 100%'
+        }}
+        animate={{ backgroundPosition: ["0% 0%", "200% 0%"] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      />
+    </motion.nav>
   );
 }
