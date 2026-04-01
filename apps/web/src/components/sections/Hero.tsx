@@ -121,21 +121,26 @@ export function Hero() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="flex flex-col md:flex-row md:items-center gap-10 mb-16"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] as any }}
+            className="flex flex-col xl:flex-row xl:items-end justify-between gap-16 mb-24 relative"
           >
-            <p className="text-[20px] text-[#8B8B9E] max-w-[340px] font-medium leading-relaxed italic border-l-2 border-[#6C63FF] pl-6 py-2">
-              Recruit your backend genius. Find your UI master. Ship in public.
-            </p>
+            <div className="max-w-2xl">
+               <div className="text-[12px] font-mono font-black tracking-[10px] text-[#6C63FF] mb-6 uppercase italic">THE PROTOCOL</div>
+               <p className="text-[32px] md:text-[48px] text-white font-display font-black leading-[1.0] italic uppercase tracking-tighter border-l-[12px] border-[#6C63FF] pl-10 py-2 group-hover:scale-105 transition-all">
+                 Recruit your <span className="text-[#00D4FF]">backend genius.</span> <br />
+                 Find your <span className="text-[#FFE135]">UI master.</span> <br />
+                 Ship <span className="text-[#00FF94]">in public.</span>
+               </p>
+            </div>
 
-            <div className="flex flex-wrap gap-4">
-              <GradientButton variant="primary" className="h-[64px] px-10 bg-[#6C63FF] hover:bg-[#8B85FF] font-display font-extrabold uppercase italic tracking-wider text-[18px] rounded-full shadow-[0_12px_40px_rgba(108,99,255,0.4)] transition-all">
-                Get Started →
+            <div className="flex flex-wrap gap-8 relative items-center">
+              <GradientButton variant="primary" className="h-[84px] px-16 bg-[#2B59FF] hover:bg-[#6C63FF] font-display font-black uppercase italic tracking-widest text-[24px] rounded-[36px] border-4 border-[#0A0A0F] shadow-[16px_16px_0_#0A0A0F] hover:translate-x-2 hover:translate-y-2 hover:shadow-none transition-all duration-500">
+                GET STARTED →
               </GradientButton>
-              <button className="h-[64px] px-10 border-2 border-white text-white font-display font-extrabold uppercase italic tracking-wider text-[18px] rounded-full hover:bg-white hover:text-[#0A0A0F] transition-all">
-                Join Discord
+              <button className="text-[16px] font-display font-black text-white hover:text-[#6C63FF] uppercase italic tracking-[6px] transition-colors border-b-4 border-transparent hover:border-[#6C63FF] pb-2">
+                JOIN DISCORD // COMM
               </button>
             </div>
           </motion.div>

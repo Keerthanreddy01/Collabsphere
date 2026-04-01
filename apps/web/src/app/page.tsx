@@ -8,6 +8,7 @@ import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { CTASection } from "@/components/sections/CTASection";
+import { ShowcaseSection } from "@/components/sections/ShowcaseSection";
 
 export default function LandingPage() {
   return (
@@ -18,6 +19,7 @@ export default function LandingPage() {
         <Hero />
         <TickerSection />
         <StoryScroll />
+        <ShowcaseSection />
         <StatsBar />
         <FeatureGrid />
         <HowItWorks />
