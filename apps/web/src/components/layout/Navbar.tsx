@@ -54,7 +54,7 @@ export function Navbar() {
         backdropFilter: navBlur,
       }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-700 h-24 md:h-28 flex items-center justify-between px-6 md:px-12 lg:px-20",
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-700 h-16 md:h-20 flex items-center justify-between px-6 md:px-12 lg:px-16",
         theme === "dark" ? "bg-[rgba(10,10,15,0.95)]" : "bg-[rgba(245,245,240,0.9)]"
       )}
     >

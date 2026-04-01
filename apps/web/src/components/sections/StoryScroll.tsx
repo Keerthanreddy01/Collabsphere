@@ -48,7 +48,7 @@ export function StoryScroll() {
    }, [scrollYProgress]);
 
    return (
-      <section ref={containerRef} className="relative h-[400vh] bg-[var(--bg)] z-10 m-0 p-0 transition-colors duration-500">
+      <section ref={containerRef} className="relative h-[300vh] bg-[var(--bg)] z-10 m-0 p-0 transition-colors duration-500">
          <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-20">
 
             {/* Left Side: STICKY MOCKUP */}
@@ -110,7 +110,7 @@ export function StoryScroll() {
                            STEP {block.step} / {block.title}
                         </div>
 
-                        <h2 className="text-[54px] md:text-[84px] font-display font-extrabold leading-[0.85] mb-12 tracking-[-0.03em] flex flex-col overflow-hidden">
+                        <h2 className="text-[42px] md:text-[64px] font-display font-extrabold leading-[0.9] mb-8 tracking-[-0.03em] flex flex-col overflow-hidden">
                            <motion.span
                               initial={{ y: "100%" }}
                               whileInView={{ y: 0 }}
@@ -140,9 +140,9 @@ export function StoryScroll() {
             </div>
          </div>
 
-         {/* Massive Background Ghost Text (Dynamic) */}
+         {/* Background Ghost Text (Rescaled) */}
          <div className="absolute inset-x-0 bottom-20 pointer-events-none opacity-[0.02] flex justify-center overflow-hidden">
-            <span className="text-[300px] font-display font-extrabold text-[var(--text)] leading-none whitespace-nowrap italic uppercase">
+            <span className="text-[140px] font-display font-extrabold text-[var(--text)] leading-none whitespace-nowrap italic uppercase">
                BUILD IN PUBLIC BUILD IN PUBLIC
             </span>
          </div>

@@ -33,7 +33,7 @@ const TickerRow = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
-      className={cn("flex items-center overflow-hidden whitespace-nowrap py-8 will-change-transform cursor-pointer transition-all duration-700", className)}
+      className={cn("flex items-center overflow-hidden whitespace-nowrap py-4 will-change-transform cursor-pointer transition-all duration-700", className)}
     >
       <motion.div 
         animate={{ 
@@ -47,18 +47,18 @@ const TickerRow = ({
         className="flex w-fit items-center"
       >
         {duplicatedItems.map((item, i) => (
-          <div key={i} className="flex items-center mx-20">
+          <div key={i} className="flex items-center mx-10">
             <span 
               className={cn(
-                "text-[32px] md:text-5xl font-black italic uppercase transition-all duration-700 select-none leading-none",
+                "text-[24px] md:text-3xl font-black italic uppercase transition-all duration-700 select-none leading-none",
                 isHovered ? "opacity-100 tracking-[-0.01em]" : "opacity-90 tracking-[-0.04em]"
               )}
             >
-              {typeof item === "string" ? item : item.label}
+               {typeof item === "string" ? item : item.label}
             </span>
             
             {/* Pulsing Node Separation (Glowing Dot) */}
-            <div className="mx-20 flex items-center justify-center pointer-events-none">
+            <div className="mx-10 flex items-center justify-center pointer-events-none">
               <motion.div 
                 animate={{ 
                   scale: isHovered ? [1.1, 1.4, 1.1] : [1, 1.3, 1], 
@@ -106,7 +106,7 @@ export function TickerSection() {
   ];
 
   return (
-    <div className="relative w-full py-24 -mt-24 z-10 bg-[var(--bg)] overflow-visible transition-colors duration-500">
+    <div className="relative w-full py-10 -mt-10 z-10 bg-[var(--bg)] overflow-visible transition-colors duration-500">
       
       {/* 1. THEME-AWARE FADE OVERLAY */}
       <div className="absolute top-0 left-0 right-0 h-[120px] pointer-events-none z-[5]">

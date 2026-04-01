@@ -19,7 +19,7 @@ export function CTASection() {
    return (
       <section 
         ref={containerRef} 
-        className="relative pt-64 pb-32 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden"
+        className="relative pt-24 pb-16 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden"
       >
          
          {/* THEME-INDEPENDENT BACKGROUND FILL */}
@@ -43,7 +43,7 @@ export function CTASection() {
          <div className="max-w-7xl mx-auto px-6 relative z-10">
 
             {/* Newsletter Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 mb-80 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-32 items-center">
                
                {/* Massive Text Area */}
                <div className="lg:col-span-12 xl:col-span-7 space-y-12">

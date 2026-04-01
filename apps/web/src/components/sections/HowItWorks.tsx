@@ -1,149 +1,150 @@
 "use client";
 
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const STEPS = [
   {
     number: "01",
-    title: "CREATE YOUR PROFILE",
-    body: "Connect your GitHub. Define your stack. Showcase your shipped features.",
-    color: "var(--purple)"
+    title: "PROFILE_ARCHITECT",
+    body: "Map your true developer DNA by synchronizing your GitHub ecosystem into a world-class portfolio audit.",
+    color: "var(--purple)",
+    tag: "DNA_MAPPING"
   },
   {
     number: "02",
-    title: "LAUNCH PROJECTS",
-    body: "Post your vision or find an existing team that needs your specific expertise.",
-    color: "var(--cyan)"
+    title: "TEAM_SYNERGY",
+    body: "Enter the neural matching engine. Find exact peers that complement your technical architecture gaps.",
+    color: "var(--cyan)",
+    tag: "NEURAL_MATCH"
   },
   {
     number: "03",
-    title: "CONNECT & SHIP",
-    body: "Join a room, coordinate in real-time, and ship world-class software together.",
-    color: "var(--green)"
+    title: "SHIP_VELOCITY",
+    body: "Deploy into high-fidelity rooms. Coordinate and deliver software at boutique agency speeds.",
+    color: "var(--green)",
+    tag: "TOTAL_IMPACT"
   }
 ];
 
 export function HowItWorks() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
 
-  const pathLength = useTransform(scrollYProgress, [0.3, 0.7], [0, 1]);
-
   return (
-    <section ref={containerRef} className="relative py-64 bg-[var(--bg)] border-b-[8px] border-[var(--bg)] overflow-hidden transition-colors duration-500">
+    <section ref={containerRef} className="relative h-[200vh] bg-[var(--bg)] transition-colors duration-500">
       
-      {/* BOUTIQUE GRID BACKGROUND */}
-      <div className="absolute inset-0 grid-pattern opacity-60 z-0 pointer-events-none" />
-
-      {/* Background Decor (Dynamic) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--purple)]/5 blur-[150px] rounded-full pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      {/* THE STICKY CONTENT AREA */}
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
         
-        {/* Section Header */}
-        <div className="mb-48 flex flex-col items-center text-center">
-           <motion.div
-             initial={{ opacity: 0, scale: 0.8 }}
-             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-             className="mb-8 bg-[var(--purple)] text-white px-6 py-2.5 font-mono font-black text-xs uppercase italic rotate-[-1.5deg] rounded-xl shadow-2xl border-4 border-[var(--text)]"
-           >
-              PROCESS PROTOCOL
-           </motion.div>
+        {/* Background Atmosphere */}
+        <div className="absolute inset-0 grid-pattern opacity-40 z-0" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[var(--purple)]/5 blur-[200px] rounded-full pointer-events-none" />
+
+        {/* Cinematic Background Header (Reduced Scale) */}
+        <div className="absolute top-1/4 w-full text-center z-0 pointer-events-none px-6">
            <motion.h2 
-             initial={{ opacity: 0, y: 30 }}
-             animate={isInView ? { opacity: 1, y: 0 } : {}}
-             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} 
-             className="text-[64px] md:text-[110px] font-display font-extrabold flex flex-col leading-[0.82] tracking-[-0.05em] italic uppercase"
+             style={{ opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.1, 0.2, 0.2, 0.1]) } as any}
+             className="text-[64px] md:text-[96px] font-display font-black leading-none italic uppercase text-transparent select-none"
            >
-             <span className="text-[var(--text)]">THREE STEPS TO</span>
-             <span className="text-[var(--purple)]">YOUR DREAM TEAM.</span>
+              THE PROCESS
            </motion.h2>
         </div>
 
-        {/* Steps Horizontal Stack */}
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-24 items-start pt-20">
-           
-           {/* Animated Dotted Path (Theme-Aware) */}
-           <div className="absolute top-[80px] left-0 right-0 hidden md:block -z-10 h-10 px-24">
-              <svg width="100%" height="20" viewBox="0 0 1000 20" fill="none" className="overflow-visible">
-                 <path 
-                    d="M0 10 H1000" 
-                    stroke="var(--border)" 
-                    strokeWidth="6" 
-                    strokeDasharray="16 12" 
-                 />
-                 <motion.path 
-                    d="M0 10 H1000" 
-                    stroke="var(--purple)" 
-                    strokeWidth="6" 
-                    style={{ pathLength }}
-                    strokeLinecap="round"
-                    strokeDasharray="16 12"
-                 />
-              </svg>
-           </div>
-
+        {/* The Stacked Cards Container */}
+        <div className="relative z-10 w-full max-w-4xl px-6 h-[400px]">
            {STEPS.map((step, i) => (
-             <div key={i} className="relative group perspective-1000">
-                {/* PUPPET STRING (Elite Minimalist) */}
-                <motion.div 
-                    initial={{ height: 0 }}
-                    animate={isInView ? { height: 160 } : {}}
-                    transition={{ duration: 1.2, delay: i * 0.2, ease: "easeOut" }}
-                    className="absolute top-[-160px] left-1/2 -translate-x-1/2 w-px bg-[var(--text)]/20 z-0 origin-top"
-                >
-                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-[var(--text)] rounded-full border-2 border-[var(--bg)]" />
-                </motion.div>
-
-                {/* THE STEP CARD (ELITE THEME-SYNC) */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: 100 }}
-                  animate={isInView ? { 
-                    opacity: 1, 
-                    scale: 1, 
-                    y: 0,
-                    rotateX: 0
-                  } : {}}
-                  transition={{ duration: 1.2, delay: i * 0.2 + 0.3, ease: [0.16, 1, 0.3, 1] }} 
-                  className="relative z-10 bg-[var(--bg-card)] border-8 border-[var(--text)] p-12 rounded-[56px] shadow-[24px_24px_0_var(--text)]/[0.03] hover:translate-x-3 hover:translate-y-3 hover:shadow-none transition-all duration-700"
-                >
-                   <div 
-                      className="w-18 h-18 bg-[var(--bg)] text-[var(--text)] border-4 rounded-2xl flex items-center justify-center font-display font-black text-2xl mb-12 shadow-xl transition-colors duration-500" 
-                      style={{ borderColor: step.color }}
-                   >
-                     {i + 1}
-                   </div>
-
-                   <h3 className="text-3xl md:text-5xl font-display font-black text-[var(--text)] mb-6 uppercase italic tracking-tighter leading-none group-hover:text-[var(--purple)] transition-colors duration-500">
-                      {step.title}
-                   </h3>
-                   <p className="text-[19px] font-medium text-[var(--text-muted)] leading-[1.6] uppercase italic group-hover:text-[var(--text)] transition-colors duration-500">
-                      {step.body}
-                   </p>
-
-                   {/* Background Number Ghost */}
-                   <span className="absolute bottom-4 right-8 text-[120px] font-display font-black text-[var(--text)]/[0.03] select-none pointer-events-none tracking-tighter italic">
-                     {step.number}
-                   </span>
-                </motion.div>
-             </div>
+             <StepCard key={step.number} step={step} i={i} progress={scrollYProgress} />
            ))}
         </div>
       </div>
 
-      {/* Background massive ghost text (Dynamic) */}
-      <div className="absolute inset-x-0 bottom-10 pointer-events-none opacity-[0.03] flex justify-center overflow-hidden translate-y-1/2">
-         <span className="text-[300px] font-display font-extrabold text-[var(--text)] leading-none whitespace-nowrap italic uppercase">
-           THE PROCESS THE PROCESS THE PROCESS
-         </span>
+      {/* Global Progress Indicator (Minimalist) */}
+      <div className="fixed bottom-12 right-12 z-50 flex flex-col items-end gap-2 pr-4 border-r-2 border-[var(--border)]">
+         <span className="font-mono text-[10px] tracking-[4px] text-[var(--purple)]">SYSTEM_PHASE</span>
+         <div className="flex gap-1">
+            {STEPS.map((_, i) => (
+              <motion.div 
+                key={i} 
+                className="w-2 h-2 bg-[var(--text)]/20 rounded-full"
+                style={{ backgroundColor: useTransform(scrollYProgress, [i/3, (i+0.5)/3, (i+1)/3], ["rgba(var(--text-rgb), 0.2)", "var(--purple)", "var(--purple)"]) }}
+              />
+            ))}
+         </div>
       </div>
     </section>
+  );
+}
+
+function StepCard({ step, i, progress }: { step: any, i: number, progress: any }) {
+  const start = i / STEPS.length;
+  const end = (i + 1) / STEPS.length;
+
+  const y = useTransform(progress, [start, end], [600, 0]);
+  const scale = useTransform(progress, [start, end], [0.8, 1]);
+  const opacity = useTransform(progress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, 0.8]);
+  const rotate = useTransform(progress, [start, end], [10, 0]);
+
+  // Special "Stacking" Logic: stay at 0 once reached
+  const stickyY = useTransform(progress, (val: number) => {
+    if (val < start) return 600;
+    if (val > end) return -20 * (val - end) * 500; 
+    return 0;
+  });
+
+  const translateY = useTransform(progress, [start, end], [400, 0]);
+
+  return (
+    <motion.div
+      style={{ 
+        y: translateY,
+        scale,
+        opacity,
+        rotateX: rotate,
+        zIndex: i + 10
+      }}
+      className="absolute inset-0 flex items-center justify-center perspective-[1000px]"
+    >
+       <div className="relative w-full max-w-xl group">
+          {/* THE BOUTIQUE HARDWARE CARD (Reduced Scale) */}
+          <div className="bg-[var(--bg-card)] border-[4px] border-[var(--text)] p-7 md:p-8 rounded-[40px] shadow-[12px_12px_0_var(--text)]/[0.03] transition-all duration-700 overflow-hidden">
+             
+             {/* Hud Interface Detail */}
+             <div className="flex justify-between items-start mb-8">
+                <div className="w-12 h-12 rounded-2xl border-2 border-[var(--text)]/10 flex items-center justify-center font-display font-black text-xl italic group-hover:bg-[var(--purple)] group-hover:text-white transition-all">
+                   {step.number}
+                </div>
+                <div className="font-mono text-[8px] tracking-[4px] text-[var(--purple)] opacity-50 uppercase">
+                   {step.tag}
+                </div>
+             </div>
+
+             <h3 className="text-3xl md:text-4xl font-display font-black text-[var(--text)] mb-4 uppercase italic tracking-tighter leading-none">
+                {step.title}
+             </h3>
+             <p className="text-[14px] md:text-[16px] font-medium text-[var(--text-muted)] leading-relaxed uppercase italic max-w-sm">
+                {step.body}
+             </p>
+
+             <div className="mt-8 pt-6 border-t border-[var(--border)] flex justify-between items-center">
+                <div className="font-mono text-[7px] tracking-[4px] opacity-20 group-hover:opacity-100 transition-all">
+                   ENCRYPTION_STATUS: OK
+                </div>
+                <div className="w-6 h-6 rounded-full border-2 border-[var(--text)]/10 flex items-center justify-center opacity-40 group-hover:opacity-100 group-hover:bg-[var(--purple)] group-hover:text-white transition-all">
+                   ↓
+                </div>
+             </div>
+          </div>
+
+          {/* Technical Alignment Marker */}
+          <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-px bg-[var(--text)] opacity-20" />
+          <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-6 h-px bg-[var(--text)] opacity-20" />
+       </div>
+    </motion.div>
   );
 }
