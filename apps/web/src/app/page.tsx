@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { TickerSection } from "@/components/sections/Ticker";
 import { StoryScroll } from "@/components/sections/StoryScroll";
@@ -26,8 +25,6 @@ export default function LandingPage() {
         <Testimonials />
         <CTASection />
       </main>
-
-      <Footer />
     </div>
   );
 }

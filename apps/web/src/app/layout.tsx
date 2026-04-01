@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { MouseGlow } from "@/components/shared/MouseGlow";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -30,6 +29,8 @@ export const metadata: Metadata = {
   keywords: ["developer", "builder", "collaboration", "projects", "startup", "open source"],
 };
 
+import { FloatingSidebar } from "@/components/layout/FloatingSidebar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,20 +39,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-[#0A0A0F] text-white overflow-x-hidden`}
+        className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-white overflow-x-hidden`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           <AuthProvider>
-            <div className="fixed inset-0 z-0 bg-[#0A0A0F] pointer-events-none" />
+            {/* GLOBAL WRAPPER: BIND THE THEME COLOR VARIABLES HERE */}
+            <div className="relative z-[1] min-h-screen transition-colors duration-500">
+               {children}
+            </div>
             
-            <main className="relative z-[1] min-h-screen">
-              {children}
-            </main>
+            {/* SIDEBAR NAVIGATION SPINE */}
+            <FloatingSidebar />
+            
             <Toaster position="top-center" expand={true} richColors closeButton />
           </AuthProvider>
         </ThemeProvider>

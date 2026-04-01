@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Star } from "lucide-react";
 
 export function CTASection() {
    const containerRef = useRef<HTMLDivElement>(null);
@@ -16,9 +17,12 @@ export function CTASection() {
    const tickerX = useTransform(scrollYProgress, [0, 1], [0, -1000]);
 
    return (
-      <section ref={containerRef} className="relative pt-64 pb-32 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden">
+      <section 
+        ref={containerRef} 
+        className="relative pt-64 pb-32 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden"
+      >
          
-         {/* ELITE BACKGROUND FILL: Ticker + Atoms */}
+         {/* THEME-INDEPENDENT BACKGROUND FILL */}
          <div className="absolute inset-0 opacity-10 pointer-events-none select-none">
             <motion.div 
                style={{ x: tickerX }}
@@ -28,7 +32,7 @@ export function CTASection() {
             </motion.div>
          </div>
 
-         {/* Heavy Airloop Dot Pattern */}
+         {/* Heavy Airloop Dot Pattern (Theme-Independent) */}
          <div className="absolute inset-0 opacity-15" 
               style={{ 
                 backgroundImage: `radial-gradient(circle at 2px 2px, white 2px, transparent 0)`,
@@ -140,14 +144,26 @@ export function CTASection() {
 
             {/* Footer Bottom */}
             <div className="pt-20 border-t-8 border-[#0A0A0F] flex flex-col md:flex-row justify-between items-center gap-10">
-               <div className="flex items-center gap-10">
+               <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10">
                   <p className="text-[14px] font-mono font-black text-white/50 uppercase tracking-[8px]">© 2026 THE GALAXY CORP.</p>
                   <div className="h-6 w-1 bg-white/20 hidden md:block" />
-                  <span className="text-[10px] font-mono font-black text-white/20 uppercase tracking-[4px] hidden md:block italic">WORLD-CLASS SHIPPER PROTOCOL ACTIVE</span>
+                  <span className="text-[10px] font-mono font-black text-white/20 uppercase tracking-[2px] italic">MIT Licensed · Open Source · Made by builders.</span>
                </div>
-               <div className="flex gap-16 font-mono text-[10px] font-black text-[#B6FF33] underline underline-offset-4 decoration-2">
-                  <button className="hover:text-white transition-colors">PRIVACY</button>
-                  <button className="hover:text-white transition-colors">TERMS</button>
+               
+               <div className="flex items-center gap-12">
+                  <div className="flex gap-10 font-mono text-[10px] font-black text-[#B6FF33] underline underline-offset-4 decoration-2">
+                     <button className="hover:text-white transition-colors">PRIVACY</button>
+                     <button className="hover:text-white transition-colors">TERMS</button>
+                  </div>
+
+                  <a 
+                    href="https://github.com/Keerthanreddy01/Collabsphere"
+                    target="_blank"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-[#0A0A0F] rounded-full text-[12px] font-mono font-black border-4 border-[#0A0A0F] shadow-[8px_8px_0_#0A0A0F] hover:translate-x-2 hover:translate-y-2 hover:shadow-none transition-all"
+                  >
+                     <Star size={14} className="fill-[#0A0A0F]" />
+                     Starred on GitHub <span className="text-[#0A0A0F]/40 font-normal ml-1">1.2k</span>
+                  </a>
                </div>
             </div>
          </div>

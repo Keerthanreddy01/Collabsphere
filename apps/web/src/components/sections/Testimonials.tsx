@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const TESTIMONIALS = [
    {
@@ -32,7 +33,7 @@ export function Testimonials() {
    const isInView = useInView(ref, { once: true, margin: "-100px" });
 
    return (
-      <section ref={ref} className="relative py-48 bg-[#6C63FF] overflow-hidden dot-texture">
+      <section ref={ref} className="relative py-48 bg-[#6C63FF] overflow-hidden">
          {/* High-quality background texture overlay */}
          <div className="absolute inset-0 pointer-events-none opacity-[0.14] bg-white/10 dot-texture" />
 
@@ -61,11 +62,11 @@ export function Testimonials() {
                      whileHover={{ scale: 1.08, rotate: 0, z: 50 }}
                      className="relative h-full bg-[#f5f4ee] p-12 rounded-[40px] border-8 border-[#0A0A0F] shadow-[30px_30px_0_rgba(10,10,15,0.4)] flex flex-col justify-between group cursor-default transition-all duration-500"
                   >
-                     {/* Circular Stamp Badge from Screenshot */}
+                     {/* Circular Stamp Badge */}
                      <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-[#FFE135] border-8 border-[#0A0A0F] rounded-full flex flex-col items-center justify-center rotate-[-12deg] group-hover:rotate-0 transition-transform duration-700 z-20 shadow-2xl overflow-hidden p-2">
                         <span className="text-[10px] font-mono font-black text-[#0A0A0F] text-center leading-[1.1]">DIL KHOL KE BOLIYE</span>
                         <div className="h-px w-full bg-[#0A0A0F]/20 my-1" />
-                        <span className="text-[8px] font-mono font-bold text-[#0A0A0F]/60">VERIFIED BUILDER</span>
+                        <span className="text-[8px] font-mono font-bold text-[#0A0A0F]/60 uppercase">VERIFIED BUILDER</span>
                      </div>
 
                      {/* Header with Icon */}

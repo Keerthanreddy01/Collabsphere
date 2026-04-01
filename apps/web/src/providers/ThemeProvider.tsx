@@ -1,11 +1,52 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ThemeProvider as NextThemesProvider } from "next-themes"
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-export function ThemeProvider({
-    children,
-    ...props
-}: React.ComponentProps<typeof NextThemesProvider>) {
-    return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+type Theme = "light" | "dark";
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("collabsphere-theme") as Theme;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+    }
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("collabsphere-theme", theme);
+    }
+  }, [theme, mounted]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 }

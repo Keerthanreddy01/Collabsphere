@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useTheme } from "@/providers/ThemeProvider";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
   { name: "HOME", href: "/" },
@@ -15,55 +17,52 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const { scrollY } = useScroll();
+  const { theme } = useTheme();
   const [isHovered, setIsHovered] = useState<string | null>(null);
 
-  // High-end dynamic scroll animations (SNAPPY TRANSITION)
+  // Theme-aware dynamic colors
+  const bgColorOnDark = "rgba(10, 10, 15, 0.95)";
+  const bgColorOnLight = "rgba(245, 245, 240, 0.9)";
+  
+  const textOnDark = "#FFFFFF";
+  const textOnLight = "#0A0A0F";
+
+  const targetBg = theme === "dark" ? bgColorOnDark : bgColorOnLight;
+  const targetText = theme === "dark" ? textOnDark : textOnLight;
+
+  // SCROLL-ADAPTIVE TRANSFORMS (SNAPPY TRANSITION)
   const navBg = useTransform(
     scrollY,
     [10, 40],
-    ["rgba(248, 249, 250, 0)", "rgba(10, 10, 15, 0.98)"]
+    [theme === "dark" ? "rgba(10, 10, 15, 0)" : "rgba(245, 245, 240, 0)", targetBg]
   );
   
   const navBorder = useTransform(
     scrollY,
     [10, 40],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.15)"]
+    ["rgba(255, 255, 255, 0)", theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.08)"]
   );
 
-  const navBlur = useTransform(
-    scrollY,
-    [10, 40],
-    ["blur(0px)", "blur(24px)"]
-  );
-
-  const textColor = useTransform(
-    scrollY,
-    [10, 40],
-    ["#0A0A0F", "#FFFFFF"]
-  );
-
-  const buttonText = useTransform(
-    scrollY,
-    [10, 40],
-    ["#0A0A0F", "#FFFFFF"]
-  );
+  const navBlur = useTransform(scrollY, [10, 40], ["blur(0px)", "blur(24px)"]);
+  const textColor = useTransform(scrollY, [10, 40], [targetText, targetText]); // Stay consistent based on current theme
 
   return (
     <motion.nav
       style={{ 
-        backgroundColor: navBg,
         borderBottom: `1px solid`,
         borderColor: navBorder,
         backdropFilter: navBlur,
       }}
-      className="fixed top-0 left-0 right-0 z-[100]"
+      className={cn(
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-700 h-24 md:h-28 flex items-center justify-between px-6 md:px-12 lg:px-20",
+        theme === "dark" ? "bg-[rgba(10,10,15,0.95)]" : "bg-[rgba(245,245,240,0.9)]"
+      )}
     >
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 h-24 md:h-28 flex items-center justify-between">
         
         {/* 1. BRAND LOGO (ELITE REDESIGN) */}
         <Link href="/" className="flex-shrink-0 group relative pr-10">
            <motion.span 
-             style={{ color: textColor }}
+             style={{ color: targetText }}
              className="text-2xl md:text-3xl font-black italic uppercase tracking-tighter transition-colors duration-500 block"
            >
              COLLAB<span className="text-[#6C63FF]">SPHERE</span>
@@ -87,7 +86,7 @@ export function Navbar() {
                className="relative py-2 group px-2 whitespace-nowrap"
              >
                 <motion.span
-                  style={{ color: textColor }}
+                  style={{ color: targetText }}
                   className="text-sm xl:text-base font-black italic uppercase tracking-[0.1em] transition-colors duration-500 block"
                 >
                   {link.name}
@@ -106,16 +105,22 @@ export function Navbar() {
            ))}
         </div>
 
-        {/* 3. AWARD-WINNING CONTACT PILL (SEAMLESS SCROLL COLOR SHIFT) */}
-        <div className="flex-shrink-0 flex items-center gap-4">
+        {/* 3. AWARD-WINNING ACTION HUB (CONTACT + THEME TOGGLE) */}
+        <div className="flex-shrink-0 flex items-center gap-4 md:gap-8 lg:gap-10">
+           
+
            <motion.button 
              whileHover="hover"
              className="hidden sm:flex relative group items-center gap-5 px-10 py-4.5 md:px-12 md:py-5 overflow-hidden rounded-full"
            >
              {/* THE MAGNETIC DEPTH BORDER */}
              <motion.div 
-                style={{ borderColor: useTransform(scrollY, [10, 40], ["#6C63FF", "rgba(255,255,255,0.2)"]) }}
-                className="absolute inset-0 rounded-full border-2 border-[#6C63FF] transition-colors duration-500 group-hover:border-white/40" 
+                className={cn(
+                  "absolute inset-0 rounded-full border-2 transition-colors duration-500 group-hover:border-white/40",
+                  theme === "dark" 
+                    ? "border-[#6C63FF]" 
+                    : "border-[#0A0A0F]/20"
+                )}
              />
              
              {/* THE LIQUID FILL (FLOWS FROM LEFT) */}
@@ -128,49 +133,39 @@ export function Navbar() {
                className="absolute inset-0 bg-gradient-to-r from-[#6C63FF] via-[#8B8DFF] to-[#6C63FF] z-0"
              />
 
-             {/* SHIFTING BLOOM GLOW */}
-             <div className="absolute -inset-2 bg-white/40 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 scale-75 group-hover:scale-110" />
-
-             {/* TEXT CONTENT (DYNAMIC SCROLL COLOR SHIFTING) */}
+             {/* TEXT CONTENT (DYNAMIC THEME SHIFTING) */}
              <motion.span 
-               style={{ color: buttonText }}
+               style={{ color: targetText }}
                className="relative z-10 text-xs md:text-sm font-black italic uppercase tracking-[0.2em] group-hover:text-white transition-colors duration-500 whitespace-nowrap"
              >
                CONTACT US
              </motion.span>
 
              {/* THE DYNAMIC 45 DEGREE ARROW HUB */}
-             <div className="relative z-10 w-6 h-6 md:w-7 md:h-7 rounded-full bg-[#0A0A0F] group-hover:bg-white text-white group-hover:text-[#6C63FF] flex items-center justify-center transition-all duration-700 group-hover:rotate-[405deg] shadow-[0_0_15px_rgba(10,10,15,0.3)] group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+             <div className={cn(
+                "relative z-10 w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center transition-all duration-700 group-hover:rotate-[405deg] shadow-[0_0_15px_rgba(10,10,15,0.3)]",
+                theme === "dark" 
+                   ? "bg-[#FFFFFF] text-[#0A0A0F] group-hover:bg-[#0A0A0F] group-hover:text-white" 
+                   : "bg-[#0A0A0F] text-white group-hover:bg-[#FFFFFF] group-hover:text-[#0A0A0F]"
+             )}>
                <span className="text-lg md:text-xl font-black mt-[-1px] ml-[1px]">↗</span>
              </div>
-
-             {/* INTERACTIVE MESH PATTERN (SURGICAL) */}
-             <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-1000 z-0 pointer-events-none"
-               style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '8px 8px' }}
-             />
            </motion.button>
+
+           {/* THEME TOGGLE ORB (INTEGRATED) */}
+           <div className="hidden sm:block">
+              <ThemeToggle />
+           </div>
 
            {/* Mobile Menu Trigger (Dynamic Color shift) */}
-           <motion.button 
-             style={{ color: textColor }}
-             className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group relative"
-           >
-              <motion.div 
-                 style={{ backgroundColor: textColor }}
-                 className="w-8 h-1 rounded-full group-hover:w-4 group-hover:-translate-x-1 transition-all duration-500" 
+           <button className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group relative">
+              <div 
+                 className={cn("w-8 h-1 rounded-full group-hover:w-4 group-hover:-translate-x-1 transition-all duration-500", theme === "dark" ? "bg-white" : "bg-[#0A0A0F]")} 
               />
-              <motion.div 
-                 style={{ backgroundColor: useTransform(scrollY, [10, 40], ["#6C63FF", "#6C63FF"]) }}
-                 className="w-8 h-1 rounded-full transition-all duration-300" 
-              />
-              <motion.div 
-                 style={{ backgroundColor: useTransform(scrollY, [10, 40], ["#FF6B35", "#FF6B35"]) }}
-                 className="w-4 h-1 rounded-full group-hover:w-8 group-hover:translate-x-1 transition-all duration-500" 
-              />
-           </motion.button>
+              <div className="w-8 h-1 bg-[#6C63FF] rounded-full transition-all duration-300" />
+              <div className="w-4 h-1 bg-[#FF6B35] rounded-full group-hover:w-7 transition-all duration-500" />
+           </button>
         </div>
-
-      </div>
 
       {/* SUBTLE PROGRESS LINE ON SCROLL (MESH GRADIENT) */}
       <motion.div 
