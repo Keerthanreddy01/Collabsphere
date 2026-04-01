@@ -29,7 +29,6 @@ export const metadata: Metadata = {
   keywords: ["developer", "builder", "collaboration", "projects", "startup", "open source"],
 };
 
-import { FloatingSidebar } from "@/components/layout/FloatingSidebar";
 
 export default function RootLayout({
   children,
@@ -40,6 +39,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${syne.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-transparent text-white overflow-x-hidden`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           <AuthProvider>
@@ -48,8 +48,6 @@ export default function RootLayout({
                {children}
             </div>
             
-            {/* SIDEBAR NAVIGATION SPINE */}
-            <FloatingSidebar />
             
             <Toaster position="top-center" expand={true} richColors closeButton />
           </AuthProvider>
