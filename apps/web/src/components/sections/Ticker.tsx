@@ -2,125 +2,149 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import React, { useState } from "react";
+
+interface TickerItem {
+  type: "card";
+  color: string;
+  label: string;
+}
 
 interface TickerRowProps {
-  items: (string | { type: "card", img: string, label: string })[];
+  items: (string | TickerItem)[];
   className?: string;
   speed?: number;
   reverse?: boolean;
 }
 
-const TickerRow = ({ items, className, speed = 40, reverse = false }: TickerRowProps) => {
+const TickerRow = ({
+  items,
+  className,
+  speed = 70,
+  reverse = false
+}: TickerRowProps) => {
+  // Duplicate items twice for seamless horizontal looping
+  const duplicatedItems = [...items, ...items, ...items, ...items];
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className={cn("relative overflow-hidden whitespace-nowrap py-14 w-full group", className)}>
-      
-      {/* Edge Fades for Cinema Finish */}
-      <div className="absolute inset-y-0 left-0 w-64 bg-gradient-to-r from-inherit to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-64 bg-gradient-to-l from-inherit to-transparent z-10 pointer-events-none" />
-
-      {/* DOTTED BACKGROUND PATTERN (Airloop style) */}
-      <div 
-        className="absolute inset-0 opacity-15 pointer-events-none" 
-        style={{ 
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,0,0,0.5) 2.5px, transparent 0)`,
-          backgroundSize: '40px 40px' 
-        }} 
-      />
-
-      <div 
-        className={cn("flex w-fit items-center", reverse ? "animate-ticker-reverse" : "animate-ticker shadow-ticker")}
-        style={{ animationDuration: `${speed}s` }}
+    <motion.div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.02 }}
+      className={cn("flex items-center overflow-hidden whitespace-nowrap py-8 will-change-transform cursor-pointer transition-all duration-700", className)}
+    >
+      <motion.div
+        animate={{
+          x: reverse ? ["-50%", "0%"] : ["0%", "-50%"]
+        }}
+        transition={{
+          duration: isHovered ? speed * 1.5 : speed,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+        className="flex w-fit items-center"
       >
-        {[...items, ...items, ...items, ...items].map((item, i) => (
+        {duplicatedItems.map((item, i) => (
           <div key={i} className="flex items-center mx-20">
-            {typeof item === "string" ? (
-              <>
-                <span className="text-[28px] md:text-[42px] font-display font-black uppercase italic tracking-[-0.04em] text-white/95">
-                   {item}
-                </span>
-                <span className="mx-20 text-[40px] font-black text-black/20 select-none">★</span>
-              </>
-            ) : (
-              <div className="relative h-28 w-56 mx-10 bg-[#0A0A0F] border-4 border-black/20 rounded-[30px] overflow-hidden shadow-2xl flex items-center justify-center rotate-[-3deg] group-hover:rotate-0 transition-all duration-700">
-                <Image 
-                  src={item.img} 
-                  alt={item.label} 
-                  fill
-                  className="object-cover opacity-80"
-                />
-                <div className="absolute inset-x-0 bottom-0 py-2 bg-black/60 backdrop-blur-md flex items-center justify-center">
-                   <span className="text-[10px] font-mono font-black text-white uppercase italic tracking-widest">{item.label}</span>
-                </div>
-              </div>
-            )}
-            
-            {/* Boutique Hardware ID Badge */}
-            {i % 4 === 0 && (
-              <div className="w-[55px] h-[55px] rounded-2xl bg-black/30 backdrop-blur-xl border-4 border-black/20 flex flex-col items-center justify-center font-mono font-black text-[12px] text-white shadow-2xl skew-x-[-10deg] ml-10">
-                 <span className="text-[8px] opacity-40 uppercase">UID</span>
-                 {String.fromCharCode(65 + (i % 26))}{i % 100}
-              </div>
-            )}
+            <span
+              className={cn(
+                "text-[32px] md:text-5xl font-black italic uppercase transition-all duration-700 select-none leading-none",
+                isHovered ? "opacity-100 tracking-[-0.01em]" : "opacity-90 tracking-[-0.04em]"
+              )}
+            >
+              {typeof item === "string" ? item : item.label}
+            </span>
+
+            {/* Pulsing Node Separation (Glowing Dot) */}
+            <div className="mx-20 flex items-center justify-center pointer-events-none">
+              <motion.div
+                animate={{
+                  scale: isHovered ? [1.1, 1.4, 1.1] : [1, 1.3, 1],
+                  opacity: [0.6, 1, 0.6]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-4 h-4 rounded-full shadow-[0_0_15px_currentColor]"
+                style={{
+                  backgroundColor: typeof item === "string" ? "#6C63FF" : item.color,
+                  color: typeof item === "string" ? "#6C63FF" : item.color
+                }}
+              />
+            </div>
           </div>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
 export function TickerSection() {
   const row1Items = [
     "Find Your Teammates",
-    { type: "card" as const, img: "/project_1_showcase_1775052734961.png", label: "AURA BUILD" },
+    { type: "card" as const, color: "#6C63FF", label: "AURA BUILD" },
     "Build in Public",
     "Ship Faster",
-    { type: "card" as const, img: "/project_2_showcase_1775052756574.png", label: "BOLT STACK" },
+    { type: "card" as const, color: "#FF6B35", label: "BOLT STACK" },
     "Open Source",
     "Developer Network",
-    { type: "card" as const, img: "/project_3_showcase_1775052778130.png", label: "ZEN UI" },
+    { type: "card" as const, color: "#00FF94", label: "ZEN UI" },
     "Collaboration Rooms"
   ];
 
   const row2Items = [
     "POST YOUR PROJECT",
-    { type: "card" as const, img: "/mini_mockup_1_1775052654655.png", label: "CODEBASE" },
+    { type: "card" as const, color: "#0A0A0F", label: "CODEBASE" },
     "FIND YOUR STACK",
     "BUILD IN PUBLIC",
     "SHIP TOGETHER",
-    { type: "card" as const, img: "/mini_mockup_2_1775052672477.png", label: "INTERFACE" },
+    { type: "card" as const, color: "#FFE135", label: "INTERFACE" },
     "OPEN SOURCE FIRST",
     "DEVELOPER NETWORK"
   ];
 
   return (
-    <section className="relative py-12 flex flex-col gap-10 bg-[#0A0A0F] overflow-hidden">
-      
-      {/* High-End Layout Lines Backdrop */}
-      <div className="absolute inset-0 flex justify-between pointer-events-none opacity-[0.05] px-20">
-         {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-full w-[1px] bg-white border-l-[1px]" />
-         ))}
+    <div className="relative w-full py-24 -mt-24 z-10 bg-[#0A0A0F] overflow-visible">
+
+      {/* 1. OPTION 1 (BEST): SMOOTH FADE OVERLAY (140px) — TICKER EMERGES FROM HERO */}
+      <div className="absolute top-0 left-0 right-0 h-[140px] pointer-events-none z-[40]">
+        <div className="w-full h-full bg-gradient-to-b from-transparent via-[#0A0A0F]/70 to-[#0A0A0F]" />
       </div>
 
-      <div className="relative z-10 flex flex-col gap-10">
-        <TickerRow 
-          items={row1Items} 
-          className="bg-[#2B59FF] shadow-[0_40px_100px_rgba(43,89,255,0.35)]" 
-          speed={35} 
-        />
-        
-        <TickerRow 
-          items={row2Items} 
-          className="bg-[#111118] text-white font-mono border-y-2 border-white/5" 
-          speed={45} 
-          reverse 
-        />
+      {/* 2. CINEMATIC EDGE MASK (20% FADE) */}
+      <div className="absolute inset-0 z-20 pointer-events-none"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)'
+        }}
+      />
+
+      {/* 3. RADIAL GLOW (DEPTH) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[40%] bg-[#6C63FF]/5 blur-[120px] rounded-full pointer-events-none z-0" />
+
+      {/* 4. PRO-LEVEL DYNAMIC HIGHWAY (0.3deg TILT) */}
+      <div className="relative flex flex-col gap-10 z-10">
+
+        {/* ROW 1: DARK LEFTWARD (75s) */}
+        <div className="rotate-[0.3deg] overflow-visible">
+          <TickerRow
+            items={row1Items}
+            className="bg-[#0b0b0b] text-white border-y border-white/5"
+            speed={75}
+          />
+        </div>
+
+        {/* ROW 2: BLUE RIGHTWARD (60s) */}
+        <div className="-rotate-[0.3deg] overflow-visible">
+          <TickerRow
+            items={row2Items}
+            className="bg-[#6C63FF] text-black shadow-2xl"
+            speed={60}
+            reverse
+          />
+        </div>
+
       </div>
 
-      {/* Boutique Details: Floating Atoms */}
-      <div className="absolute top-[20%] left-10 w-2 h-2 bg-[#00FF94] rounded-full blur-[2px] animate-pulse" />
-      <div className="absolute bottom-[20%] right-10 w-3 h-3 bg-[#FFE135] rounded-full blur-[4px] animate-pulse delay-700" />
-    </section>
+    </div>
   );
 }

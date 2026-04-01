@@ -2,25 +2,21 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import Image from "next/image";
 
 const PROJECTS = [
   { 
     name: "CYBER CORE", 
     desc: "Next-gen builder dashboard.", 
-    img: "/project_1_showcase_1775052734961.png",
     color: "#6C63FF"
   },
   { 
     name: "NOVA PROTOCOL", 
     desc: "Cross-chain networking for devs.", 
-    img: "/project_2_showcase_1775052756574.png",
     color: "#FF6B35"
   },
   { 
     name: "ORBITAL APP", 
     desc: "Real-time ship tracking protocol.", 
-    img: "/project_3_showcase_1775052778130.png",
     color: "#00FF94"
   }
 ];
@@ -32,7 +28,7 @@ export function ShowcaseSection() {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-[#0A0A0F] border-t-[8px] border-[#0A0A0F]">
+    <section ref={targetRef} className="relative h-[300vh] bg-[#0A0A0F] border-t-[8px] border-[#0A0A0F] z-10">
       
       {/* Sticky Context (The Cinema Stage) */}
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
@@ -94,14 +90,20 @@ function ProjectCard({ project, index }: { project: any, index: number }) {
       whileHover={{ scale: 1.05, rotate: -1.5, y: -20 }}
       className="relative w-[300px] md:w-[680px] aspect-video bg-[#111118] border-[10px] border-[#0A0A0F] rounded-[64px] overflow-hidden group shadow-[40px_40px_0_rgba(10,10,15,1)] transition-all duration-700 cursor-pointer"
     >
+       {/* Background Placeholder with Project Color Gradient */}
+       <div 
+          className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity" 
+          style={{ 
+             background: `linear-gradient(45deg, ${project.color}, transparent)`
+          }} 
+       />
+       
        <div className="absolute inset-x-0 bottom-0 top-[20%] bg-gradient-to-t from-black via-transparent to-transparent opacity-60 z-10" />
        
-       <Image 
-         src={project.img} 
-         alt={project.name} 
-         fill
-         className="object-cover group-hover:scale-110 transition-transform duration-[2s] ease-out-expo"
-       />
+       {/* Abstract Project Mesh / Pattern */}
+       <div className="absolute inset-10 border-2 border-white/5 rounded-[40px] flex items-center justify-center opacity-10 group-hover:opacity-30 transition-all duration-700">
+          <span className="text-[120px] font-display font-black italic">{project.name[0]}</span>
+       </div>
 
        {/* Floating Tag Overlay */}
        <div className="absolute top-10 right-10 z-20">

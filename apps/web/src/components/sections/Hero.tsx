@@ -1,18 +1,51 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { PillBadge } from "@/components/ui/PillBadge";
 import { GradientButton } from "@/components/ui/GradientButton";
 import React, { useRef } from "react";
+import { cn } from "@/lib/utils";
 
-const Sticker = ({ children, className = "", delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => (
+// ------------------------------------------------------------------------------------------------
+// BYOOOOOOB / GSAP HYBRID ASSETS (High-End Creative)
+// ------------------------------------------------------------------------------------------------
+
+const TalentSticker = ({ name, role, color, className = "", delay = 0 }: { name: string, role: string, color: string, className?: string, delay?: number }) => (
   <motion.div
-    animate={{
-      rotate: [0, 5, -5, 0],
-      y: [0, -10, 10, 0]
+    initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+    animate={{ 
+       opacity: 1, 
+       scale: 1, 
+       rotate: [0, 5, -5, 0],
+       y: [0, -15, 15, 0]
     }}
-    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay }}
-    className={`absolute z-30 pointer-events-none select-none ${className}`}
+    transition={{ 
+      duration: 1.2, 
+      delay, 
+      ease: [0.16, 1, 0.3, 1],
+      y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay }
+    }}
+    className={cn("absolute z-40 pointer-events-auto cursor-pointer group", className)}
+  >
+    <div className="relative p-2 bg-white border-[6px] border-[#0A0A0F] rounded-[32px] shadow-[12px_12px_0_#0A0A0F] group-hover:translate-x-2组 group-hover:translate-y-2 group-hover:shadow-none transition-all">
+       <div className="w-24 h-32 rounded-[24px] bg-gray-200 overflow-hidden mb-3 border-2 border-[#0A0A0F]" style={{ backgroundColor: color }}>
+          <div className="w-full h-full flex items-center justify-center text-white font-display font-black text-4xl italic opacity-40">{name[0]}</div>
+       </div>
+       <div className="px-2 text-center pb-2">
+          <h5 className="text-[10px] font-display font-black text-[#0A0A0F] uppercase leading-none mb-1">{name}</h5>
+          <p className="text-[7px] font-mono font-bold text-[#0A0A0F]/50 uppercase tracking-[1px]">{role}</p>
+       </div>
+       {/* Sticker Badge */}
+       <div className="absolute -top-3 -right-3 w-8 h-8 bg-[#FFE135] border-3 border-[#0A0A0F] rounded-full flex items-center justify-center text-[10px] font-black rotate-12">★</div>
+    </div>
+  </motion.div>
+);
+
+const FloatingIcon = ({ children, className = "", delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ opacity: 1, scale: 1, rotate: [0, 360] }}
+    transition={{ duration: 1, delay, rotate: { duration: 20, repeat: Infinity, ease: "linear" } }}
+    className={cn("absolute z-30 pointer-events-none opacity-40", className)}
   >
     {children}
   </motion.div>
@@ -24,180 +57,100 @@ export function Hero() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 100, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 100, damping: 20 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const x = (e.clientX - rect.left) / width - 0.5;
-    const y = (e.clientY - rect.top) / height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-
-  const lineVariants = {
-    hidden: { opacity: 0, y: 80, rotate: 2 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      rotate: 0,
-      transition: {
-        delay: 0.2 + i * 0.15,
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] as any
-      }
-    })
-  };
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 100, damping: 30 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), { stiffness: 100, damping: 30 });
 
   return (
     <section
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
-      className="relative min-h-screen flex items-center justify-center pt-24 dot-texture overflow-hidden bg-[#0A0A0F]"
+      className="relative min-h-screen flex items-center justify-center pt-64 pb-32 overflow-visible bg-[#F8F9FA]"
     >
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#6C63FF]/5 blur-[180px] rounded-full pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#00D4FF]/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* Visual Background: Minimal Grid (Byoooooob Style) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'linear-gradient(#0A0A0F 1px, transparent 1px), linear-gradient(90deg, #0A0A0F 1px, transparent 1px)', backgroundSize: '100px 100px' }} />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10 w-full h-full lg:min-h-[85vh]">
-
-        {/* Left Column - The Massive Creative Type */}
-        <div className="lg:col-span-12 xl:col-span-8 flex flex-col justify-center py-20 relative">
-
-          {/* Top Pill Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-            className="mb-8"
-          >
-            <div className="bg-[#111118] border border-white/10 px-6 py-2 rounded-full inline-flex items-center gap-3 shadow-xl">
-              <span className="flex gap-1">
-                <span className="w-2 h-2 rounded-full bg-[#00FF94] pulse-dot" />
-                <span className="w-2 h-2 rounded-full bg-[#00D4FF]" />
-              </span>
-              <span className="text-[10px] font-mono font-bold tracking-[2px] uppercase text-[#8B8B9E]">
-                Open Beta · Build v0.1.0
-              </span>
-            </div>
-          </motion.div>
-
-          {/* HEADLINE: CRASHING, MIXED TYPE */}
-          <div className="relative mb-14">
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              className="text-[80px] md:text-[130px] font-display font-extrabold leading-[0.88] tracking-[-0.05em] flex flex-col"
+      <div className="max-w-[1400px] mx-auto px-10 relative z-10 w-full flex flex-col items-center">
+        
+        {/* CENTER TYPOGRAPHY: (GSAP / BYOOOOOOB STYLE) */}
+        <div className="relative mb-24 text-center">
+          <h1 className="flex flex-col gap-0 md:gap-2">
+            
+            <motion.div 
+               initial={{ opacity: 0, y: 80 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+               className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[#0A0A0F] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
             >
-              <motion.span variants={lineVariants} custom={0} className="text-white relative flex items-baseline">
-                WHERE <span className="text-[#6C63FF] italic ml-4">BUILDERS</span>
-                <Sticker className="-top-12 left-[20%] delay-150">
-                  <div className="w-16 h-16 bg-[#FFE135] text-[#0A0A0F] flex items-center justify-center font-display font-black text-2xl rotate-12 rounded-xl shadow-2xl">★</div>
-                </Sticker>
-              </motion.span>
+               BUILD YOUR <span className="text-[#6C63FF]">DREAM</span>
+            </motion.div>
 
-              <motion.span variants={lineVariants} custom={1} className="text-white flex items-center group">
-                FIND THEIR
-                <span className="hidden md:inline-flex mx-6 w-[140px] h-[70px] bg-[#6C63FF] rounded-full items-center justify-center overflow-hidden rotate-[-3deg] group-hover:rotate-0 transition-all duration-500">
-                  <span className="text-white font-mono text-3xl font-bold italic">&lt;/&gt;</span>
-                </span>
-                PEOPLE.
-              </motion.span>
+            <motion.div 
+               initial={{ opacity: 0, y: 80 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+               className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[#0A0A0F] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
+            >
+               TEAM <span className="font-serif italic text-white bg-[#0A0A0F] px-8 lg:px-14 py-2 lg:py-6 rounded-[40px] lg:rounded-[80px] -rotate-2 -mt-4">/with</span>
+            </motion.div>
 
-              <motion.span variants={lineVariants} custom={2} className="relative">
-                <span className="text-[#00D4FF] italic">READY</span>
-                <span className="text-white"> TO </span>
-                <span className="text-[#6C63FF]">SHIP.</span>
+            <motion.div 
+               initial={{ opacity: 0, y: 80 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+               className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[#6C63FF] leading-[0.85] tracking-[-0.06em] uppercase flex items-center justify-center gap-10 flex-wrap"
+            >
+               ELITE BUILDERS
+            </motion.div>
+          </h1>
 
-                <Sticker className="bottom-0 -right-12 delay-500">
-                  <div className="bg-[#00FF94] text-[#0A0A0F] px-4 py-2 font-mono font-black text-xs rotate-[-12deg] rounded-lg shadow-2xl border-2 border-[#0A0A0F]">v0.1 RELEASE</div>
-                </Sticker>
-              </motion.span>
-            </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-12 text-[18px] lg:text-[22px] font-mono font-bold text-[#0A0A0F]/60 uppercase tracking-[2px] max-w-2xl mx-auto italic"
+          >
+            Find the perfect team for your business goals. <br />
+            No noise, just <span className="text-[#0A0A0F] font-black underline decoration-4 decoration-[#6C63FF]">verified production history.</span>
+          </motion.p>
+        </div>
+
+        {/* Global CTA Vision Group */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center gap-10 relative w-full mb-32"
+        >
+          <div className="flex flex-col md:flex-row gap-10 items-center">
+            <GradientButton className="h-[84px] px-20 bg-[#0A0A0F] text-white hover:bg-[#6C63FF] font-display font-black uppercase italic tracking-[6px] text-[20px] rounded-full border-4 border-[#0A0A0F] shadow-[16px_16px_0_rgba(108,99,255,0.4)] transition-all duration-500 hover:translate-x-2 hover:translate-y-2 hover:shadow-none">
+               GET A QUOTE →
+            </GradientButton>
           </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] as any }}
-            className="flex flex-col xl:flex-row xl:items-end justify-between gap-16 mb-24 relative"
-          >
-            <div className="max-w-2xl">
-               <div className="text-[12px] font-mono font-black tracking-[10px] text-[#6C63FF] mb-6 uppercase italic">THE PROTOCOL</div>
-               <p className="text-[32px] md:text-[48px] text-white font-display font-black leading-[1.0] italic uppercase tracking-tighter border-l-[12px] border-[#6C63FF] pl-10 py-2 group-hover:scale-105 transition-all">
-                 Recruit your <span className="text-[#00D4FF]">backend genius.</span> <br />
-                 Find your <span className="text-[#FFE135]">UI master.</span> <br />
-                 Ship <span className="text-[#00FF94]">in public.</span>
-               </p>
-            </div>
+        {/* FLOATING TALENT STICKERS (BYOOOOOOB STYLE) */}
+        <TalentSticker name="AMELIA_W" role="UI DESIGNER" color="#FF6B35" className="top-20 left-[5%] lg:left-[8%]" delay={1} />
+        <TalentSticker name="S. RIVERS" role="RUST ARCHITECT" color="#6C63FF" className="top-[50%] left-[-2%] lg:left-[5%]" delay={1.2} />
+        <TalentSticker name="MIA_KH" role="DESSIGN LEAD" color="#00FF94" className="bottom-20 left-[10%] lg:left-[15%]" delay={1.4} />
+        
+        <TalentSticker name="MAX_P" role="WASM GURU" color="#00D4FF" className="top-40 right-[1%] lg:right-[10%]" delay={1.3} />
+        <TalentSticker name="LIAM_T" role="BACKEND" color="#FFE135" className="bottom-[40%] right-[-2%] lg:right-[5%]" delay={1.5} />
+        <TalentSticker name="SYNE_K" role="FOUNDER" color="#0A0A0F" className="bottom-0 right-[15%] lg:right-[20%]" delay={1.7} />
 
-            <div className="flex flex-wrap gap-8 relative items-center">
-              <GradientButton variant="primary" className="h-[84px] px-16 bg-[#2B59FF] hover:bg-[#6C63FF] font-display font-black uppercase italic tracking-widest text-[24px] rounded-[36px] border-4 border-[#0A0A0F] shadow-[16px_16px_0_#0A0A0F] hover:translate-x-2 hover:translate-y-2 hover:shadow-none transition-all duration-500">
-                GET STARTED →
-              </GradientButton>
-              <button className="text-[16px] font-display font-black text-white hover:text-[#6C63FF] uppercase italic tracking-[6px] transition-colors border-b-4 border-transparent hover:border-[#6C63FF] pb-2">
-                JOIN DISCORD // COMM
-              </button>
-            </div>
-          </motion.div>
-        </div>
+        {/* GRAPHIC ASSETS (BYOOOOOOB / GSAP) */}
+        <FloatingIcon className="top-[10%] right-[30%]" delay={0.5}>
+           <div className="w-20 h-20 bg-[#FF6B35] rounded-full border-4 border-[#0A0A0F] shadow-xl flex items-center justify-center font-display font-black text-white text-3xl">★</div>
+        </FloatingIcon>
+        <FloatingIcon className="bottom-[15%] left-[25%]" delay={0.7}>
+           <div className="w-16 h-16 border-4 border-[#0A0A0F] rounded-[24px] rotate-12 flex items-center justify-center p-2">
+              <div className="w-full h-full bg-[#00FF94] rounded-full" />
+           </div>
+        </FloatingIcon>
+        <FloatingIcon className="top-[55%] right-[25%]" delay={0.9}>
+           <div className="w-24 h-12 bg-[#FFE135] border-4 border-[#0A0A0F] rounded-full flex items-center justify-center font-mono font-black italic text-[10px] tracking-widest text-[#0A0A0F] rotate-[-12deg]">PROTOCOL</div>
+        </FloatingIcon>
 
-        {/* Right Column - Interactive Stamp Card */}
-        <div className="lg:col-span-12 xl:col-span-4 relative flex items-center justify-center lg:justify-end py-16 xl:py-0">
-          <motion.div
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="relative w-full max-w-[400px] perspective-1000"
-          >
-            <div
-              className="bg-[#F5F4EE] border-4 border-[#0A0A0F] p-8 rounded-[32px] shadow-[20px_20px_0_#6C63FF] transition-all duration-300 hover:translate-x-2 hover:translate-y-2 hover:shadow-none"
-              style={{ transform: "translateZ(50px)" }}
-            >
-              {/* Stamp Style Profile */}
-              <div className="flex flex-col gap-6">
-                <div className="flex justify-between items-start">
-                  <div className="w-20 h-20 bg-[#6C63FF] rounded-2xl flex items-center justify-center font-display font-black text-3xl text-white rotate-[-6deg] group-hover:rotate-0 transition-all border-4 border-[#0A0A0F]">
-                    JD
-                  </div>
-                  <div className="bg-[#FFE135] border-4 border-[#0A0A0F] px-4 py-1 font-mono font-black text-[10px] uppercase rotate-6">
-                    VERIFIED
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <h3 className="text-2xl font-display font-extrabold text-[#0A0A0F] italic uppercase">J. DOE</h3>
-                  <p className="text-xs font-mono font-bold text-[#5A5A6E] tracking-[1px] uppercase">Senior Rust Architect</p>
-                </div>
-
-                <div className="h-px w-full bg-[#0A0A0F]/10" />
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-[#00FF94] rounded-full" />
-                    <span className="text-xs font-mono font-bold text-[#0A0A0F]">AVAIL: 12H / WK</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {["RUST", "WASM", "GO"].map(t => (
-                      <span key={t} className="bg-[#0A0A0F] text-white px-3 py-1 rounded-lg text-[10px] font-mono font-black italic">{t}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <button className="w-full bg-[#0A0A0F] py-4 rounded-xl font-display font-extrabold text-white uppercase italic text-sm transition-all hover:bg-[#6C63FF]">
-                  Invite to Project
-                </button>
-              </div>
-            </div>
-
-            {/* Decorative Stick-ons */}
-            <div className="absolute -top-10 -right-6 w-24 h-24 bg-[#00D4FF] border-4 border-[#0A0A0F] rounded-full flex items-center justify-center -rotate-12 z-20 shadow-xl overflow-hidden">
-              <span className="text-[10px] font-mono font-black text-[#0A0A0F] text-center leading-tight">OFFERING<br />HELP</span>
-            </div>
-          </motion.div>
-        </div>
       </div>
     </section>
   );

@@ -2,149 +2,100 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Menu, X, Star } from "lucide-react";
+import { Star } from "lucide-react";
+
+const NAV_LINKS = [
+  { name: "FEATURES", href: "#" },
+  { name: "COMMUNITY", href: "#" },
+  { name: "DOCS", href: "#", isNew: true },
+];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const { scrollY } = useScroll();
   
-  const backgroundColor = useTransform(
-    scrollY,
-    [0, 80],
-    ["rgba(10, 10, 15, 0)", "rgba(10, 10, 15, 0.95)"]
-  );
-  
-  const navLinks = [
-    { name: "Features", href: "#" },
-    { name: "Community", href: "#", isNew: true },
-    { name: "Docs", href: "#" },
-  ];
+  // Transition background on scroll
+  const bgOpacity = useTransform(scrollY, [0, 50], [0.7, 0.95]);
+  const blurAmount = useTransform(scrollY, [0, 50], [20, 25]);
+  const borderOpacity = useTransform(scrollY, [0, 50], [0.08, 0.12]);
 
   return (
-    <motion.nav
-      style={{ backgroundColor }}
-      className="fixed top-0 left-0 right-0 z-[100] h-24 flex items-center transition-all duration-500 border-b border-white/[0.05]"
+    <motion.header 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="fixed top-6 left-0 right-0 z-[100] w-full flex justify-center px-4 pointer-events-none"
     >
-      <div className="max-w-7xl mx-auto w-full px-6 flex items-center justify-between">
-        
-        {/* LOGO - CLEAN 3D EFFECT (NO GLITCHY DROP-SHADOW) */}
-        <Link href="/" className="flex items-center gap-3 group relative perspective-1000">
-           <motion.div 
-             whileHover={{ scale: 1.05 }}
-             className="relative flex items-center"
-           >
-              {/* Back Layer (The Shadow) */}
-              <span className="absolute top-[4px] left-[4px] text-[26px] font-display font-black tracking-tighter text-[#6C63FF] uppercase italic leading-none select-none opacity-50 group-hover:text-white transition-colors">
-                 COLLABSPHERE
-              </span>
-              
-              {/* Front Layer */}
-              <span className="relative text-[26px] font-display font-black tracking-tighter text-white uppercase italic leading-none">
-                 COLLAB<span className="text-[#6C63FF] group-hover:text-[#FFE135] transition-colors">SPHERE</span>
-              </span>
-
-              {/* The "Eye" Dot */}
-              <div className="absolute -top-1 -left-5 w-3.5 h-3.5 bg-[#00FF94] rounded-full border-4 border-[#0A0A0F] shadow-[0_0_15px_#00FF94]" />
-           </motion.div>
+      <motion.div 
+        style={{ 
+          backgroundColor: useTransform(bgOpacity, v => `rgba(10, 10, 10, ${v})`),
+          backdropFilter: useTransform(blurAmount, v => `blur(${v}px)`),
+          borderColor: useTransform(borderOpacity, v => `rgba(255, 255, 255, ${v})`)
+        }}
+        className="flex items-center justify-between w-full max-w-3xl h-16 rounded-full border px-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)] pointer-events-auto"
+      >
+        {/* LOGO: LEFT */}
+        <Link href="/" className="flex items-center group relative overflow-hidden">
+           <span className="text-[18px] font-display font-black tracking-tighter text-white uppercase italic leading-none group-hover:text-[#6C63FF] transition-colors">
+              COLLAB<span className="text-[#6C63FF] group-hover:text-white">SPHERE</span>
+           </span>
         </Link>
 
-        {/* Desktop Links */}
-        <div className="hidden lg:flex items-center gap-14">
-          <div className="flex items-center gap-10">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="group relative flex items-center"
-              >
-                <motion.span 
-                  whileHover={{ y: -2 }}
-                  className="text-[11px] font-mono font-black tracking-[4px] text-white uppercase italic transition-colors hover:text-[#FFE135]"
-                >
-                  {link.name}
-                </motion.span>
-                {link.isNew && (
-                  <motion.span 
-                    animate={{ rotate: [5, -5, 5] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="bg-[#FF6B35] text-white text-[7px] font-mono font-black italic px-2 py-0.5 rounded-md border-2 border-[#0A0A0F] absolute -top-4 -right-10 whitespace-nowrap shadow-xl"
-                  >
-                     NEW!
-                  </motion.span>
-                )}
-              </Link>
-            ))}
-          </div>
-          
-          <div className="flex items-center gap-10 border-l border-white/10 pl-10">
-            <Link
-              href="https://github.com"
-              target="_blank"
-              className="group flex flex-col items-end"
-            >
-              <div className="flex items-center gap-1.5">
-                 <Star size={14} className="text-[#FFE135] fill-[#FFE135]" />
-                 <span className="text-[11px] font-mono font-black text-white italic group-hover:text-[#FFE135]">1.2K</span>
-              </div>
-              <span className="text-[7px] font-mono font-bold text-white/30 uppercase tracking-widest">STARS</span>
-            </Link>
+        {/* LINKS: CENTER */}
+        <nav className="hidden md:flex items-center gap-10">
+           {NAV_LINKS.map((link) => (
+             <Link
+               key={link.name}
+               href={link.href}
+               className="relative group flex items-center"
+             >
+               <motion.span
+                 whileHover={{ 
+                    color: "#ffffff", 
+                    textShadow: "0 0 12px rgba(108,99,255,0.8)" 
+                 }}
+                 className="text-[10px] font-mono font-black tracking-[3px] text-white/60 uppercase transition-colors"
+               >
+                 {link.name}
+               </motion.span>
+               
+               {/* Tiny Pulsing Orange Dot for New Items */}
+               {link.isNew && (
+                 <motion.div 
+                   animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+                   transition={{ duration: 2, repeat: Infinity }}
+                   className="absolute -top-1.5 -right-3 w-1.5 h-1.5 bg-[#FF6B35] rounded-full shadow-[0_0_8px_#FF6B35]"
+                 />
+               )}
+             </Link>
+           ))}
+        </nav>
 
-            {/* WORLD CLASS CTA BUTTON */}
-            <motion.button 
-              whileHover={{ 
-                translateX: 4,
-                translateY: 4,
-                boxShadow: "none"
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="h-[56px] px-10 bg-white border-4 border-[#0A0A0F] rounded-full text-[#0A0A0F] font-display font-black text-[13px] italic uppercase tracking-wider shadow-[8px_8px_0_#6C63FF] transition-all flex items-center justify-center gap-3 group/btn"
-            >
-               START BUILDING <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-            </motion.button>
-          </div>
+        {/* ACTIONS: RIGHT */}
+        <div className="flex items-center gap-8">
+           {/* Stars Ghost Item */}
+           <div className="hidden md:flex items-center gap-1.5 cursor-default group">
+              <Star size={10} className="text-[#FFE135] fill-[#FFE135]/20 group-hover:fill-[#FFE135] transition-all" />
+              <span className="text-[10px] font-mono font-bold text-white/30 group-hover:text-white transition-colors">1.2K</span>
+           </div>
+
+           {/* START BUILDING: GRADIENT BORDER STYLE */}
+           <motion.button
+             whileHover={{ scale: 1.05 }}
+             whileTap={{ scale: 0.95 }}
+             className="relative group/btn"
+           >
+             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#6C63FF] to-[#ff6b35] p-[1.5px] opacity-80 group-hover/btn:opacity-100 transition-opacity" />
+             <div className="relative h-10 px-6 rounded-full bg-[#0d0d0d] flex items-center justify-center">
+                <span className="text-[10px] font-display font-black text-white italic uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
+                   START BUILDING →
+                </span>
+             </div>
+           </motion.button>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          className="lg:hidden w-12 h-12 bg-[#111118] border-4 border-[#0A0A0F] rounded-2xl flex items-center justify-center text-white"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden absolute inset-0 top-24 h-screen bg-[#0A0A0F] z-[99] p-8 flex flex-col items-center justify-center gap-12"
-        >
-          {navLinks.map((link, i) => (
-            <motion.div
-              key={link.name}
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <Link
-                href={link.href}
-                className="text-6xl font-display font-black text-white italic uppercase tracking-tighter hover:text-[#6C63FF] transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
-            </motion.div>
-          ))}
-          <motion.button 
-            className="w-full h-20 bg-[#6C63FF] border-8 border-[#0A0A0F] rounded-[40px] text-white font-display font-black text-xl italic shadow-[15px_15px_0_#0A0A0F]"
-          >
-             START BUILDING
-          </motion.button>
-        </motion.div>
-      )}
-    </motion.nav>
+      </motion.div>
+    </motion.header>
   );
 }
