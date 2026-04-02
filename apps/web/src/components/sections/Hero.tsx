@@ -127,7 +127,7 @@ export function Hero() {
         </motion.div>
 
         {/* FLOATING TALENT STICKERS (DYNAMIC) */}
-        <TalentSticker name="AMELIA_W" role="UI DESIGNER" color="#FF6B35" className="top-10 left-[10%] lg:left-[15%]" delay={1} />
+        <TalentSticker name="AMELIA_W" role="UI DESIGNER" color="#FF6B35" className="top-[4%] left-[2%] lg:left-[5%]" delay={1} />
         <TalentSticker name="S. RIVERS" role="RUST ARCHITECT" color="#6C63FF" className="top-[45%] left-[2%] lg:left-[8%]" delay={1.2} />
         <TalentSticker name="MIA_KH" role="DESSIGN LEAD" color="#00FF94" className="bottom-14 left-[15%] lg:left-[20%]" delay={1.4} />
 
