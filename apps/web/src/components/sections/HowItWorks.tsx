@@ -33,7 +33,7 @@ const STEPS = [
 
 export function HowItWorks() {
    const targetRef = useRef<HTMLDivElement>(null);
-   
+
    const { scrollYProgress } = useScroll({
       target: targetRef,
       offset: ["start start", "end end"]
@@ -48,26 +48,26 @@ export function HowItWorks() {
 
    // Technical Horizontal Track (0% -> -66.6% for 3 items)
    const x = useTransform(smoothProgress, [0, 1], ["0%", "-66.6%"]);
-   
+
    // Parallax Backdrop Narrative
    const backdropX = useTransform(smoothProgress, [0, 1], [0, -400]);
 
    return (
-      <section 
-         ref={targetRef} 
+      <section
+         ref={targetRef}
          className="relative h-[400vh] bg-[var(--bg)] border-t-[4px] border-[var(--border)] overflow-visible z-40"
       >
          {/* THE CINEMATIC STICKY STAGE */}
          <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-            
+
             {/* Background Engineering Atmosphere */}
             <div className="absolute inset-0 grid-pattern opacity-[0.06] z-0 pointer-events-none" />
-            
+
             {/* Parallax Atmospheric Narrative */}
             <div className="absolute top-[18%] left-[5%] z-0 pointer-events-none">
-               <motion.h2 
+               <motion.h2
                   style={{ x: backdropX }}
-                  className="text-[100px] md:text-[140px] font-display font-black text-[var(--text)] opacity-[0.03] italic uppercase leading-none tracking-[-0.08em] whitespace-nowrap"
+                  className="text-[60px] md:text-[100px] font-display font-black text-[var(--text)] opacity-[0.03] italic uppercase leading-none tracking-[-0.08em] whitespace-nowrap"
                >
                   THE_PROCESS_ENGINE_SYSTEM
                </motion.h2>
@@ -75,7 +75,7 @@ export function HowItWorks() {
 
             {/* THE HORIZONTAL NARRATIVE TRACK */}
             <div className="relative z-10 w-full flex items-center h-full">
-               <motion.div 
+               <motion.div
                   style={{ x }}
                   className="flex gap-[15vw] md:gap-[25vw] px-[15vw] w-max items-center"
                >
@@ -102,11 +102,11 @@ export function HowItWorks() {
             <div className="absolute bottom-12 right-10 md:right-[6%] z-20 flex gap-4">
                {STEPS.map((_, i) => (
                   <div key={i} className="flex flex-col gap-2 scale-75 md:scale-100">
-                     <span className="font-mono text-[10px] text-[var(--text-muted)] opacity-20 text-center">{i+1}</span>
+                     <span className="font-mono text-[10px] text-[var(--text-muted)] opacity-20 text-center">{i + 1}</span>
                      <div className="w-16 h-1.5 bg-[var(--text)]/10 rounded-full overflow-hidden">
-                        <motion.div 
+                        <motion.div
                            className="h-full bg-[var(--purple)]"
-                           style={{ width: useTransform(smoothProgress, [i/3, (i+1)/3], ["0%", "100%"]) }}
+                           style={{ width: useTransform(smoothProgress, [i / 3, (i + 1) / 3], ["0%", "100%"]) }}
                         />
                      </div>
                   </div>
@@ -121,19 +121,19 @@ export function HowItWorks() {
 function StepCard({ step, i, progress }: { step: any, i: number, progress: any }) {
    return (
       <div className="relative group">
-         
+
          {/* THE CARD FRAME (Boutique Industrial Design) */}
-         <div className="relative w-[85vw] md:w-[480px] lg:w-[540px] bg-[var(--bg-card)] border-[6px] md:border-[6px] border-[var(--text)] rounded-[56px] md:rounded-[64px] p-8 md:p-10 shadow-[20px_20px_0_var(--border)] overflow-hidden transition-all duration-700 group-hover:shadow-none group-hover:translate-x-2 group-hover:translate-y-2">
-            
+         <div className="relative w-[85vw] md:w-[400px] lg:w-[460px] bg-[var(--bg-card)] border-[4px] md:border-[6px] border-[var(--text)] rounded-[40px] md:rounded-[56px] p-6 md:p-8 shadow-[16px_16px_0_var(--border)] overflow-hidden transition-all duration-700 group-hover:shadow-none group-hover:translate-x-2 group-hover:translate-y-2">
+
             {/* Animated Scanning HUD Line */}
-            <div 
+            <div
                className="absolute top-0 left-0 w-full h-[2px] opacity-20 animate-scan"
                style={{ background: `linear-gradient(90deg, transparent, ${step.color}, transparent)` }}
             />
 
             {/* Top Identity Block */}
             <div className="flex justify-between items-start mb-12">
-               <div 
+               <div
                   className="w-16 h-16 rounded-[22px] border-4 border-[var(--text)] flex items-center justify-center font-display font-black text-2xl italic transition-all duration-700 shadow-2xl group-hover:scale-110"
                   style={{ background: step.color, color: "var(--bg)" }}
                >
@@ -151,11 +151,11 @@ function StepCard({ step, i, progress }: { step: any, i: number, progress: any }
 
             {/* Core Narrative Detail */}
             <div className="space-y-6">
-               <h3 className="text-4xl md:text-5xl font-display font-black text-[var(--text)] uppercase italic tracking-tighter leading-none group-hover:translate-x-3 transition-transform duration-500">
+               <h3 className="text-3xl md:text-4xl font-display font-black text-[var(--text)] uppercase italic tracking-tighter leading-none group-hover:translate-x-3 transition-transform duration-500">
                   {step.title}
                </h3>
                <div className="h-1.5 w-24 bg-[var(--purple)] rounded-full group-hover:w-full transition-all duration-1000" style={{ backgroundColor: step.color }} />
-               <p className="text-[17px] md:text-[20px] font-medium text-[var(--text-muted)] leading-[1.3] uppercase italic tracking-tight max-w-[450px] group-hover:text-[var(--text)] transition-colors duration-700">
+               <p className="text-[15px] md:text-[18px] font-medium text-[var(--text-muted)] leading-[1.3] uppercase italic tracking-tight max-w-[400px] group-hover:text-[var(--text)] transition-colors duration-700">
                   {step.description}
                </p>
             </div>

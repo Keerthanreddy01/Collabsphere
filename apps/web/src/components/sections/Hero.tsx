@@ -77,7 +77,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[var(--text)] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
+              className="text-[48px] md:text-[90px] lg:text-[120px] font-display font-black text-[var(--text)] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
             >
               BUILD YOUR <span className="text-[var(--purple)]">DREAM</span>
             </motion.div>
@@ -86,16 +86,16 @@ export function Hero() {
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[var(--text)] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
+              className="text-[48px] md:text-[90px] lg:text-[120px] font-display font-black text-[var(--text)] leading-[0.85] tracking-[-0.06em] flex items-center justify-center gap-10 flex-wrap"
             >
-              TEAM <span className="font-serif italic text-[var(--bg)] bg-[var(--text)] px-8 lg:px-14 py-2 lg:py-6 rounded-[40px] lg:rounded-[80px] -rotate-2 -mt-4">/with</span>
+              TEAM <span className="font-serif italic text-[var(--bg)] bg-[var(--text)] px-6 lg:px-12 py-2 lg:py-4 rounded-[32px] lg:rounded-[64px] -rotate-2 -mt-4">/with</span>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[64px] md:text-[110px] lg:text-[145px] font-display font-black text-[var(--purple)] leading-[0.85] tracking-[-0.06em] uppercase flex items-center justify-center gap-10 flex-wrap"
+              className="text-[48px] md:text-[90px] lg:text-[120px] font-display font-black text-[var(--purple)] leading-[0.85] tracking-[-0.06em] uppercase flex items-center justify-center gap-10 flex-wrap"
             >
               ELITE BUILDERS
             </motion.div>
@@ -105,7 +105,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-12 text-[18px] lg:text-[22px] font-mono font-bold text-[var(--text-muted)] uppercase tracking-[2px] max-w-2xl mx-auto italic"
+            className="mt-10 text-[16px] lg:text-[18px] font-mono font-bold text-[var(--text-muted)] uppercase tracking-[2px] max-w-2xl mx-auto italic"
           >
             Find the perfect team for your business goals. <br />
             No noise, just <span className="text-[var(--text)] font-black underline decoration-4 decoration-[var(--purple)]">verified production history.</span>
@@ -120,7 +120,7 @@ export function Hero() {
           className="flex flex-col items-center gap-10 relative w-full mb-32"
         >
           <div className="flex flex-col md:flex-row gap-10 items-center">
-            <GradientButton className="h-[84px] px-20 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--purple)] hover:text-white font-display font-black uppercase italic tracking-[6px] text-[20px] rounded-full border-4 border-[var(--text)] shadow-[16px_16px_0_var(--purple)]/40 transition-all duration-500 hover:translate-x-2 hover:translate-y-2 hover:shadow-none">
+            <GradientButton className="h-[72px] px-16 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--purple)] hover:text-white font-display font-black uppercase italic tracking-[6px] text-[18px] rounded-full border-4 border-[var(--text)] shadow-[12px_12px_0_var(--purple)]/40 transition-all duration-500 hover:translate-x-2 hover:translate-y-2 hover:shadow-none">
               GET A QUOTE →
             </GradientButton>
           </div>

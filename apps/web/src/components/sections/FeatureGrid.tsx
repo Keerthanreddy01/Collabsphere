@@ -63,7 +63,7 @@ export function FeatureGrid() {
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as any }}
-          className="text-[36px] md:text-[48px] font-display font-extrabold flex flex-col leading-[0.85] tracking-[-0.04em] italic uppercase"
+          className="text-[28px] md:text-[40px] font-display font-extrabold flex flex-col leading-[0.85] tracking-[-0.04em] italic uppercase"
         >
           <span className="text-[var(--text)]">EVERYTHING_A</span>
           <span className="text-[var(--purple)]">BUILDER_NEEDS.</span>
@@ -87,7 +87,7 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
       transition={{ duration: 1.2, delay: 0.1 + index * 0.15, ease: [0.16, 1, 0.3, 1] as any }}
       whileHover={{ y: -6 }}
       className={cn(
-        "group relative h-[320px] bg-[var(--bg-card)] border-[3px] border-[var(--text)] p-6 md:p-7 rounded-[40px] overflow-hidden transition-all duration-700 shadow-[10px_10px_0_var(--text)]/[0.03] hover:shadow-none hover:translate-x-1 hover:translate-y-1",
+        "group relative h-[460px] bg-[var(--bg-card)] border-[3px] border-[var(--text)] p-7 md:p-9 rounded-[40px] overflow-hidden transition-all duration-700 shadow-[12px_12px_0_var(--text)]/[0.04] hover:shadow-none hover:translate-x-1 hover:translate-y-1 flex flex-col justify-between",
         feature.span
       )}
     >
@@ -97,7 +97,7 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
         style={{ background: feature.bg }}
       />
 
-      <div className="relative z-10 h-full flex flex-col items-start gap-12">
+      <div className="relative z-10 flex flex-col items-start gap-10">
 
         <div className="flex justify-between items-center w-full">
           <motion.div
@@ -113,7 +113,7 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-3xl md:text-4xl font-display font-black text-[var(--text)] italic leading-none uppercase relative inline-block group-hover:translate-x-2 transition-transform duration-500">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-[var(--text)] italic leading-none uppercase relative inline-block group-hover:translate-x-3 transition-transform duration-500 tracking-tighter">
             {feature.title}
             <motion.div
               className="absolute -bottom-2 left-0 h-2 bg-[var(--purple)] rounded-full"
@@ -122,19 +122,22 @@ function FeatureCard({ feature, index, isInView }: { feature: any, index: number
               transition={{ duration: 1.5, delay: 0.8 + index * 0.1 }}
             />
           </h3>
-          <p className="text-[16px] md:text-[18px] text-[var(--text-muted)] leading-[1.3] group-hover:text-[var(--text)] transition-colors duration-1000 font-medium italic uppercase tracking-tighter max-w-[320px]">
+          <p className={cn(
+            "text-[clamp(14px,1.5vw,20px)] text-[var(--text-muted)] leading-[1.3] group-hover:text-[var(--text)] transition-colors duration-1000 font-medium italic uppercase tracking-tighter",
+            feature.span.includes("col-span-2") ? "max-w-[600px]" : "max-w-[300px]"
+          )}>
             {feature.description}
           </p>
         </div>
-
-        <motion.div
-          whileHover={{ x: 15 }}
-          className="mt-auto self-end flex items-center gap-6 px-10 py-4 bg-[var(--bg)] border-4 border-[var(--text)] rounded-full hover:bg-[var(--purple)] hover:text-white transition-all duration-500 cursor-pointer shadow-xl"
-        >
-          <span className="text-[11px] font-mono font-black tracking-[4px] uppercase italic">VERIFY_SYSTEM</span>
-          <div className="text-xl">↗</div>
-        </motion.div>
       </div>
+
+      <motion.div
+        whileHover={{ x: 15 }}
+        className="group/btn mt-auto self-end flex items-center gap-6 px-10 py-4 bg-[var(--bg)] border-4 border-[var(--text)] rounded-full hover:bg-[var(--purple)] hover:border-[var(--purple)] transition-all duration-500 cursor-pointer shadow-[8px_8px_0_var(--border)] relative z-10"
+      >
+        <span className="text-[12px] md:text-[14px] font-mono font-black tracking-[4px] uppercase italic text-[var(--text)] group-hover/btn:text-white transition-colors">VERIFY_SYSTEM</span>
+        <div className="text-xl text-[var(--text)] group-hover/btn:text-white transition-colors">↗</div>
+      </motion.div>
 
       {/* Alignment Markers */}
       <div className="absolute top-0 right-10 w-px h-12 bg-[var(--text)] opacity-10" />

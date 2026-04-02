@@ -17,14 +17,14 @@ export function CTASection() {
    const tickerX = useTransform(scrollYProgress, [0, 1], [0, -1000]);
 
    return (
-      <section 
-        ref={containerRef} 
-        className="relative pt-24 pb-16 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden"
+      <section
+         ref={containerRef}
+         className="relative pt-24 pb-16 bg-[#2B59FF] border-t-[8px] border-[#0A0A0F] overflow-hidden"
       >
-         
+
          {/* THEME-INDEPENDENT BACKGROUND FILL */}
          <div className="absolute inset-0 opacity-10 pointer-events-none select-none">
-            <motion.div 
+            <motion.div
                style={{ x: tickerX }}
                className="flex whitespace-nowrap text-[180px] font-display font-black text-white italic uppercase leading-none tracking-tighter"
             >
@@ -33,30 +33,30 @@ export function CTASection() {
          </div>
 
          {/* Heavy Airloop Dot Pattern (Theme-Independent) */}
-         <div className="absolute inset-0 opacity-15" 
-              style={{ 
-                backgroundImage: `radial-gradient(circle at 2px 2px, white 2px, transparent 0)`,
-                backgroundSize: '40px 40px' 
-              }} 
+         <div className="absolute inset-0 opacity-15"
+            style={{
+               backgroundImage: `radial-gradient(circle at 2px 2px, white 2px, transparent 0)`,
+               backgroundSize: '40px 40px'
+            }}
          />
 
          <div className="max-w-7xl mx-auto px-6 relative z-10">
 
             {/* Newsletter Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-32 items-center">
-               
+
                {/* Massive Text Area */}
                <div className="lg:col-span-12 xl:col-span-7 space-y-12">
                   <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                     initial={{ opacity: 0, x: -50 }}
+                     whileInView={{ opacity: 1, x: 0 }}
+                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                   >
-                     <h3 className="text-[72px] md:text-[140px] font-display font-black text-white italic uppercase tracking-[-0.08em] leading-[0.78]">
-                        READY TO <br/><span className="text-[#B6FF33]">SHIP?</span>
+                     <h3 className="text-[60px] md:text-[100px] font-display font-black text-white italic uppercase tracking-[-0.08em] leading-[0.78]">
+                        READY TO <br /><span className="text-[#B6FF33]">SHIP?</span>
                      </h3>
                   </motion.div>
-                  
+
                   <div className="flex flex-col md:flex-row gap-6 max-w-2xl mt-12">
                      <div className="flex-1 bg-white p-2 rounded-[32px] border-4 border-[#0A0A0F] shadow-[16px_16px_0_#0A0A0F] transition-all hover:translate-x-4 hover:translate-y-4 hover:shadow-none duration-500">
                         <input
@@ -104,40 +104,40 @@ export function CTASection() {
             </div>
 
             {/* THE MASSIVE COLLABSPHERE WORDMARK */}
-            <div className="relative mb-32 h-[450px] md:h-[600px] flex items-center justify-center overflow-visible">
+            <div className="relative mb-32 h-[300px] md:h-[450px] flex items-center justify-center overflow-visible">
                <motion.div
                   style={{ x: wordmarkX }}
                   className="flex whitespace-nowrap pointer-events-none select-none w-full justify-center"
                >
-                  <h2 className="text-[200px] md:text-[450px] font-display font-black text-white leading-none tracking-[-0.08em] italic uppercase">
+                  <h2 className="text-[120px] md:text-[280px] font-display font-black text-white leading-none tracking-[-0.08em] italic uppercase">
                      COLLABSPHERE
                   </h2>
                </motion.div>
 
                {/* HI-FIDELITY ORGANIC STICKERS */}
                <div className="absolute inset-x-0 bottom-[-10%] flex items-center justify-center gap-4 md:gap-48 w-full">
-                  
+
                   {/* Flower Sticker */}
                   <motion.div
                      whileHover={{ scale: 1.1, rotate: -5 }}
-                     className="relative w-56 h-56 md:w-96 md:h-96 flex items-center justify-center rotate-[-12deg] cursor-pointer group"
+                     className="relative w-40 h-40 md:w-64 md:h-64 flex items-center justify-center rotate-[-12deg] cursor-pointer group"
                   >
                      <div className="absolute inset-0 bg-[#FF7E5F] rounded-[40%_60%_70%_40%_/_40%_40%_60%_60%] border-[8px] md:border-[20px] border-[#0A0A0F] shadow-[40px_40px_0_#0A0A0F] group-hover:rotate-12 transition-all duration-700" />
-                     <span className="relative z-10 text-xl md:text-6xl font-display font-black text-[#0A0A0F] uppercase italic leading-tight text-center">
+                     <span className="relative z-10 text-lg md:text-4xl font-display font-black text-[#0A0A0F] uppercase italic leading-tight text-center">
                         LETS<br />TALK
                      </span>
-                     <div className="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-[#0A0A0F] border-4 border-white/20" />
+                     <div className="absolute top-6 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#0A0A0F] border-4 border-white/20" />
                   </motion.div>
 
                   {/* Blob Sticker */}
                   <motion.div
                      whileHover={{ scale: 1.05, rotate: 5 }}
-                     className="relative bg-[#B6FF33] border-[8px] md:border-[20px] border-[#0A0A0F] px-10 md:px-32 py-10 md:py-24 rounded-[100px_40px_120px_60px] shadow-[40px_40px_0_#0A0A0F] rotate-[6deg] cursor-pointer group"
+                     className="relative bg-[#B6FF33] border-[6px] md:border-[16px] border-[#0A0A0F] px-8 md:px-24 py-8 md:py-16 rounded-[100px_40px_120px_60px] shadow-[30px_30px_0_#0A0A0F] rotate-[6deg] cursor-pointer group"
                   >
-                     <span className="text-xl md:text-6xl font-display font-black text-[#0A0A0F] uppercase italic leading-none">
+                     <span className="text-lg md:text-4xl font-display font-black text-[#0A0A0F] uppercase italic leading-none">
                         HI@COLLAB.TECH
                      </span>
-                     <div className="absolute bottom-10 right-10 w-8 h-8 rounded-full bg-[#0A0A0F] border-4 border-white/20" />
+                     <div className="absolute bottom-6 right-6 w-6 h-6 rounded-full bg-[#0A0A0F] border-4 border-white/20" />
                   </motion.div>
                </div>
             </div>
@@ -149,17 +149,17 @@ export function CTASection() {
                   <div className="h-6 w-1 bg-white/20 hidden md:block" />
                   <span className="text-[10px] font-mono font-black text-white/20 uppercase tracking-[2px] italic">MIT Licensed · Open Source · Made by builders.</span>
                </div>
-               
+
                <div className="flex items-center gap-12">
                   <div className="flex gap-10 font-mono text-[10px] font-black text-[#B6FF33] underline underline-offset-4 decoration-2">
                      <button className="hover:text-white transition-colors">PRIVACY</button>
                      <button className="hover:text-white transition-colors">TERMS</button>
                   </div>
 
-                  <a 
-                    href="https://github.com/Keerthanreddy01/Collabsphere"
-                    target="_blank"
-                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-[#0A0A0F] rounded-full text-[12px] font-mono font-black border-4 border-[#0A0A0F] shadow-[8px_8px_0_#0A0A0F] hover:translate-x-2 hover:translate-y-2 hover:shadow-none transition-all"
+                  <a
+                     href="https://github.com/Keerthanreddy01/Collabsphere"
+                     target="_blank"
+                     className="flex items-center gap-2 px-5 py-2.5 bg-white text-[#0A0A0F] rounded-full text-[12px] font-mono font-black border-4 border-[#0A0A0F] shadow-[8px_8px_0_#0A0A0F] hover:translate-x-2 hover:translate-y-2 hover:shadow-none transition-all"
                   >
                      <Star size={14} className="fill-[#0A0A0F]" />
                      Starred on GitHub <span className="text-[#0A0A0F]/40 font-normal ml-1">1.2k</span>
